@@ -1,0 +1,9 @@
+Third-party code in this folder. Both files load only when a feature needs them.
+
+qrcode.js  - QR Code Generator for JavaScript, version 1.4.4
+             Copyright (c) 2009 Kazuhiko Arase. MIT licence.
+             http://www.opensource.org/licenses/mit-license.php
+
+jsQR.js    - jsQR, version 1.4.0
+             Copyright (c) Cosmo Wolfe. Apache License 2.0.
+             https://www.apache.org/licenses/LICENSE-2.0

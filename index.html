@@ -1,0 +1,1794 @@
+<!doctype html>
+<html lang="en-NZ" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sevens Coaching Form</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#111214">
+<meta name="color-scheme" content="light dark">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Sevens Form">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<script>try{var t=JSON.parse(localStorage.getItem('sevens.theme.v1'));if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<style>
+/* Barlow and Barlow Condensed, SIL Open Font License. Latin-ext carries the macrons for te reo Māori. */
+@font-face { font-family: "Barlow"; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/barlow-latin-400.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Barlow"; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/barlow-latin-ext-400.woff2) format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: "Barlow"; font-style: normal; font-weight: 600; font-display: swap; src: url(fonts/barlow-latin-600.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Barlow"; font-style: normal; font-weight: 600; font-display: swap; src: url(fonts/barlow-latin-ext-600.woff2) format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: "Barlow Condensed"; font-style: normal; font-weight: 700; font-display: swap; src: url(fonts/barlow-condensed-latin-700.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Barlow Condensed"; font-style: normal; font-weight: 700; font-display: swap; src: url(fonts/barlow-condensed-latin-ext-700.woff2) format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: "Barlow Condensed"; font-style: normal; font-weight: 800; font-display: swap; src: url(fonts/barlow-condensed-latin-800.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Barlow Condensed"; font-style: normal; font-weight: 800; font-display: swap; src: url(fonts/barlow-condensed-latin-ext-800.woff2) format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+
+
+:root {
+  --jersey: #111214;
+  --sideline: #F1F3F4;
+  --paper: #FFFFFF;
+  --ink: #111214;
+  --muted: #55606B;
+  --soft: #5F6A75;
+  --line: #C5CBD0;
+  --edge: #828C95;
+  --silver: #9EA7AF;
+  --card-y: #F5C400;
+  --card-r: #C62828;
+  --pounamu: #1E6B57;
+  --danger: #B3261E;
+  --pri-bg: var(--jersey);
+  --pri-ink: #FFFFFF;
+  --sel-bg: var(--jersey);
+  --sel-ink: #FFFFFF;
+  --focus: #1A73E8;
+  --bw: 2px;
+  --display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", system-ui, sans-serif;
+  --body: "Barlow", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root[data-theme=auto] {
+    --sideline: #0B0C0D; --paper: #16181A; --ink: #EEF1F2; --muted: #98A3AC; --soft: #98A3AC;
+    --line: #2C3238; --edge: #6F7A84; --silver: #6B757E; --pounamu: #3FB596; --danger: #FF8A80;
+    --pri-bg: #EEF1F2; --pri-ink: #111214; --sel-bg: #EEF1F2; --sel-ink: #111214; --focus: #8AB4F8;
+  }
+}
+:root[data-theme=dark] {
+  --sideline: #0B0C0D; --paper: #16181A; --ink: #EEF1F2; --muted: #98A3AC; --soft: #98A3AC;
+  --line: #2C3238; --edge: #6F7A84; --silver: #6B757E; --pounamu: #3FB596; --danger: #FF8A80;
+  --pri-bg: #EEF1F2; --pri-ink: #111214; --sel-bg: #EEF1F2; --sel-ink: #111214; --focus: #8AB4F8;
+}
+/* Sun mode: white page, black type, heavy edges. For bright fields. */
+:root[data-theme=sun] {
+  --sideline: #FFFFFF; --paper: #FFFFFF; --ink: #000000; --muted: #1F262C; --soft: #2B333A;
+  --line: #59626A; --edge: #000000; --silver: #2B333A; --pounamu: #0F5140; --danger: #9B1C15;
+  --pri-bg: #000000; --pri-ink: #FFFFFF; --sel-bg: #000000; --sel-ink: #FFFFFF; --bw: 3px;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--sideline); color: var(--ink); font: 400 17px/1.4 var(--body); }
+button, input, textarea, select { font: inherit; color: inherit; }
+button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Tab bar stays at the top. It clears the Static.app badge at the bottom left. */
+.btn-new { flex: none; min-height: 44px; padding: 0 16px; border: 2px solid rgba(255,255,255,.7); border-radius: 6px; background: transparent; color: #fff; font: 700 20px/1 var(--display); letter-spacing: .03em; }
+.tabs { position: sticky; top: 0; z-index: 5; padding-top: env(safe-area-inset-top); display: grid; grid-template-columns: repeat(4, 1fr); background: var(--jersey); }
+.tabs::after { content: ""; position: absolute; left: 0; bottom: 0; height: 4px; width: var(--p, 0%); background: var(--card-y); transition: width .25s ease; pointer-events: none; }
+.tabs button { min-height: 48px; padding: 4px 0 7px; border: 0; background: transparent; box-shadow: inset 0 -3px 0 transparent; font: 700 20px/1 var(--display); letter-spacing: .02em; color: #B4BCC3; }
+.tabs button[aria-current=page] { color: #fff; box-shadow: inset 0 -3px 0 #fff; }
+.tabs button { position: relative; white-space: nowrap; }
+.pill { position: absolute; top: 3px; right: 6px; min-width: 18px; padding: 1px 5px; border-radius: 10px; background: var(--card-y); color: #111214; font: 800 14px/1.15 var(--display); text-align: center; }
+#count { font-weight: 600; opacity: .9; }
+
+/* Jersey back (first visit) and compact band (every visit after) */
+.jersey { background: var(--jersey); color: #fff; text-align: center; padding: 2px 16px 26px; overflow: hidden; }
+.jersey svg { display: block; width: 100%; max-width: 420px; height: auto; margin: 0 auto; }
+.jersey .arc { fill: #fff; font: 800 29px var(--display); letter-spacing: .19em; text-transform: uppercase; }
+.jersey .number { margin: -18px 0 0; font: 800 176px/.8 var(--display); letter-spacing: -.01em; }
+.jersey .sub { margin: 14px 0 0; font-size: 15px; color: #C5CBD0; letter-spacing: .04em; }
+.jersey .sub::before, .jersey .sub::after { content: ""; display: inline-block; width: 28px; height: 3px; margin: 0 10px 4px; background: var(--card-y); }
+.band { display: flex; align-items: center; gap: 12px; padding: 6px 16px 12px; background: var(--jersey); color: #fff; }
+.band .num { flex: none; font: 800 66px/.8 var(--display); }
+.band .txt { flex: 1; min-width: 0; }
+.band .ttl { margin: 0; font: 800 26px/1 var(--display); letter-spacing: .04em; text-transform: uppercase; }
+.band #status { margin: 4px 0 0; font-size: 13px; color: #C5CBD0; }
+
+main { max-width: 1200px; margin: 0 auto; padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
+#view-form, #view-saved, #view-setup { max-width: 680px; margin-left: auto; margin-right: auto; }
+#rv-table > :not(.tbl-wrap), #rv-detail { max-width: 680px; }
+#rv-more { max-width: 680px; }
+
+/* Match details */
+.meta { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 12px; padding: 18px 16px 12px; }
+.meta .wide, .wide { grid-column: 1 / -1; }
+.f { display: grid; gap: 5px; font: 600 15px var(--body); color: var(--muted); }
+.f i { margin-left: 6px; font-style: normal; font-weight: 400; color: var(--soft); }
+input[type=text], input[type=date], input[type=time], select, textarea {
+  width: 100%; font-size: 17px; padding: 12px; border: var(--bw) solid var(--edge); border-radius: 6px; background: var(--paper); color: var(--ink);
+}
+input[type=text], input[type=date], input[type=time], select { min-height: 50px; }
+input[type=date], input[type=time] { appearance: none; -webkit-appearance: none; text-align: left; }
+input:focus, textarea:focus, select:focus { border-color: var(--ink); }
+.hint { grid-column: 1 / -1; margin: -8px 0 0; font-size: 15px; color: var(--muted); }
+.hint button { min-height: 36px; padding: 0 10px; border: var(--bw) solid var(--ink); border-radius: 6px; background: var(--paper); font-weight: 600; }
+.more { margin: 0 16px 14px; border: var(--bw) solid var(--edge); border-radius: 6px; background: var(--paper); }
+.more summary { display: flex; align-items: center; gap: 10px; min-height: 52px; padding: 8px 12px; list-style: none; cursor: pointer; }
+.more summary::-webkit-details-marker { display: none; }
+.more summary::after { content: "\25BE"; margin-left: auto; font-size: 16px; color: var(--muted); }
+.more[open] summary::after { content: "\25B4"; }
+.more .ttl { font: 800 20px/1 var(--display); letter-spacing: .02em; }
+.more .sum { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 15px; color: var(--muted); }
+.more .sum b { color: var(--danger); font-weight: 600; }
+.more .meta { padding: 4px 12px 14px; border-top: 2px solid var(--line); }
+.intro { margin: 0; padding: 0 16px 8px; font-size: 15px; color: var(--muted); }
+.legend { margin: 0 16px 16px; font-size: 15px; color: var(--muted); }
+.legend summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; font-weight: 600; color: var(--ink); }
+.legend ol { margin: 0 0 4px; padding-left: 22px; }
+.try-line { height: 4px; background: var(--ink); }
+
+/* Scored rows: each is fenced by a dashed 5 m line */
+.row { position: relative; padding: 20px 16px 18px; }
+.row::before { content: ""; position: absolute; top: 0; left: 16px; right: 16px; height: 3px; background: repeating-linear-gradient(90deg, var(--silver) 0 16px, transparent 16px 26px); }
+#sections .row:first-child::before { display: none; }
+.row-head { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 12px; }
+.row-head h2 { display: flex; align-items: center; margin: 0; font: 800 28px/1.05 var(--display); letter-spacing: .01em; }
+.row-head p, .row .sub { margin: 0; font-size: 15px; color: var(--muted); }
+.cards { display: inline-flex; gap: 4px; margin-left: 10px; }
+.cards i { display: block; width: 12px; height: 17px; border-radius: 2px; background: var(--card-y); transform: rotate(-8deg); }
+.cards i + i { background: var(--card-r); transform: rotate(7deg); }
+.whistle { width: 40px; height: 28px; margin-left: 12px; color: var(--ink); }
+.scale { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 14px 0 6px; }
+.scale button { min-height: 58px; border-radius: 6px; border: var(--bw) solid var(--edge); background: var(--paper); font: 800 32px/1 var(--display); }
+.scale button[aria-pressed=true] { background: var(--sel-bg); color: var(--sel-ink); border-color: var(--sel-bg); box-shadow: inset 0 -5px 0 var(--card-y); }
+.anchor { margin: 0 0 8px; font-size: 15px; font-weight: 600; color: var(--ink); }
+.qt { display: flex; gap: 8px; margin: 8px -16px 10px; padding: 0 16px 2px; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.qt::-webkit-scrollbar { display: none; }
+.qt button { flex: none; min-height: 44px; padding: 0 14px; border: var(--bw) solid var(--edge); border-radius: 22px; background: var(--paper); font: 600 15px var(--body); white-space: nowrap; }
+textarea { min-height: 66px; resize: vertical; line-height: 1.35; }
+.contest { margin-top: 20px; padding-top: 16px; border-top: 3px dotted var(--silver); }
+.contest h3 { margin: 0 0 10px; font: 800 22px/1.1 var(--display); letter-spacing: .01em; }
+.chips { display: flex; gap: 8px; margin-bottom: 10px; }
+.chip { flex: 1; min-height: 50px; padding: 0 4px; border-radius: 6px; border: var(--bw) solid var(--edge); background: var(--paper); font: 700 20px/1 var(--display); letter-spacing: .02em; }
+.chip[aria-pressed=true] { background: var(--sel-bg); color: var(--sel-ink); border-color: var(--sel-bg); box-shadow: inset 0 -4px 0 var(--card-y); }
+.row.rating { background: var(--paper); margin-top: 4px; border-top: 4px solid var(--ink); }
+.row.rating::before { display: none; }
+.row.rating h2 { font-size: 34px; }
+.row.rating .scale button { min-height: 68px; font-size: 38px; }
+.row.notes { background: var(--paper); border-top: 4px solid var(--ink); display: grid; gap: 14px; }
+.row.notes::before, .row.priv::before { display: none; }
+.row.notes h2, .row.priv h2 { margin: 0; font: 800 26px/1.05 var(--display); }
+.row.priv { background: var(--paper); border-top: 2px solid var(--line); border-bottom: 2px solid var(--line); display: grid; gap: 8px; }
+
+/* Buttons */
+.actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 18px 16px; }
+.btn { min-height: 52px; padding: 0 14px; border-radius: 6px; border: var(--bw) solid var(--edge); background: var(--paper); font: 700 22px/1 var(--display); letter-spacing: .02em; }
+.btn.primary { background: var(--pri-bg); color: var(--pri-ink); border-color: var(--pri-bg); }
+.btn.danger { color: var(--danger); border-color: var(--danger); background: transparent; }
+.btn:disabled { opacity: .6; cursor: default; }
+.btn.small { min-height: 44px; font-size: 19px; }
+.up-status { grid-column: 1 / -1; margin: -2px 0 4px; font-size: 15px; text-align: center; color: var(--muted); }
+
+/* Saved, review and setup panels */
+.panel { padding: 20px 16px; }
+.panel h1 { margin: 0 0 4px; font: 800 32px/1.05 var(--display); letter-spacing: .01em; }
+.panel h2 { margin: 0 0 4px; font: 800 26px/1.05 var(--display); letter-spacing: .01em; }
+.panel h3 { margin: 22px 0 6px; font: 800 22px/1.1 var(--display); }
+.panel .note { margin: 0 0 14px; font-size: 15px; color: var(--muted); }
+.note.warn { color: var(--ink); font-weight: 600; }
+.list { list-style: none; margin: 0; padding: 0; border-top: 4px solid var(--ink); }
+.item { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 12px; width: 100%; padding: 14px 4px; text-align: left; background: transparent; border: 0; border-bottom: 2px solid var(--line); }
+.item strong { display: block; font: 800 24px/1.1 var(--display); letter-spacing: .01em; }
+.item span { font-size: 15px; color: var(--muted); }
+.item.open strong::after { content: " (open now)"; font: 400 14px var(--body); color: var(--muted); }
+.item .tag { display: block; margin-top: 2px; font-size: 14px; }
+.item .tag.warn { color: var(--ink); font-weight: 600; }
+.badge { min-width: 48px; height: 48px; border-radius: 6px; display: grid; place-items: center; border: var(--bw) solid var(--edge); font: 800 30px/1 var(--display); }
+.badge.has { background: var(--sel-bg); color: var(--sel-ink); border-color: var(--sel-bg); }
+.empty { padding: 28px 4px; color: var(--muted); }
+.tools { display: grid; gap: 10px; margin-top: 22px; }
+.install { margin-top: 22px; padding-top: 16px; border-top: 2px solid var(--line); font-size: 15px; color: var(--muted); }
+.install p { margin: 0 0 10px; }
+.range { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+.range .f, .range input, .range select { min-width: 0; }
+.chk { display: flex; align-items: center; gap: 10px; min-height: 44px; font: 600 16px var(--body); color: var(--ink); }
+.chk input { width: 26px; height: 26px; accent-color: var(--ink); }
+.chiplist { display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0 0; padding: 0; list-style: none; }
+.chiplist li { padding: 6px 12px; border: var(--bw) solid var(--edge); border-radius: 18px; background: var(--paper); font-size: 15px; }
+.chiplist li.zero { border-color: var(--danger); color: var(--danger); font-weight: 600; }
+.dup { display: grid; gap: 8px; margin: 8px 0; padding: 12px; border: var(--bw) solid var(--edge); border-radius: 6px; background: var(--paper); font-size: 15px; }
+.dup .row2 { display: flex; flex-wrap: wrap; gap: 8px; }
+.mini { width: 100%; border-collapse: collapse; font-size: 16px; }
+.mini th, .mini td { padding: 8px 6px; text-align: left; border-bottom: 1px solid var(--line); }
+.mini td.n { text-align: right; font-variant-numeric: tabular-nums; }
+.qr { display: grid; justify-items: center; gap: 10px; margin: 14px 0; }
+#qr-svg { width: 100%; display: flex; justify-content: center; }
+.qr svg { width: 100%; max-width: 300px; height: auto; background: #fff; padding: 6px; border-radius: 6px; border: 2px solid #000; }
+.qr input { text-align: left; }
+.set-block { margin: 0 0 24px; }
+.stack { display: grid; gap: 12px; }
+
+/* Toast and scanner */
+.toast { position: fixed; left: 50%; bottom: calc(76px + env(safe-area-inset-bottom)); transform: translateX(-50%); z-index: 9; max-width: calc(100% - 32px); padding: 12px 18px; border-radius: 6px; background: #fff; color: var(--jersey); font: 600 16px var(--body); text-align: center; box-shadow: 0 0 0 2px var(--jersey); }
+.scan { position: fixed; inset: 0; z-index: 20; display: grid; grid-template-rows: 1fr auto; background: #000; color: #fff; }
+.scan video { width: 100%; height: 100%; object-fit: cover; }
+.scan p { margin: 0; padding: 12px 16px; text-align: center; font-size: 16px; }
+.scan button { min-height: 56px; margin: 0 16px calc(16px + env(safe-area-inset-bottom)); border: 2px solid #fff; border-radius: 6px; background: transparent; color: #fff; font: 700 22px var(--display); }
+
+/* Review table: a scoreboard */
+.tbl-wrap { overflow-x: auto; border: var(--bw) solid var(--ink); border-radius: 6px; background: var(--paper); -webkit-overflow-scrolling: touch; }
+table.rv { border-collapse: separate; border-spacing: 0; width: 100%; min-width: 780px; font-size: 17px; }
+.rv th, .rv td { padding: 4px 5px; text-align: center; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.rv tbody tr:last-child > * { border-bottom: 0; }
+.rv thead th { background: var(--jersey); color: #fff; border-bottom: 0; }
+.rv .nm { position: sticky; left: 0; z-index: 1; text-align: left; min-width: 176px; padding-left: 8px; background: var(--paper); box-shadow: 2px 0 0 var(--ink); font-weight: 400; }
+.rv thead .nm { background: var(--jersey); }
+.rv thead button { min-height: 48px; padding: 0 2px; border: 0; background: none; color: #fff; font: 700 17px/1 var(--display); letter-spacing: .02em; }
+.rv th[aria-sort=ascending] button::after { content: " \25B2"; font-size: 10px; color: var(--card-y); }
+.rv th[aria-sort=descending] button::after { content: " \25BC"; font-size: 10px; color: var(--card-y); }
+.rk { display: inline-grid; place-items: center; min-width: 32px; height: 32px; margin-right: 10px; border-radius: 6px; background: var(--sel-bg); color: var(--sel-ink); font: 800 21px/1 var(--display); }
+.rk.none { background: transparent; border: 2px solid var(--edge); color: var(--muted); }
+.rv .who { min-height: 46px; padding: 0; border: 0; background: none; font: 700 19px var(--body); text-align: left; text-decoration: underline; text-decoration-color: var(--silver); text-underline-offset: 4px; }
+.pv { margin-left: 8px; font-size: 13px; color: var(--muted); }
+.rv tr.prov td, .rv tr.prov th.nm { color: var(--muted); }
+.rv .sc { font: 700 20px var(--display); font-variant-numeric: tabular-nums; background: color-mix(in srgb, var(--pounamu) var(--t, 0%), transparent); }
+.rv .sc.main { font-weight: 800; font-size: 22px; }
+.back { min-height: 46px; margin: 0 0 8px -4px; padding: 0 4px; border: 0; background: none; font: 700 20px var(--display); letter-spacing: .03em; color: var(--muted); }
+.game { padding: 16px 0; border-top: 4px solid var(--ink); }
+.game h2 { margin: 0; font: 800 24px/1.1 var(--display); }
+#rv-more h2 { margin: 22px 0 6px; font-size: 22px; }
+.game .by { margin: 2px 0 10px; font-size: 15px; color: var(--muted); }
+.sg { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 8px; margin-bottom: 10px; }
+.sg div { padding: 6px 8px; border: var(--bw) solid var(--edge); border-radius: 6px; font-size: 14px; color: var(--muted); }
+.sg b { display: block; font: 800 30px/1.05 var(--display); color: var(--ink); }
+.game p.cm { margin: 6px 0 0; white-space: pre-wrap; font-size: 16px; }
+.game .btn { margin-top: 12px; }
+
+@media (prefers-reduced-motion: reduce) { .tabs::after { transition: none; } }
+
+@media print {
+  @page { margin: 12mm; }
+  body { background: #fff; color: #000; font-size: 12pt; }
+  .top { background: #fff; color: #000; padding: 0 0 8px; border-bottom: 2px solid #000; }
+  .btn-new, .tabs, .actions, .toast, .brand p:not(.t), .intro, .legend, .jersey, .band, .row::before, .qt, .anchor, .row.priv, .hint { display: none !important; }
+  .brand .t { color: #000; }
+  .row { break-inside: avoid; padding: 8px 0; border-top: 1px solid #999; background: #fff !important; }
+  .meta { padding: 10px 0; }
+  .more { border: 0; margin: 0; }
+  .more summary { display: none; }
+  input, textarea, select { border: 0; border-bottom: 1px solid #999; border-radius: 0; background: #fff; color: #000; padding: 4px 0; min-height: 0; }
+  textarea { resize: none; }
+  .scale button, .chip { min-height: 32px; border: 1px solid #000; background: #fff; color: #000; }
+  .scale button[aria-pressed=true], .chip[aria-pressed=true] { background: #000 !important; color: #fff !important; box-shadow: none; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  main { padding-bottom: 0; }
+  #view-saved, #view-review, #view-setup { display: none !important; }
+}
+
+</style>
+</head>
+<body>
+
+
+
+<nav class="tabs" id="tabs" aria-label="Main">
+  <button type="button" data-tab="form" aria-current="page">Form</button>
+  <button type="button" data-tab="saved">Saved <span id="count">0</span><span class="pill" id="pend" hidden aria-label="waiting to upload">0</span></button>
+  <button type="button" data-tab="review">Review</button>
+  <button type="button" data-tab="setup">Setup</button>
+</nav>
+
+<main>
+  <div id="view-form">
+    <h1 class="sr">Coaching Sevens form</h1>
+    <section class="jersey" id="hero" hidden>
+      <svg viewBox="0 0 420 92" aria-hidden="true" focusable="false">
+        <defs><path id="arc" d="M 26 82 Q 210 14 394 82"/></defs>
+        <text class="arc" text-anchor="middle"><textPath href="#arc" startOffset="50%">Coaching Sevens</textPath></text>
+      </svg>
+      <p class="number" aria-hidden="true">7</p>
+      <p class="sub">Referee coaching form</p>
+    </section>
+    <section class="band" id="band">
+      <span class="num" aria-hidden="true">7</span>
+      <div class="txt"><p class="ttl">Coaching Sevens</p><p id="status" aria-live="polite">0 of 8 scored</p></div>
+      <button type="button" class="btn-new" data-act="new" aria-label="Start a new form">New</button>
+    </section>
+
+    <div class="meta">
+      <label class="f wide"><span>Referee <i lang="mi">Kaiwhakawā</i></span>
+        <input type="text" data-f="referee" list="dl-ref" autocomplete="off" autocapitalize="words" enterkeyhint="next">
+      </label>
+      <p class="hint" id="ref-hint" hidden></p>
+      <label class="f"><span>Field <i lang="mi">Papa tākaro</i></span>
+        <input type="text" data-f="field" list="dl-field" autocomplete="off" enterkeyhint="next">
+      </label>
+      <label class="f"><span>Time <i lang="mi">Wā</i></span>
+        <input type="time" data-f="time">
+      </label>
+    </div>
+
+    <details class="more" id="more">
+      <summary><span class="ttl">Match details</span><span class="sum" id="more-sum"></span></summary>
+      <div class="meta">
+        <label class="f wide"><span>Coach <i lang="mi">Kaiako</i></span>
+          <input type="text" data-f="coach" list="dl-coach" autocomplete="name" autocapitalize="words">
+        </label>
+        <label class="f wide"><span>Tournament <i lang="mi">Whakataetae</i></span>
+          <input type="text" data-f="tournament" autocomplete="off" autocapitalize="words">
+        </label>
+        <label class="f"><span>Date <i lang="mi">Rā</i></span>
+          <input type="date" data-f="date">
+        </label>
+        <label class="f"><span>Level</span>
+          <input type="text" data-f="level" list="dl-level" autocomplete="off" placeholder="Pool play, Cup">
+        </label>
+        <label class="f"><span>Game <i lang="mi">Tākaro</i></span>
+          <input type="text" data-f="game" autocomplete="off" placeholder="Pool A, game 5">
+        </label>
+        <label class="f"><span>Role</span>
+          <select data-f="role">
+            <option>Referee</option>
+            <option>Assistant referee 1</option>
+            <option>Assistant referee 2</option>
+          </select>
+        </label>
+      </div>
+    </details>
+
+    <details class="legend">
+      <summary>How to score</summary>
+      <p>Score each area from 1 to 5. Tap a score again to clear it. The form saves on this device as you type.</p>
+      <ol id="legend-list"></ol>
+    </details>
+
+    <div class="try-line" aria-hidden="true"></div>
+    <div id="sections"></div>
+
+    <section class="row notes">
+      <h2>Feedback for the referee</h2>
+      <label class="f"><span>Strength to keep</span>
+        <textarea data-f="keep" rows="2" placeholder="What worked well"></textarea>
+      </label>
+      <label class="f"><span>One thing to work on</span>
+        <textarea data-f="work" rows="2" placeholder="The next step"></textarea>
+      </label>
+    </section>
+    <section class="row priv">
+      <h2>Private notes</h2>
+      <p class="sub">Left out of the summary, email and print. The organiser sees them after an upload.</p>
+      <textarea data-f="priv" rows="2" aria-label="Private notes" placeholder="For selectors only"></textarea>
+    </section>
+
+    <div class="actions">
+      <button type="button" class="btn primary wide" id="up-btn" data-act="upload">Upload results</button>
+      <p class="up-status" id="up-status" aria-live="polite"></p>
+      <button type="button" class="btn primary wide" id="next-btn" data-act="new" hidden>Start next game</button>
+      <label class="f wide">Email a copy to
+        <input type="text" id="mail-to" inputmode="email" autocomplete="email" autocapitalize="off" placeholder="name@example.com, name2@example.com">
+      </label>
+      <button type="button" class="btn wide" data-act="email">Email this form</button>
+      <button type="button" class="btn" data-act="share">Share summary</button>
+      <button type="button" class="btn" data-act="copy">Copy text</button>
+      <button type="button" class="btn wide" data-act="print">Print or save PDF</button>
+      <button type="button" class="btn danger wide" data-act="delete">Delete this form</button>
+    </div>
+  </div>
+
+  <div id="view-saved" class="panel" hidden>
+    <h1>Saved forms</h1>
+    <p class="note">Forms are saved on this device. Upload them when you have signal.</p>
+    <p class="note" id="bk-note"></p>
+    <div class="tools" style="margin:0 0 14px"><button type="button" class="btn primary" id="up-all" data-act="uploadall" hidden>Upload all waiting</button><button type="button" class="btn" data-act="new">Start a new form</button></div>
+    <ul class="list" id="list"></ul>
+    <div class="empty" id="empty" hidden>No forms yet. Fill in the form and it saves here by itself.</div>
+
+    <div class="tools">
+      <button type="button" class="btn" data-act="csv">Export all as spreadsheet (CSV)</button>
+      <button type="button" class="btn" data-act="backup">Save backup file</button>
+      <button type="button" class="btn" data-act="restore">Add forms from backup files</button>
+      <input type="file" id="restore" accept="application/json,.json" multiple hidden>
+    </div>
+
+    <div class="install" id="install">
+      <p><b>iPhone and iPad:</b> tap Share in Safari, then Add to Home Screen. Then always open the app from its icon. Safari and the icon keep separate forms.</p>
+      <p><b>Android:</b> open the browser menu and tap Install app.</p>
+      <button type="button" class="btn" id="install-btn" hidden>Install this app</button>
+    </div>
+  </div>
+
+  <div id="view-review" class="panel" hidden>
+    <div id="rv-table">
+      <h1>Referee review</h1>
+      <p class="note" id="rv-intro"></p>
+      <div class="range">
+        <label class="f wide">Tournament
+          <select id="rv-tour"><option value="">All tournaments</option></select>
+        </label>
+        <label class="f">Role
+          <select id="rv-role">
+            <option value="Referee">Referee</option>
+            <option value="Assistant referee 1">Assistant referee 1</option>
+            <option value="Assistant referee 2">Assistant referee 2</option>
+            <option value="">All roles</option>
+          </select>
+        </label>
+        <label class="f">Minimum games
+          <select id="rv-min"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option></select>
+        </label>
+        <label class="f">From date<input type="date" id="rv-from"></label>
+        <label class="f">To date<input type="date" id="rv-to"></label>
+        <label class="chk wide"><input type="checkbox" id="rv-adj"> Adjust ratings for coach marking style</label>
+      </div>
+      <div class="tbl-wrap" id="rv-wrap" tabindex="0" role="region" aria-label="Referee ranking table"></div>
+      <p class="note" id="rv-note" style="margin-top:10px"></p>
+
+      <div id="rv-more"></div>
+
+      <div class="tools">
+        <button type="button" class="btn primary" data-act="rvcsv">Export ranking table (CSV)</button>
+        <button type="button" class="btn" data-act="loadres">Load results file</button>
+        <input type="file" id="resfile" accept=".csv,.json,text/csv,application/json" hidden>
+      </div>
+      <p class="note" style="margin-top:14px">Uploaded results are collected in the static.app account for this site. Export the entries there, then choose Load results file to rank every referee.</p>
+    </div>
+    <div id="rv-detail" hidden></div>
+  </div>
+
+  <div id="view-setup" class="panel" hidden>
+    <h1>Setup</h1>
+    <div class="set-block">
+      <h2>This device</h2>
+      <p class="note" id="cfg-sum"></p>
+      <div class="stack">
+        <button type="button" class="btn primary" data-act="scan">Scan a setup QR code</button>
+        <label class="f">Or paste a setup link or code
+          <input type="text" id="cfg-paste" autocomplete="off" autocapitalize="off" placeholder="Paste here">
+        </label>
+        <button type="button" class="btn" data-act="cfgpaste">Use this setup</button>
+        <button type="button" class="btn danger" data-act="cfgclear">Clear the setup on this device</button>
+      </div>
+    </div>
+
+    <div class="set-block">
+      <h2>Display</h2>
+      <label class="f">Colours
+        <select id="set-theme">
+          <option value="auto">Match my phone</option>
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+          <option value="sun">Sun mode: white and black, heavy edges</option>
+        </select>
+      </label>
+    </div>
+
+    <details class="more" id="demo" style="margin:0 0 14px">
+      <summary><span class="ttl">Demo and training</span></summary>
+      <div class="meta">
+        <p class="note wide" style="margin:0">Load a made-up tournament with 45 games, 12 referees and 4 coaches. Use it to show the app or to train coaches. Demo forms are never uploaded. Your own forms stay safe.</p>
+        <p class="note wide" id="demo-note" style="margin:0"></p>
+        <button type="button" class="btn primary wide" data-act="demoload">Load the demo tournament</button>
+        <button type="button" class="btn wide" data-act="demoremove">Remove the demo data</button>
+      </div>
+    </details>
+
+    <details class="more" id="org" style="margin:0">
+      <summary><span class="ttl">Organiser: make a setup</span></summary>
+      <div class="meta">
+        <label class="f wide">Tournament name<input type="text" id="o-t" autocomplete="off"></label>
+        <label class="f wide">Tournament code<input type="text" id="o-c" autocomplete="off" autocapitalize="off" placeholder="For example bay26"></label>
+        <label class="f wide">Field names, with commas<input type="text" id="o-f" autocomplete="off" placeholder="1, 2, 3, Main"></label>
+        <label class="f wide">Levels, one per line<textarea id="o-l" rows="4"></textarea></label>
+        <label class="f wide">Coaches, one per line<textarea id="o-k" rows="4"></textarea></label>
+        <label class="f wide">Referees, one per line<textarea id="o-r" rows="6"></textarea></label>
+        <p class="note wide" style="margin:0">Anyone who has the code can send results. It is a filter, not a password.</p>
+        <button type="button" class="btn wide" data-act="orgload">Fill from this device</button>
+        <button type="button" class="btn primary wide" data-act="orguse">Use on this device</button>
+        <button type="button" class="btn primary wide" data-act="orgmake">Make setup link and QR</button>
+      </div>
+      <div class="qr" id="qr" hidden style="padding:0 12px 14px">
+        <div id="qr-svg"></div>
+        <input type="text" id="o-link" readonly aria-label="Setup link">
+        <div class="row2" style="display:flex;gap:8px;width:100%">
+          <button type="button" class="btn small" style="flex:1" data-act="orgcopy">Copy link</button>
+          <button type="button" class="btn small" style="flex:1" data-act="orgshare">Share link</button>
+        </div>
+        <p class="note" id="qr-note" style="margin:0"></p>
+      </div>
+    </details>
+  </div>
+</main>
+
+<div class="toast" id="toast" role="status" hidden></div>
+
+<div class="scan" id="scan" hidden>
+  <video id="scan-video" playsinline muted></video>
+  <div><p>Hold the phone over the setup QR code.</p><button type="button" data-act="scanstop">Cancel</button></div>
+</div>
+
+<datalist id="dl-ref"></datalist>
+<datalist id="dl-field"></datalist>
+<datalist id="dl-coach"></datalist>
+<datalist id="dl-level"></datalist>
+
+<form id="up-form" static-form static-form-id="sevens-results" static-form-success-callback="sevensUploaded" hidden aria-hidden="true"></form>
+
+<script>
+(() => {
+'use strict';
+
+/* Score anchors. Change the words here after a calibration session with your coaches. */
+const ANCHORS = {
+  1: 'Major concern. Needs urgent work.',
+  2: 'Below the standard for this level.',
+  3: 'Meets the standard for this level.',
+  4: 'Above the standard for this level.',
+  5: 'Outstanding for this level.'
+};
+
+const SECTIONS = [
+  { key: 'fitness',       title: 'Fitness',                short: 'Fitness',       sub: 'Ball in line / speed', tags: ['Kept up with play', 'On the ball line', 'Fell behind play', 'Good recovery pace'] },
+  { key: 'foul',          title: 'Foul play',              short: 'Foul play',     cards: true, tags: ['Clear warning first', 'Consistent sanctions', 'Missed high tackle', 'Managed head contact well'] },
+  { key: 'breakdown',     title: 'Breakdowns / turnovers', short: 'Breakdowns',    tags: ['Clear tackle release call', 'Missed a hand in the ruck', 'Quick, clear turnover call', 'Late to see the ball'] },
+  { key: 'setphase',      title: 'Set phase',              short: 'Set phase',     sub: 'Scrums / lineouts / KO / taps', tags: ['Quick, clean restarts', 'Slow to reset', 'Clear kick-off signals', 'Scrum managed well'] },
+  { key: 'awareness',     title: 'Game awareness',         short: 'Awareness',     contest: true, tags: ['Read the play early', 'Late to see offside', 'Good use of advantage', 'Lost sight of the ball'] },
+  { key: 'management',    title: 'Game management',        short: 'Management',    tags: ['Good clock and advantage use', 'Slow to manage players', 'Sin-bin handled clearly', 'Calm at key moments'] },
+  { key: 'communication', title: 'Communication',          short: 'Communication', sub: 'Voice / whistle / signals', tags: ['Clear voice', 'Strong whistle', 'Signals were late', 'Calm with players'] },
+  { key: 'rating',        title: 'Rating score',           short: 'Rating',        rating: true, whistle: true, tags: [] }
+];
+const AREAS = SECTIONS.filter(s => !s.rating);
+const COMMENT_KEYS = [...SECTIONS.map(s => s.key), 'contest'];
+const ROLES = ['Referee', 'Assistant referee 1', 'Assistant referee 2'];
+const DEFAULT_LEVELS = ['Pool play', 'Cup', 'Plate', 'Bowl', 'Final'];
+
+const LS_FORMS = 'sevens.forms.v1';
+const LS_CUR = 'sevens.current.v1';
+const LS_COACH = 'sevens.coach.v1';
+const LS_TOUR = 'sevens.tournament.v1';
+const LS_MAIL = 'sevens.mailto.v1';
+const LS_CARRY = 'sevens.carry.v1';
+const LS_CFG = 'sevens.config.v1';
+const LS_ALIAS = 'sevens.aliases.v1';
+const LS_NODUP = 'sevens.notdup.v1';
+const LS_SEEN = 'sevens.seen.v1';
+const LS_BK = 'sevens.lastbackup.v1';
+const LS_THEME = 'sevens.theme.v1';
+const LS_CFGBK = 'sevens.config.backup.v1';
+const isDemo = (f) => String(f.id).startsWith('demo-');
+
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+const pad = (n) => String(n).padStart(2, '0');
+const str = (v) => typeof v === 'string' ? v : '';
+
+function read(key, fallback) {
+  try { const v = JSON.parse(localStorage.getItem(key)); return v ?? fallback; } catch { return fallback; }
+}
+function write(key, value) {
+  try { localStorage.setItem(key, JSON.stringify(value)); return true; } catch { return false; }
+}
+function today() {
+  const d = new Date();
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+}
+function fmtDate(iso, withYear = true) {
+  if (!iso) return '';
+  const d = new Date(iso + 'T00:00:00');
+  if (isNaN(d)) return iso;
+  return d.toLocaleDateString('en-NZ', withYear ? { day: 'numeric', month: 'short', year: 'numeric' } : { day: 'numeric', month: 'short' });
+}
+function fmtTime(t) {
+  if (!t) return '';
+  const d = new Date('1970-01-01T' + t);
+  return isNaN(d) ? t : d.toLocaleTimeString('en-NZ', { hour: 'numeric', minute: '2-digit' });
+}
+const fmtStamp = (ts) => new Date(ts).toLocaleString('en-NZ', { hour: 'numeric', minute: '2-digit', day: 'numeric', month: 'short' });
+function ago(ts) {
+  const m = Math.round((Date.now() - ts) / 60000);
+  if (m < 2) return 'just now';
+  if (m < 90) return m + ' minutes ago';
+  const h = Math.round(m / 60);
+  if (h < 36) return h + ' hours ago';
+  return Math.round(h / 24) + ' days ago';
+}
+const refKey = (n) => String(n || '').trim().toLowerCase().replace(/\s+/g, ' ');
+function lev(a, b) {
+  if (a === b) return 0;
+  if (!a.length) return b.length;
+  if (!b.length) return a.length;
+  let prev = Array.from({ length: b.length + 1 }, (_, j) => j);
+  for (let i = 1; i <= a.length; i++) {
+    const row = [i];
+    for (let j = 1; j <= b.length; j++) row[j] = Math.min(prev[j] + 1, row[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    prev = row;
+  }
+  return prev[b.length];
+}
+function nextGame(label) {
+  const m = String(label || '').match(/^(.*?)(\d+)\s*$/);
+  return m ? m[1] + (Number(m[2]) + 1) : '';
+}
+
+/* ---------- Setup (tournament config) ---------- */
+function cleanCfg(o) {
+  const arr = (a) => Array.isArray(a) ? a.map(x => String(x).trim()).filter(Boolean).slice(0, 400) : [];
+  return { v: 1, t: String(o.t || '').trim().slice(0, 80), c: String(o.c || '').trim().slice(0, 40), f: arr(o.f), r: arr(o.r), k: arr(o.k), l: arr(o.l) };
+}
+let cfg = cleanCfg(read(LS_CFG, {}));
+const codeKey = (c) => String(c || '').trim().toLowerCase();
+
+/* ---------- Form records ---------- */
+function blank(opts = {}) {
+  const carry = read(LS_CARRY, {});
+  let coach = '', tournament = '';
+  try { coach = JSON.parse(localStorage.getItem(LS_COACH)) || ''; } catch {}
+  try { tournament = JSON.parse(localStorage.getItem(LS_TOUR)) || ''; } catch {}
+  if (!tournament && cfg.t) tournament = cfg.t;
+  return {
+    id: uid(), coach, tournament, level: carry.level || '', game: opts.sameGame ? (carry.game || '') : nextGame(carry.game),
+    role: carry.role || 'Referee', referee: '', field: '', time: '', date: today(),
+    scores: {}, comments: {}, tooClose: false, inWay: false, goodPos: false, keep: '', work: '', priv: '',
+    created: Date.now(), updated: Date.now(), uploadedAt: 0, uploadedVersion: 0
+  };
+}
+function normalise(f) {
+  f.tournament ??= ''; f.game ??= ''; f.level ??= ''; f.role ||= 'Referee';
+  f.goodPos ??= false; f.keep ??= ''; f.work ??= ''; f.priv ??= '';
+  f.uploadedAt ??= 0; f.uploadedVersion ??= 0; f.scores ??= {}; f.comments ??= {};
+  return f;
+}
+function isEmpty(f) {
+  return !f.referee.trim() && !f.field.trim() && !f.time && !(f.game || '').trim() &&
+    !Object.keys(f.scores).length && !Object.values(f.comments).some(v => String(v).trim()) &&
+    !f.tooClose && !f.inWay && !f.goodPos && !(f.keep || '').trim() && !(f.work || '').trim() && !(f.priv || '').trim();
+}
+
+let forms = read(LS_FORMS, []);
+if (!Array.isArray(forms)) forms = [];
+forms.forEach(normalise);
+let cur = forms.find(f => f.id === read(LS_CUR, null)) || blank();
+let timer = null, dirty = false, upBusy = false, upResolve = null, lastSaved = '';
+
+/* ---------- Build the score rows ---------- */
+const WHISTLE = '<svg class="whistle" viewBox="0 0 40 28" aria-hidden="true" focusable="false"><path fill="currentColor" d="M1 11h15l3-4h11a9 9 0 0 1 0 18h-1a9 9 0 0 1-8.6-6.4H1z"/><circle cx="29" cy="16" r="3.2" fill="var(--paper)"/><rect x="20" y="2" width="6" height="4" rx="1" fill="currentColor"/></svg>';
+$('#legend-list').innerHTML = [1, 2, 3, 4, 5].map(n => `<li>${esc(ANCHORS[n])}</li>`).join('');
+$('#sections').innerHTML = SECTIONS.map(s => `
+  <section class="row${s.rating ? ' rating' : ''}" data-key="${s.key}">
+    <div class="row-head">
+      <h2 id="h-${s.key}">${s.title}${s.cards ? '<span class="cards" aria-hidden="true"><i></i><i></i></span>' : ''}${s.whistle ? WHISTLE : ''}</h2>
+      ${s.sub ? `<p>${s.sub}</p>` : ''}
+    </div>
+    <div class="scale" role="group" aria-labelledby="h-${s.key}">
+      ${[1, 2, 3, 4, 5].map(n => `<button type="button" data-k="${s.key}" data-v="${n}" aria-pressed="false" aria-label="${s.title}: ${n}">${n}</button>`).join('')}
+    </div>
+    <p class="anchor" data-anchor="${s.key}" hidden></p>
+    ${s.tags.length ? `<div class="qt" role="group" aria-label="Quick notes: ${s.title}">${s.tags.map((t, i) => `<button type="button" data-tag="${s.key}" data-i="${i}">${esc(t)}</button>`).join('')}</div>` : ''}
+    <textarea data-c="${s.key}" rows="2" placeholder="Comments" aria-label="Comments: ${s.title}"></textarea>
+    ${s.contest ? `
+    <div class="contest">
+      <h3>Distance from contest</h3>
+      <div class="chips">
+        <button type="button" class="chip" data-flag="tooClose" aria-pressed="false">Too close</button>
+        <button type="button" class="chip" data-flag="inWay" aria-pressed="false">In the way</button>
+        <button type="button" class="chip" data-flag="goodPos" aria-pressed="false">Good position</button>
+      </div>
+      <textarea data-c="contest" rows="2" placeholder="Comments" aria-label="Comments: Distance from contest"></textarea>
+    </div>` : ''}
+  </section>`).join('');
+
+/* ---------- Lists from the setup ---------- */
+function fillLists() {
+  const opt = (a) => a.map(x => `<option value="${esc(x)}"></option>`).join('');
+  $('#dl-ref').innerHTML = opt(cfg.r);
+  $('#dl-field').innerHTML = opt(cfg.f);
+  $('#dl-coach').innerHTML = opt(cfg.k);
+  $('#dl-level').innerHTML = opt(cfg.l.length ? cfg.l : DEFAULT_LEVELS);
+}
+
+/* ---------- Fill and update ---------- */
+function autosize(t) {
+  if (!t.offsetParent) return;
+  t.style.height = 'auto';
+  t.style.height = (t.scrollHeight + 4) + 'px';
+}
+function autosizeAll() { $$('textarea').forEach(autosize); }
+function refreshScores() {
+  $$('.scale button').forEach(b => b.setAttribute('aria-pressed', String(cur.scores[b.dataset.k] === Number(b.dataset.v))));
+  $$('[data-anchor]').forEach(p => {
+    const v = cur.scores[p.dataset.anchor];
+    p.hidden = !v;
+    p.textContent = v ? `${v}. ${ANCHORS[v]}` : '';
+  });
+}
+function refreshFlags() {
+  $$('[data-flag]').forEach(b => b.setAttribute('aria-pressed', String(!!cur[b.dataset.flag])));
+}
+function moreSummary() {
+  const bits = [cur.coach.trim() || null, cur.tournament.trim(), cur.level.trim(), cur.game.trim(), fmtDate(cur.date, false)].filter(x => x !== '');
+  const html = bits.map(b => b === null ? '<b>Add your name</b>' : esc(b)).join(', ');
+  $('#more-sum').innerHTML = html;
+}
+function fillForm() {
+  $$('[data-f]').forEach(el => { el.value = cur[el.dataset.f] || (el.dataset.f === 'role' ? 'Referee' : ''); });
+  $$('[data-c]').forEach(el => { el.value = cur.comments[el.dataset.c] || ''; });
+  refreshScores();
+  refreshFlags();
+  $('#ref-hint').hidden = true;
+  moreSummary();
+  autosizeAll();
+  updateStatus();
+}
+function updateStatus() {
+  const n = SECTIONS.filter(s => cur.scores[s.key]).length;
+  $('#status').textContent = `${n} of ${SECTIONS.length} scored` + (lastSaved ? `, saved ${lastSaved}` : '');
+  $('#tabs').style.setProperty('--p', (n / SECTIONS.length * 100) + '%');
+  updateUploadUI();
+}
+const upState = (f) => !f.uploadedAt ? 'new' : (f.updated > f.uploadedVersion ? 'changed' : 'done');
+const pending = () => forms.filter(f => f.referee.trim() && !isDemo(f) && upState(f) !== 'done');
+function updateTabs() {
+  $('#count').textContent = forms.length;
+  const p = pending().length;
+  $('#pend').hidden = !p;
+  $('#pend').textContent = p;
+}
+function updateUploadUI() {
+  const st = upState(cur), b = $('#up-btn'), t = $('#up-status');
+  if (isDemo(cur)) {
+    b.disabled = true; b.textContent = 'Demo form';
+    $('#next-btn').hidden = false;
+    t.textContent = 'This is demo data. It stays on this device and is never uploaded.';
+    return;
+  }
+  b.disabled = upBusy || st === 'done';
+  b.textContent = upBusy ? 'Uploading...' : st === 'changed' ? 'Upload changes' : st === 'done' ? 'Uploaded' : 'Upload results';
+  $('#next-btn').hidden = st !== 'done';
+  t.textContent = st === 'done' ? `Uploaded ${fmtStamp(cur.uploadedAt)}${cfg.c ? ' with the tournament code' : ', no tournament code'}. Edit the form to upload changes.`
+    : st === 'changed' ? 'Changed since the last upload.'
+    : 'Not uploaded yet. The form is saved on this device.';
+}
+
+/* ---------- Saving ---------- */
+function commit() {
+  clearTimeout(timer); timer = null;
+  const known = forms.some(f => f.id === cur.id);
+  write(LS_CUR, cur.id);
+  if (!dirty && known) return;
+  if (isEmpty(cur) && !known) return;
+  dirty = false;
+  cur.updated = Date.now();
+  if (!known) forms.push(cur);
+  if (write(LS_FORMS, forms)) {
+    lastSaved = new Date().toLocaleTimeString('en-NZ', { hour: 'numeric', minute: '2-digit' });
+  } else {
+    lastSaved = '';
+    toast('Could not save. Storage is full or blocked.');
+  }
+  updateTabs();
+  updateStatus();
+}
+function queueSave() {
+  dirty = true;
+  updateStatus();
+  clearTimeout(timer);
+  timer = setTimeout(commit, 300);
+}
+addEventListener('pagehide', commit);
+document.addEventListener('visibilitychange', () => { if (document.hidden) commit(); });
+
+/* ---------- Form events ---------- */
+$('#mail-to').value = read(LS_MAIL, '');
+$('#mail-to').addEventListener('input', (e) => write(LS_MAIL, e.target.value));
+function markSeen() { if (!read(LS_SEEN, false)) write(LS_SEEN, true); }
+$('#view-form').addEventListener('input', (e) => {
+  const t = e.target;
+  markSeen();
+  if (t.dataset.f) {
+    cur[t.dataset.f] = t.value;
+    if (t.dataset.f === 'coach') write(LS_COACH, t.value);
+    if (t.dataset.f === 'tournament') write(LS_TOUR, t.value);
+    if (['level', 'game', 'role'].includes(t.dataset.f)) write(LS_CARRY, { ...read(LS_CARRY, {}), [t.dataset.f]: t.value });
+    if (t.dataset.f === 'referee') $('#ref-hint').hidden = true;
+    if (t.tagName === 'TEXTAREA') autosize(t);
+    moreSummary();
+  } else if (t.dataset.c) {
+    cur.comments[t.dataset.c] = t.value;
+    autosize(t);
+  } else return;
+  queueSave();
+});
+$('#view-form').addEventListener('change', (e) => {
+  if (e.target.dataset.f !== 'referee') return;
+  const v = cur.referee.trim();
+  const hint = $('#ref-hint');
+  if (!v || !cfg.r.length || cfg.r.some(n => refKey(n) === refKey(v))) { hint.hidden = true; return; }
+  let best = null, bd = 99;
+  for (const n of cfg.r) { const d = lev(refKey(v), refKey(n)); if (d < bd) { bd = d; best = n; } }
+  hint.hidden = false;
+  hint.innerHTML = bd <= 2 ? `Did you mean <button type="button" data-fix="${esc(best)}">${esc(best)}</button>?` : 'This name is not on the appointment list. Check the spelling.';
+});
+$('#view-form').addEventListener('click', (e) => {
+  const b = e.target.closest('button');
+  if (!b) return;
+  markSeen();
+  if (b.dataset.k) {
+    const v = Number(b.dataset.v);
+    if (cur.scores[b.dataset.k] === v) delete cur.scores[b.dataset.k]; else cur.scores[b.dataset.k] = v;
+    refreshScores();
+    queueSave();
+  } else if (b.dataset.flag) {
+    const f = b.dataset.flag, on = !cur[f];
+    cur[f] = on;
+    if (on) { if (f === 'goodPos') { cur.tooClose = false; cur.inWay = false; } else cur.goodPos = false; }
+    refreshFlags();
+    queueSave();
+  } else if (b.dataset.tag) {
+    const s = SECTIONS.find(x => x.key === b.dataset.tag), text = s.tags[Number(b.dataset.i)];
+    const old = (cur.comments[s.key] || '').trim();
+    if (!old.includes(text)) cur.comments[s.key] = old ? `${old} ${text}.` : `${text}.`;
+    const ta = $(`[data-c="${s.key}"]`);
+    ta.value = cur.comments[s.key];
+    autosize(ta);
+    queueSave();
+  } else if (b.dataset.fix) {
+    cur.referee = b.dataset.fix;
+    $('[data-f=referee]').value = cur.referee;
+    $('#ref-hint').hidden = true;
+    queueSave();
+  }
+});
+
+/* ---------- Tabs ---------- */
+function showTab(name) {
+  for (const v of ['form', 'saved', 'review', 'setup']) $('#view-' + v).hidden = v !== name;
+  $$('.tabs button').forEach(b => b.setAttribute('aria-current', b.dataset.tab === name ? 'page' : 'false'));
+  if (name === 'saved') renderSaved();
+  else if (name === 'review') renderReview();
+  else if (name === 'setup') renderSetup();
+  else autosizeAll();
+  scrollTo(0, 0);
+}
+$$('.tabs button').forEach(b => b.addEventListener('click', () => { commit(); showTab(b.dataset.tab); }));
+
+function renderSaved() {
+  const list = [...forms].sort((a, b) => (b.updated || 0) - (a.updated || 0));
+  const pend = pending().length;
+  $('#up-all').hidden = !pend;
+  $('#up-all').textContent = `Upload all waiting (${pend})`;
+  $('#empty').hidden = list.length > 0;
+  $('#list').hidden = list.length === 0;
+  const bk = read(LS_BK, 0);
+  const bn = $('#bk-note');
+  bn.className = 'note' + (forms.length && (!bk || Date.now() - bk > 864e5) ? ' warn' : '');
+  bn.textContent = !forms.length ? '' : bk ? `Last backup: ${ago(bk)}.` : 'No backup yet. Tap Save backup file below.';
+  $('#list').innerHTML = list.map(f => {
+    const bits = [f.game ? esc(f.game) : '', f.field ? 'Field ' + esc(f.field) : 'No field', fmtTime(f.time) ? esc(fmtTime(f.time)) : '', esc(fmtDate(f.date, false))].filter(Boolean);
+    const r = f.scores.rating;
+    const st = upState(f);
+    const tag = isDemo(f) ? '<span class="tag">Demo</span>' : !f.referee.trim() ? '' : st === 'done' ? '<span class="tag">Uploaded</span>' : st === 'changed' ? '<span class="tag warn">Changed since upload</span>' : '<span class="tag warn">Not uploaded</span>';
+    return `<li><button type="button" class="item${f.id === cur.id ? ' open' : ''}" data-id="${esc(f.id)}">
+      <div><strong>${esc(f.referee.trim() || 'No referee name')}</strong><span>${bits.join(', ')}</span>${tag}</div>
+      <div class="badge${r ? ' has' : ''}" aria-label="Rating ${r || 'not set'}">${r || '–'}</div>
+    </button></li>`;
+  }).join('');
+}
+$('#list').addEventListener('click', (e) => {
+  const b = e.target.closest('.item');
+  if (!b) return;
+  const f = forms.find(x => x.id === b.dataset.id);
+  if (!f) return;
+  cur = f;
+  write(LS_CUR, cur.id);
+  showTab('form');
+  fillForm();
+});
+
+/* ---------- Text summary and CSV ---------- */
+function summary(f) {
+  const L = ['Coaching Sevens'];
+  L.push('Referee: ' + (f.referee || '-') + (f.role && f.role !== 'Referee' ? ` (${f.role})` : ''));
+  L.push(`Field: ${f.field || '-'}   Time: ${fmtTime(f.time) || '-'}   Date: ${fmtDate(f.date) || '-'}`);
+  if (f.coach) L.push('Coach: ' + f.coach);
+  if (f.tournament || f.level || f.game) L.push(`Tournament: ${f.tournament || '-'}   Level: ${f.level || '-'}   Game: ${f.game || '-'}`);
+  L.push('');
+  for (const s of SECTIONS) {
+    L.push(`${s.title}${s.sub ? ' (' + s.sub + ')' : ''}: ${f.scores[s.key] || '-'}/5`);
+    const c = (f.comments[s.key] || '').trim();
+    if (c) L.push('  ' + c.replace(/\n/g, '\n  '));
+    if (s.contest) {
+      const flags = [f.tooClose && 'Too close', f.inWay && 'In the way', f.goodPos && 'Good position'].filter(Boolean);
+      const n = (f.comments.contest || '').trim();
+      if (flags.length || n) {
+        L.push('  Distance from contest: ' + (flags.join(', ') || '-'));
+        if (n) L.push('  ' + n.replace(/\n/g, '\n  '));
+      }
+    }
+  }
+  if ((f.keep || '').trim() || (f.work || '').trim()) {
+    L.push('');
+    if ((f.keep || '').trim()) L.push('Strength to keep: ' + f.keep.trim());
+    if ((f.work || '').trim()) L.push('One thing to work on: ' + f.work.trim());
+  }
+  return L.join('\n');
+}
+const csvCell = (v) => { v = String(v ?? ''); return /[",\r\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; };
+function toCSV(list) {
+  const head = ['Date', 'Time', 'Tournament', 'Level', 'Game', 'Field', 'Referee', 'Role', 'Coach'];
+  for (const s of SECTIONS) {
+    head.push(s.title + ' score', s.title + ' comments');
+    if (s.contest) head.push('Too close', 'In the way', 'Good position', 'Distance from contest comments');
+  }
+  head.push('Strength to keep', 'One thing to work on', 'Private notes');
+  const rows = [head];
+  for (const f of list) {
+    const r = [f.date, f.time, f.tournament, f.level, f.game, f.field, f.referee, f.role, f.coach];
+    for (const s of SECTIONS) {
+      r.push(f.scores[s.key] || '', f.comments[s.key] || '');
+      if (s.contest) r.push(f.tooClose ? 'Yes' : '', f.inWay ? 'Yes' : '', f.goodPos ? 'Yes' : '', f.comments.contest || '');
+    }
+    r.push(f.keep, f.work, f.priv);
+    rows.push(r);
+  }
+  return '\ufeff' + rows.map(r => r.map(csvCell).join(',')).join('\r\n');
+}
+function download(name, type, content) {
+  const blob = new Blob([content], { type });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = name;
+  document.body.append(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+}
+
+/* ---------- Actions ---------- */
+let toastTimer;
+function toast(msg) {
+  const t = $('#toast');
+  t.textContent = msg;
+  t.hidden = false;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { t.hidden = true; }, 3000);
+}
+async function copyText(text, msg = 'Copied to the clipboard') {
+  try { await navigator.clipboard.writeText(text); toast(msg); }
+  catch { toast('Copy did not work. Use Print instead.'); }
+}
+function newForm() {
+  commit();
+  cur = blank();
+  write(LS_CUR, cur.id);
+  lastSaved = '';
+  showTab('form');
+  fillForm();
+  toast('New form ready');
+}
+function sanitize(r) {
+  const b = blank();
+  const scores = {};
+  for (const s of SECTIONS) {
+    const n = Number(r.scores && r.scores[s.key]);
+    if (Number.isInteger(n) && n >= 1 && n <= 5) scores[s.key] = n;
+  }
+  const comments = {};
+  for (const k of COMMENT_KEYS) {
+    const v = r.comments && r.comments[k];
+    if (typeof v === 'string' && v) comments[k] = v;
+  }
+  return {
+    ...b, id: String(r.id), coach: str(r.coach), referee: str(r.referee), field: str(r.field),
+    tournament: str(r.tournament), level: str(r.level), game: str(r.game), role: str(r.role) || 'Referee',
+    uploadedAt: Number(r.uploadedAt) || 0, uploadedVersion: Number(r.uploadedVersion) || 0,
+    time: str(r.time), date: str(r.date), scores, comments,
+    tooClose: !!r.tooClose, inWay: !!r.inWay, goodPos: !!r.goodPos, keep: str(r.keep), work: str(r.work), priv: str(r.priv),
+    created: Number(r.created) || Date.now(), updated: Number(r.updated) || Date.now()
+  };
+}
+
+document.addEventListener('click', async (e) => {
+  const b = e.target.closest('[data-act]');
+  if (!b) return;
+  switch (b.dataset.act) {
+    case 'new': newForm(); break;
+    case 'share': {
+      commit();
+      const text = summary(cur);
+      const title = 'Coaching Sevens' + (cur.referee ? ': ' + cur.referee : '');
+      if (navigator.share) {
+        try { await navigator.share({ title, text }); }
+        catch (err) { if (err.name !== 'AbortError') copyText(text); }
+      } else copyText(text);
+      break;
+    }
+    case 'copy': commit(); copyText(summary(cur)); break;
+    case 'email': {
+      commit();
+      const list = $('#mail-to').value.split(/[,;\s]+/).map(x => x.trim()).filter(Boolean);
+      if (list.some(a => !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(a))) { toast('Check the email address'); $('#mail-to').focus(); break; }
+      const text = summary(cur);
+      const subject = 'Coaching Sevens: ' + (cur.referee.trim() || 'referee') + (cur.game ? ', ' + cur.game : '');
+      const to = list.join(',');
+      let url = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(text)}`;
+      if (url.length > 1900) {
+        await copyText(text);
+        url = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent('The form text is copied. Paste it here.')}`;
+      }
+      const a = document.createElement('a');
+      a.href = url;
+      document.body.append(a);
+      a.click();
+      a.remove();
+      break;
+    }
+    case 'print': {
+      commit();
+      const opened = $('#more').open;
+      $('#more').open = true;
+      autosizeAll();
+      print();
+      $('#more').open = opened;
+      break;
+    }
+    case 'delete':
+      if (!confirm('Delete this form from this device? This cannot be undone.')) break;
+      forms = forms.filter(f => f.id !== cur.id);
+      write(LS_FORMS, forms);
+      cur = blank({ sameGame: true });
+      write(LS_CUR, cur.id);
+      lastSaved = '';
+      updateTabs();
+      fillForm();
+      scrollTo(0, 0);
+      toast('Form deleted');
+      break;
+    case 'csv': {
+      commit();
+      if (!forms.length) { toast('No forms to export yet'); break; }
+      const list = [...forms].sort((a, b) => (a.date || '').localeCompare(b.date || '') || (a.time || '').localeCompare(b.time || ''));
+      download(`sevens-coaching-${today()}.csv`, 'text/csv;charset=utf-8', toCSV(list));
+      write(LS_BK, Date.now());
+      renderSaved();
+      break;
+    }
+    case 'backup':
+      commit();
+      if (!forms.length) { toast('No forms to back up yet'); break; }
+      download(`sevens-backup-${today()}.json`, 'application/json', JSON.stringify({ app: 'sevens-form', version: 2, forms }, null, 2));
+      write(LS_BK, Date.now());
+      renderSaved();
+      break;
+    case 'restore': $('#restore').click(); break;
+    case 'rvcsv': commit(); exportRanking(); break;
+    case 'loadres': $('#resfile').click(); break;
+    case 'upload':
+      commit();
+      if (isDemo(cur)) { toast('This is a demo form. Demo forms are never uploaded.'); break; }
+      if (!cur.referee.trim()) { toast('Add the referee name first'); $('[data-f=referee]').focus(); break; }
+      if (!cur.coach.trim()) { $('#more').open = true; toast('Add your name first'); $('[data-f=coach]').focus(); break; }
+      await doUpload([cur]);
+      break;
+    case 'uploadall':
+      commit();
+      await doUpload(pending().filter(f => f.coach.trim()).sort((a, b) => a.updated - b.updated));
+      break;
+    case 'scan': startScan(); break;
+    case 'demoload': loadDemo(); break;
+    case 'demoremove': removeDemo(); break;
+    case 'scanstop': stopScan(); break;
+    case 'cfgpaste': useSetupText($('#cfg-paste').value); break;
+    case 'cfgclear':
+      if (!confirm('Clear the tournament setup on this device? Your saved forms stay.')) break;
+      cfg = cleanCfg({}); write(LS_CFG, cfg); fillLists(); renderSetup(); toast('Setup cleared');
+      break;
+    case 'orgload': loadOrgFields(); break;
+    case 'orguse': { const c = readOrgFields(); if (!c) break; applyCfg(c); break; }
+    case 'orgmake': makeSetup(); break;
+    case 'orgcopy': copyText($('#o-link').value, 'Link copied'); break;
+    case 'orgshare': {
+      const url = $('#o-link').value;
+      if (navigator.share) { try { await navigator.share({ title: 'Coaching Sevens setup', url }); } catch {} } else copyText(url, 'Link copied');
+      break;
+    }
+  }
+});
+
+function mergeForms(list) {
+  let added = 0, updated = 0;
+  for (const clean of list) {
+    const i = forms.findIndex(f => f.id === clean.id);
+    if (i < 0) { forms.push(clean); added++; }
+    else if (clean.updated > (forms[i].updated || 0)) {
+      if (forms[i] === cur) Object.assign(cur, clean); else forms[i] = clean;
+      updated++;
+    }
+  }
+  write(LS_FORMS, forms);
+  updateTabs();
+  return { added, updated };
+}
+
+$('#restore').addEventListener('change', async (e) => {
+  const files = Array.from(e.target.files);
+  e.target.value = '';
+  if (!files.length) return;
+  let added = 0, updated = 0, bad = 0;
+  for (const file of files) {
+    try {
+      const data = JSON.parse(await file.text());
+      const arr = Array.isArray(data) ? data : data.forms;
+      if (!Array.isArray(arr)) throw new Error('bad file');
+      const r = mergeForms(arr.filter(x => x && typeof x === 'object' && x.id).map(sanitize));
+      added += r.added; updated += r.updated;
+    } catch { bad++; }
+  }
+  renderSaved();
+  fillForm();
+  toast(bad ? `Added ${added}, updated ${updated}. ${bad} file(s) not a Sevens backup` : `Added ${added} new, ${updated} updated`);
+});
+
+/* ---------- Upload results ---------- */
+const UP_FIELDS = ['form_id', 'version', 'code', 'tournament', 'level', 'game', 'date', 'time', 'field', 'referee', 'role', 'coach',
+  ...SECTIONS.flatMap(s => ['score_' + s.key, 'comment_' + s.key]),
+  'too_close', 'in_the_way', 'good_position', 'contest_comments', 'keep', 'work', 'private_notes'];
+$('#up-form').innerHTML = UP_FIELDS.map(k => `<input type="hidden" name="${k}">`).join('');
+
+window.sevensUploaded = () => {
+  $('#up-form').removeAttribute('data-submitting');
+  if (upResolve) upResolve();
+};
+
+function payload(f) {
+  const p = {
+    form_id: f.id, version: String(f.updated), code: cfg.c || '', tournament: (f.tournament || '').trim(), level: (f.level || '').trim(),
+    game: (f.game || '').trim(), date: f.date, time: f.time, field: f.field, referee: f.referee.trim(), role: f.role || 'Referee', coach: f.coach.trim()
+  };
+  for (const s of SECTIONS) {
+    p['score_' + s.key] = f.scores[s.key] || '';
+    p['comment_' + s.key] = (f.comments[s.key] || '').trim();
+  }
+  p.too_close = f.tooClose ? 'yes' : '';
+  p.in_the_way = f.inWay ? 'yes' : '';
+  p.good_position = f.goodPos ? 'yes' : '';
+  p.contest_comments = (f.comments.contest || '').trim();
+  p.keep = (f.keep || '').trim();
+  p.work = (f.work || '').trim();
+  p.private_notes = (f.priv || '').trim();
+  return p;
+}
+
+function uploadOne(f) {
+  return new Promise((resolve, reject) => {
+    const form = $('#up-form');
+    if (!navigator.onLine) { reject(new Error('offline')); return; }
+    if (typeof sendForm !== 'function') { reject(new Error('offline')); return; }
+    const p = payload(f);
+    for (const k of UP_FIELDS) form.elements[k].value = p[k] ?? '';
+    let seen = false, finished = false;
+    const t0 = Date.now();
+    const finish = (err) => {
+      if (finished) return;
+      finished = true;
+      clearInterval(poll); clearTimeout(limit);
+      upResolve = null;
+      err ? reject(err) : resolve();
+    };
+    upResolve = () => finish();
+    const poll = setInterval(() => {
+      const busy = form.getAttribute('data-submitting') === 'true';
+      if (busy) seen = true;
+      else if (seen || Date.now() - t0 > 2500) finish(new Error('failed'));
+    }, 250);
+    const limit = setTimeout(() => finish(new Error('failed')), 25000);
+    form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+  });
+}
+
+async function doUpload(list) {
+  list = list.filter(f => !isDemo(f));
+  if (upBusy || !list.length) return;
+  upBusy = true;
+  updateUploadUI();
+  $('#up-all').disabled = true;
+  let ok = 0, err = null;
+  for (const f of list) {
+    try {
+      await uploadOne(f);
+      f.uploadedAt = Date.now();
+      f.uploadedVersion = f.updated;
+      write(LS_FORMS, forms);
+      ok++;
+    } catch (e) { err = e; break; }
+    await new Promise(r => setTimeout(r, 400));
+  }
+  upBusy = false;
+  $('#up-all').disabled = false;
+  updateUploadUI();
+  updateTabs();
+  if (!$('#view-saved').hidden) renderSaved();
+  if (!err) toast(ok === 1 ? 'Results uploaded' : `${ok} forms uploaded`);
+  else if (err.message === 'offline') toast('No connection. The forms are saved. Try again with signal.');
+  else toast(ok ? `Uploaded ${ok}. The next one failed. Try again.` : 'Upload did not work. Try again.');
+}
+
+/* ---------- Referee review ---------- */
+const REVIEW_COLS = ['rating', ...AREAS.map(s => s.key)];
+let rvSort = { key: 'rating', dir: 'desc' };
+let rvRef = null;
+const r2 = (n) => n == null ? 'x' : Math.round(n * 100) / 100;
+const one = (n) => n == null ? '–' : (Math.round(n * 10) / 10).toFixed(1);
+const mean = (a) => a.length ? a.reduce((x, y) => x + y, 0) / a.length : null;
+
+function filters() {
+  return { from: $('#rv-from').value, to: $('#rv-to').value, tour: $('#rv-tour').value, role: $('#rv-role').value,
+    minG: Number($('#rv-min').value) || 1, adj: $('#rv-adj').checked };
+}
+
+function collect() {
+  const F = filters();
+  const aliases = read(LS_ALIAS, {});
+  const use = [];
+  let unnamed = 0, outside = 0;
+  for (const f of forms) {
+    if ((F.from && (f.date || '') < F.from) || (F.to && (f.date || '') > F.to) || (F.tour && refKey(f.tournament) !== F.tour) || (F.role && (f.role || 'Referee') !== F.role)) { outside++; continue; }
+    const k0 = refKey(f.referee);
+    if (!k0) { if (!isEmpty(f)) unnamed++; continue; }
+    use.push({ f, k0, k: aliases[k0] || k0 });
+  }
+  /* coach marking */
+  const rated = use.filter(u => u.f.scores.rating);
+  const overall = mean(rated.map(u => u.f.scores.rating));
+  const cm = new Map();
+  for (const u of rated) {
+    const ck = refKey(u.f.coach) || '(no name)';
+    const c = cm.get(ck) || { name: u.f.coach.trim() || '(no name)', n: 0, sum: 0 };
+    c.n++; c.sum += u.f.scores.rating; cm.set(ck, c);
+  }
+  const coachStats = [...cm.values()].map(c => ({ ...c, mean: c.sum / c.n, diff: c.sum / c.n - overall })).sort((a, b) => b.n - a.n);
+  const coachMean = (name) => { const c = cm.get(refKey(name) || '(no name)'); return c && c.n >= 3 ? c.sum / c.n : null; };
+  /* group by referee */
+  const map = new Map();
+  for (const u of use) {
+    const f = u.f;
+    let g = map.get(u.k);
+    if (!g) { g = { key: u.k, name: f.referee.trim(), names: new Map(), games: [], sum: {}, cnt: {}, adjSum: 0, adjCnt: 0, coaches: new Set(), tooClose: 0, inWay: 0, goodPos: 0, last: '' }; map.set(u.k, g); }
+    g.games.push(f);
+    g.names.set(u.k0, f.referee.trim());
+    for (const s of SECTIONS) {
+      const v = f.scores[s.key];
+      if (v) { g.sum[s.key] = (g.sum[s.key] || 0) + v; g.cnt[s.key] = (g.cnt[s.key] || 0) + 1; }
+    }
+    if (f.scores.rating) {
+      const cmn = coachMean(f.coach);
+      g.adjSum += cmn == null ? f.scores.rating : f.scores.rating - cmn + overall;
+      g.adjCnt++;
+    }
+    if (f.coach.trim()) g.coaches.add(refKey(f.coach));
+    if (f.tooClose) g.tooClose++;
+    if (f.inWay) g.inWay++;
+    if (f.goodPos) g.goodPos++;
+    if ((f.date || '') >= g.last) { g.last = f.date || ''; g.name = f.referee.trim(); }
+  }
+  const rows = [...map.values()];
+  for (const g of rows) {
+    if (g.names.has(g.key)) g.name = g.names.get(g.key);
+    g.avg = {};
+    for (const s of SECTIONS) g.avg[s.key] = g.cnt[s.key] ? g.sum[s.key] / g.cnt[s.key] : null;
+    g.adj = g.adjCnt ? g.adjSum / g.adjCnt : null;
+    g.metric = F.adj ? g.adj : g.avg.rating;
+    g.mean = mean(AREAS.map(s => g.avg[s.key]).filter(v => v != null));
+    g.prov = g.games.length < F.minG;
+    g.rank = null;
+  }
+  const ranked = rows.filter(g => !g.prov && g.metric != null)
+    .sort((a, b) => (b.metric - a.metric) || ((b.mean ?? 0) - (a.mean ?? 0)) || a.name.localeCompare(b.name));
+  let prev = null, rank = 0;
+  ranked.forEach((g, i) => {
+    const sig = r2(g.metric) + '|' + r2(g.mean);
+    if (sig !== prev) { rank = i + 1; prev = sig; }
+    g.rank = rank;
+  });
+  /* coverage against the appointment list */
+  const seen = new Map(rows.map(g => [g.key, g]));
+  const need = [];
+  const names = new Map();
+  for (const n of cfg.r) names.set(refKey(n), n);
+  for (const g of rows) if (!names.has(g.key)) names.set(g.key, g.name);
+  for (const [k, n] of names) {
+    const c = seen.get(k) ? seen.get(k).games.length : 0;
+    if (c < F.minG) need.push({ name: n, count: c });
+  }
+  need.sort((a, b) => a.count - b.count || a.name.localeCompare(b.name));
+  /* possible duplicate names */
+  const nodup = read(LS_NODUP, []);
+  const dups = [];
+  for (let i = 0; i < rows.length; i++) for (let j = i + 1; j < rows.length; j++) {
+    const a = rows[i], b = rows[j];
+    if (a.key.length < 4 || b.key.length < 4 || a.key[0] !== b.key[0]) continue;
+    if (lev(a.key, b.key) > 2) continue;
+    const pair = [a.key, b.key].sort().join('|');
+    if (nodup.includes(pair)) continue;
+    const [keep, drop] = a.games.length >= b.games.length ? [a, b] : [b, a];
+    dups.push({ keep, drop, pair });
+  }
+  return { rows, ranked, need, dups, coachStats, overall, unnamed, outside, F, aliases };
+}
+
+function sortRows(rows) {
+  const { key, dir } = rvSort;
+  const m = dir === 'asc' ? 1 : -1;
+  const F = filters();
+  const val = (g) => key === 'name' ? g.name.toLowerCase() : key === 'games' ? g.games.length : key === 'coaches' ? g.coaches.size : key === 'adj' ? g.adj : key === 'rating' ? g.metric : g.avg[key];
+  return [...rows].sort((a, b) => {
+    if (key === 'rating' && a.prov !== b.prov) return a.prov ? 1 : -1;
+    const x = val(a), y = val(b);
+    if (x == null && y == null) return a.name.localeCompare(b.name);
+    if (x == null) return 1;
+    if (y == null) return -1;
+    const c = typeof x === 'string' ? x.localeCompare(y) : x - y;
+    if (c) return c * m;
+    return ((b.mean ?? 0) - (a.mean ?? 0)) || a.name.localeCompare(b.name);
+  });
+}
+
+function fillTournaments() {
+  const sel = $('#rv-tour'), keep = sel.value, map = new Map();
+  for (const f of forms) { const k = refKey(f.tournament); if (k && !map.has(k)) map.set(k, f.tournament.trim()); }
+  sel.innerHTML = '<option value="">All tournaments</option>' +
+    [...map].sort((a, b) => a[1].localeCompare(b[1])).map(([k, n]) => `<option value="${esc(k)}">${esc(n)}</option>`).join('');
+  sel.value = map.has(keep) ? keep : '';
+}
+
+function renderReview() {
+  if (rvRef) { renderDetail(); return; }
+  fillTournaments();
+  $('#rv-table').hidden = false;
+  $('#rv-detail').hidden = true;
+  const D = collect();
+  const { rows, F } = D;
+  $('#rv-intro').textContent = `Ranked by ${F.adj ? 'adjusted' : 'average'} rating score. Referees with fewer than ${F.minG} game${F.minG > 1 ? 's' : ''} are provisional and have no rank. A tie is split by the average of the ${AREAS.length} area scores. Tap a heading to sort. Tap a name to read the comments.`;
+  const wrap = $('#rv-wrap');
+  const note = [];
+  if (D.unnamed) note.push(`${D.unnamed} form${D.unnamed > 1 ? 's have' : ' has'} no referee name and ${D.unnamed > 1 ? 'are' : 'is'} left out.`);
+  if (D.outside) note.push(`${D.outside} form${D.outside > 1 ? 's are' : ' is'} outside the filters.`);
+  $('#rv-note').textContent = note.join(' ');
+  if (!rows.length) {
+    wrap.innerHTML = '<div class="empty" style="padding:20px 12px">No referees to show yet. Forms with a referee name appear here.</div>';
+  } else {
+    const cols = [{ key: 'games', label: 'Games' }, { key: 'coaches', label: 'Coaches' }, { key: 'rating', label: 'Rating' }];
+    if (F.adj) cols.push({ key: 'adj', label: 'Adjusted' });
+    cols.push(...AREAS.map(s => ({ key: s.key, label: s.short })));
+    const asort = (k) => rvSort.key === k ? (rvSort.dir === 'asc' ? 'ascending' : 'descending') : 'none';
+    const head = `<tr><th class="nm" scope="col" aria-sort="${asort('name')}"><button type="button" data-sort="name">Referee</button></th>` +
+      cols.map(c => `<th scope="col" aria-sort="${asort(c.key)}"><button type="button" data-sort="${c.key}">${c.label}</button></th>`).join('') + '</tr>';
+    const cell = (v, main) => {
+      const t = v == null ? '' : ` style="--t:${Math.round((v - 1) / 4 * 45)}%"`;
+      return `<td class="sc${main ? ' main' : ''}"${t}>${one(v)}</td>`;
+    };
+    const body = sortRows(rows).map(g => {
+      const cells = [cell(g.avg.rating, !F.adj), ...(F.adj ? [cell(g.adj, true)] : []), ...AREAS.map(s => cell(g.avg[s.key]))].join('');
+      return `<tr class="${g.prov ? 'prov' : ''}"><th class="nm" scope="row"><span class="rk${g.rank ? '' : ' none'}">${g.rank || 'P'}</span><button type="button" class="who" data-ref="${esc(g.key)}">${esc(g.name)}</button>${g.prov ? '<span class="pv">provisional</span>' : ''}</th><td>${g.games.length}</td><td>${g.coaches.size}</td>${cells}</tr>`;
+    }).join('');
+    wrap.innerHTML = `<table class="rv"><thead>${head}</thead><tbody>${body}</tbody></table>`;
+  }
+  /* extra panels */
+  let more = '';
+  const aliasList = Object.entries(D.aliases);
+  if (D.need.length) {
+    more += `<h2>Needs more assessments</h2><p class="note">${cfg.r.length ? 'Names come from the appointment list. ' : 'Add an appointment list in Setup to see referees with no games at all. '}Target: ${F.minG} game${F.minG > 1 ? 's' : ''}.</p><ul class="chiplist">${D.need.map(n => `<li class="${n.count ? '' : 'zero'}">${esc(n.name)}: ${n.count}</li>`).join('')}</ul>`;
+  } else if (rows.length) {
+    more += `<h2>Coverage</h2><p class="note">Every referee has reached ${F.minG} game${F.minG > 1 ? 's' : ''}.</p>`;
+  }
+  if (D.dups.length || aliasList.length) {
+    more += '<h2>Names</h2>';
+    more += D.dups.map((d, i) => `<div class="dup"><span><b>${esc(d.drop.name)}</b> (${d.drop.games.length}) and <b>${esc(d.keep.name)}</b> (${d.keep.games.length}) may be the same person.</span><div class="row2"><button type="button" class="btn small" data-merge="${i}">Merge into ${esc(d.keep.name)}</button><button type="button" class="btn small" data-notdup="${i}">Different people</button></div></div>`).join('');
+    if (aliasList.length) more += `<p class="note">Merged: ${aliasList.map(([a, b]) => `${esc(a)} → ${esc(b)} <button type="button" class="btn small" style="min-height:44px;font-size:16px" data-unmerge="${esc(a)}">Undo</button>`).join(' ')}</p>`;
+  }
+  if (D.coachStats.length) {
+    more += `<h2>Coach marking</h2><p class="note">Average rating each coach gave. A coach who marks hard or easy moves the table. Tick the box above to adjust. It only adjusts coaches with 3 or more forms.</p><table class="mini"><thead><tr><th>Coach</th><th class="n">Forms</th><th class="n">Average</th><th class="n">Against all</th></tr></thead><tbody>${D.coachStats.map(c => `<tr><td>${esc(c.name)}</td><td class="n">${c.n}</td><td class="n">${one(c.mean)}</td><td class="n">${c.diff > 0 ? '+' : ''}${(Math.round(c.diff * 10) / 10).toFixed(1)}</td></tr>`).join('')}</tbody></table>`;
+  }
+  $('#rv-more').innerHTML = more;
+  REVIEW_LAST = D;
+}
+let REVIEW_LAST = null;
+
+function renderDetail() {
+  const D = collect();
+  const g = D.rows.find(r => r.key === rvRef);
+  if (!g) { rvRef = null; renderReview(); return; }
+  $('#rv-table').hidden = true;
+  const box = $('#rv-detail');
+  box.hidden = false;
+  const games = [...g.games].sort((a, b) => (b.date || '').localeCompare(a.date || '') || (b.time || '').localeCompare(a.time || ''));
+  const n = games.length;
+  const flags = [];
+  if (g.tooClose) flags.push(`Too close in ${g.tooClose} of ${n} game${n > 1 ? 's' : ''}.`);
+  if (g.inWay) flags.push(`In the way in ${g.inWay} of ${n} game${n > 1 ? 's' : ''}.`);
+  if (g.goodPos) flags.push(`Good position in ${g.goodPos} of ${n} game${n > 1 ? 's' : ''}.`);
+  box.innerHTML = `
+    <button type="button" class="back" data-back>&larr; Back to table</button>
+    <h1>${esc(g.name)}</h1>
+    <p class="note">${n} game${n > 1 ? 's' : ''}, ${g.coaches.size} coach${g.coaches.size === 1 ? '' : 'es'}. Average rating ${one(g.avg.rating)}${g.rank ? ', rank ' + g.rank : g.prov ? ', provisional' : ''}. ${esc(flags.join(' '))}</p>
+    ${games.map(f => {
+      const bits = [f.level ? esc(f.level) : '', f.game ? esc(f.game) : '', f.field ? 'Field ' + esc(f.field) : '', fmtTime(f.time) ? esc(fmtTime(f.time)) : ''].filter(Boolean).join(', ');
+      const comments = SECTIONS.map(s => {
+        const c = (f.comments[s.key] || '').trim();
+        return c ? `<p class="cm"><strong>${s.short}:</strong> ${esc(c)}</p>` : '';
+      }).join('');
+      const cf = [f.tooClose && 'Too close', f.inWay && 'In the way', f.goodPos && 'Good position'].filter(Boolean).join(', ');
+      const cn = (f.comments.contest || '').trim();
+      const contest = (cf || cn) ? `<p class="cm"><strong>Distance from contest:</strong> ${esc(cf || '–')}${cn ? '. ' + esc(cn) : ''}</p>` : '';
+      const fb = `${(f.keep || '').trim() ? `<p class="cm"><strong>Strength to keep:</strong> ${esc(f.keep.trim())}</p>` : ''}${(f.work || '').trim() ? `<p class="cm"><strong>One thing to work on:</strong> ${esc(f.work.trim())}</p>` : ''}${(f.priv || '').trim() ? `<p class="cm"><strong>Private note:</strong> ${esc(f.priv.trim())}</p>` : ''}`;
+      return `<article class="game">
+        <h2>${esc(fmtDate(f.date))}${bits ? ', ' + bits : ''}</h2>
+        <p class="by">${f.coach ? 'Coach: ' + esc(f.coach) : 'No coach name'}${f.role && f.role !== 'Referee' ? ', ' + esc(f.role) : ''}</p>
+        <div class="sg">${SECTIONS.map(s => `<div>${s.short}<b>${f.scores[s.key] || '–'}</b></div>`).join('')}</div>
+        ${comments}${contest}${fb}
+        <button type="button" class="btn" data-open="${esc(f.id)}">Open this form</button>
+      </article>`;
+    }).join('')}`;
+  scrollTo(0, 0);
+}
+
+$('#view-review').addEventListener('click', (e) => {
+  const b = e.target.closest('button');
+  if (!b) return;
+  if (b.dataset.sort) {
+    const k = b.dataset.sort;
+    if (rvSort.key === k) rvSort.dir = rvSort.dir === 'asc' ? 'desc' : 'asc';
+    else rvSort = { key: k, dir: k === 'name' ? 'asc' : 'desc' };
+    renderReview();
+  } else if (b.dataset.ref) {
+    rvRef = b.dataset.ref;
+    renderReview();
+  } else if (b.dataset.back !== undefined) {
+    rvRef = null;
+    renderReview();
+    scrollTo(0, 0);
+  } else if (b.dataset.open) {
+    const f = forms.find(x => x.id === b.dataset.open);
+    if (!f) return;
+    commit();
+    cur = f;
+    write(LS_CUR, cur.id);
+    showTab('form');
+    fillForm();
+  } else if (b.dataset.merge !== undefined && REVIEW_LAST) {
+    const d = REVIEW_LAST.dups[Number(b.dataset.merge)];
+    const al = read(LS_ALIAS, {});
+    for (const k of Object.keys(al)) if (al[k] === d.drop.key) al[k] = d.keep.key;
+    for (const k of d.drop.names.keys()) al[k] = d.keep.key;
+    write(LS_ALIAS, al);
+    renderReview();
+  } else if (b.dataset.notdup !== undefined && REVIEW_LAST) {
+    const d = REVIEW_LAST.dups[Number(b.dataset.notdup)];
+    write(LS_NODUP, [...read(LS_NODUP, []), d.pair]);
+    renderReview();
+  } else if (b.dataset.unmerge) {
+    const al = read(LS_ALIAS, {});
+    delete al[b.dataset.unmerge];
+    write(LS_ALIAS, al);
+    renderReview();
+  }
+});
+['#rv-from', '#rv-to', '#rv-tour', '#rv-role', '#rv-min', '#rv-adj'].forEach(s => $(s).addEventListener('change', renderReview));
+
+function exportRanking() {
+  const D = collect();
+  if (!D.rows.length) { toast('No referees to export yet'); return; }
+  const list = [...D.rows].sort((a, b) => (a.rank ?? 1e9) - (b.rank ?? 1e9) || a.name.localeCompare(b.name));
+  const head = ['Rank', 'Referee', 'Games', 'Coaches', 'Provisional', 'Rating average', 'Adjusted rating', ...AREAS.map(s => s.short + ' average'), 'Too close (games)', 'In the way (games)', 'Good position (games)'];
+  const out = [head, ...list.map(g => [
+    g.rank ?? '', g.name, g.games.length, g.coaches.size, g.prov ? 'Yes' : '',
+    g.avg.rating == null ? '' : Math.round(g.avg.rating * 100) / 100, g.adj == null ? '' : Math.round(g.adj * 100) / 100,
+    ...AREAS.map(s => g.avg[s.key] == null ? '' : Math.round(g.avg[s.key] * 100) / 100),
+    g.tooClose, g.inWay, g.goodPos
+  ])];
+  const csv = '\ufeff' + out.map(r => r.map(csvCell).join(',')).join('\r\n');
+  download(`sevens-referee-ranking-${today()}.csv`, 'text/csv;charset=utf-8', csv);
+}
+
+/* ---------- Load a results file (static.app export, API entries or backup) ---------- */
+const normKey = (k) => String(k ?? '').trim().toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
+function hashStr(s) { let h = 5381; for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0; return (h >>> 0).toString(36); }
+function csvToObjects(text) {
+  text = text.replace(/^\ufeff/, '');
+  const first = text.split(/\r?\n/, 1)[0];
+  const delim = [',', ';', '\t'].map(d => [d, first.split(d).length]).sort((a, b) => b[1] - a[1])[0][0];
+  const rows = [];
+  let row = [], cell = '', q = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (q) {
+      if (c === '"') { if (text[i + 1] === '"') { cell += '"'; i++; } else q = false; }
+      else cell += c;
+    } else if (c === '"') q = true;
+    else if (c === delim) { row.push(cell); cell = ''; }
+    else if (c === '\n' || c === '\r') {
+      if (c === '\r' && text[i + 1] === '\n') i++;
+      row.push(cell); cell = '';
+      if (row.some(v => v !== '')) rows.push(row);
+      row = [];
+    } else cell += c;
+  }
+  row.push(cell);
+  if (row.some(v => v !== '')) rows.push(row);
+  if (rows.length < 2) return [];
+  const keys = rows[0].map(normKey);
+  return rows.slice(1).map(r => Object.fromEntries(keys.map((k, i) => [k, r[i] ?? ''])));
+}
+function fromFlat(r) {
+  const g = (k) => String(r[k] ?? '').trim();
+  const referee = g('referee');
+  if (!referee) return null;
+  const scores = {}, comments = {};
+  for (const s of SECTIONS) {
+    const n = Number(g('score_' + s.key));
+    if (Number.isInteger(n) && n >= 1 && n <= 5) scores[s.key] = n;
+    const c = g('comment_' + s.key);
+    if (c) comments[s.key] = c;
+  }
+  const cc = g('contest_comments');
+  if (cc) comments.contest = cc;
+  const yes = (v) => /^(yes|true|1|y)$/i.test(String(v ?? '').trim());
+  const ver = Number(g('version')) || Date.parse(g('created_at')) || Date.now();
+  const rec = {
+    coach: g('coach'), tournament: g('tournament'), level: g('level'), game: g('game'), referee, role: g('role') || 'Referee', field: g('field'),
+    time: g('time'), date: g('date'), scores, comments, tooClose: yes(r.too_close), inWay: yes(r.in_the_way), goodPos: yes(r.good_position),
+    keep: g('keep'), work: g('work'), priv: g('private_notes')
+  };
+  const id = g('form_id') || 'imp-' + hashStr(JSON.stringify(rec));
+  return { id, ...rec, created: ver, updated: ver, uploadedAt: ver, uploadedVersion: ver, _code: g('code') };
+}
+$('#resfile').addEventListener('change', async (e) => {
+  const file = e.target.files[0];
+  e.target.value = '';
+  if (!file) return;
+  try {
+    const text = (await file.text()).trim();
+    let list;
+    if (text.startsWith('[') || text.startsWith('{')) {
+      let data = JSON.parse(text);
+      if (!Array.isArray(data)) data = data.forms || data.data || data.entries || [];
+      list = data.map(x => {
+        if (!x || typeof x !== 'object') return null;
+        if (x.scores && typeof x.scores === 'object' && x.id) return sanitize(x);
+        if (Array.isArray(x.data)) {
+          const o = Object.fromEntries(x.data.map(d => [normKey(d.name), d.value]));
+          o.created_at = x.created_at;
+          return fromFlat(o);
+        }
+        return fromFlat(Object.fromEntries(Object.entries(x).map(([k, v]) => [normKey(k), v])));
+      });
+    } else list = csvToObjects(text).map(fromFlat);
+    list = list.filter(Boolean);
+    let skipped = 0;
+    if (cfg.c) list = list.filter(f => { if (f._code === undefined) return true; if (codeKey(f._code) === codeKey(cfg.c)) return true; skipped++; return false; });
+    list.forEach(f => delete f._code);
+    list.sort((a, b) => a.updated - b.updated);
+    if (!list.length) throw new Error(skipped ? 'code' : 'none');
+    const r = mergeForms(list);
+    renderReview();
+    toast(`Loaded ${r.added} new, ${r.updated} updated` + (skipped ? `. Skipped ${skipped} with the wrong or missing code.` : ''));
+  } catch (err) {
+    toast(err.message === 'code' ? 'Every row had the wrong or missing tournament code.' : 'That file has no results I can read');
+  }
+});
+
+/* ---------- Setup: link, QR, scan, display ---------- */
+const b64e = (o) => {
+  const bytes = new TextEncoder().encode(JSON.stringify(o));
+  let s = '';
+  bytes.forEach(x => { s += String.fromCharCode(x); });
+  return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+};
+const b64d = (t) => {
+  t = t.replace(/-/g, '+').replace(/_/g, '/');
+  while (t.length % 4) t += '=';
+  return JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(t), c => c.charCodeAt(0))));
+};
+function parseSetup(input) {
+  input = String(input || '').trim();
+  const m = input.match(/[#&?]s=([A-Za-z0-9_-]+)/);
+  const o = b64d(m ? m[1] : input);
+  if (!o || o.v !== 1) throw new Error('bad');
+  return cleanCfg(o);
+}
+function applyCfg(c) {
+  cfg = cleanCfg(c);
+  write(LS_CFG, cfg);
+  if (cfg.t) { write(LS_TOUR, cfg.t); if (!cur.tournament) cur.tournament = cfg.t; }
+  fillLists();
+  fillForm();
+  renderSetup();
+  toast(`Setup saved${cfg.t ? ' for ' + cfg.t : ''}`);
+}
+function useSetupText(text) {
+  let c;
+  try { c = parseSetup(text); } catch { toast('That is not a setup link or code'); return false; }
+  const lines = `${c.r.length} referees, ${c.k.length} coaches${c.c ? ', with a tournament code' : ''}`;
+  if (!confirm(`Use the setup${c.t ? ' for ' + c.t : ''} on this device?\n${lines}.`)) return false;
+  applyCfg(c);
+  $('#cfg-paste').value = '';
+  return true;
+}
+function renderSetup() {
+  const bits = [];
+  if (cfg.t) bits.push(cfg.t);
+  bits.push(cfg.c ? 'tournament code set' : 'no tournament code');
+  if (cfg.r.length) bits.push(`${cfg.r.length} referees`);
+  if (cfg.k.length) bits.push(`${cfg.k.length} coaches`);
+  $('#cfg-sum').textContent = (cfg.t || cfg.c || cfg.r.length || cfg.k.length || cfg.f.length) ? `Now set: ${bits.join(', ')}.` : 'No tournament setup on this device. Scan the organiser\'s QR code or paste the link.';
+  $('#set-theme').value = read(LS_THEME, 'auto');
+  const nd = forms.filter(isDemo).length;
+  $('#demo-note').textContent = nd ? `${nd} demo forms are on this device.` : 'No demo data on this device.';
+}
+function loadOrgFields() {
+  $('#o-t').value = cfg.t; $('#o-c').value = cfg.c; $('#o-f').value = cfg.f.join(', ');
+  $('#o-l').value = (cfg.l.length ? cfg.l : DEFAULT_LEVELS).join('\n'); $('#o-k').value = cfg.k.join('\n'); $('#o-r').value = cfg.r.join('\n');
+}
+function readOrgFields() {
+  const lines = (id) => $(id).value.split(/\r?\n/).map(x => x.trim()).filter(Boolean);
+  const c = cleanCfg({ t: $('#o-t').value, c: $('#o-c').value, f: $('#o-f').value.split(/[,;\n]/), l: lines('#o-l'), k: lines('#o-k'), r: lines('#o-r') });
+  if (!c.t) { toast('Add the tournament name first'); $('#o-t').focus(); return null; }
+  return c;
+}
+function makeSetup() {
+  const c = readOrgFields();
+  if (!c) return;
+  const url = `${location.origin}${location.pathname}#s=${b64e(c)}`;
+  $('#o-link').value = url;
+  $('#qr').hidden = false;
+  const svgBox = $('#qr-svg');
+  const draw = () => {
+    try {
+      const qr = qrcode(0, 'L');
+      qr.addData(url);
+      qr.make();
+      svgBox.innerHTML = qr.createSvgTag({ cellSize: 4, margin: 2, scalable: true });
+      $('#qr-note').textContent = `${c.r.length} referees and ${c.k.length} coaches. Show this code on a screen or print it. Coaches scan it in the Setup tab.`;
+    } catch {
+      svgBox.innerHTML = '';
+      $('#qr-note').textContent = 'The lists are too long for one QR code. Share the link instead.';
+    }
+  };
+  if (typeof qrcode === 'function') draw();
+  else loadScript('lib/qrcode.js').then(draw).catch(() => { $('#qr-note').textContent = 'The QR maker did not load. Share the link instead.'; });
+}
+const scriptCache = {};
+function loadScript(src) {
+  return scriptCache[src] ||= new Promise((res, rej) => {
+    const s = document.createElement('script');
+    s.src = src; s.onload = res; s.onerror = () => { delete scriptCache[src]; rej(new Error('load')); };
+    document.head.append(s);
+  });
+}
+let scanStream = null, scanRaf = 0;
+async function startScan() {
+  try {
+    await loadScript('lib/jsQR.js');
+    scanStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' }, audio: false });
+  } catch {
+    toast('The camera did not start. Paste the link instead.');
+    return;
+  }
+  const v = $('#scan-video');
+  v.srcObject = scanStream;
+  await v.play().catch(() => {});
+  $('#scan').hidden = false;
+  const c = document.createElement('canvas'), x = c.getContext('2d', { willReadFrequently: true });
+  const tick = () => {
+    if (!scanStream) return;
+    if (v.videoWidth) {
+      const k = Math.min(1, 640 / v.videoWidth);
+      c.width = v.videoWidth * k; c.height = v.videoHeight * k;
+      x.drawImage(v, 0, 0, c.width, c.height);
+      const hit = jsQR(x.getImageData(0, 0, c.width, c.height).data, c.width, c.height);
+      if (hit && hit.data) {
+        stopScan();
+        useSetupText(hit.data);
+        return;
+      }
+    }
+    scanRaf = requestAnimationFrame(tick);
+  };
+  tick();
+}
+function stopScan() {
+  cancelAnimationFrame(scanRaf);
+  if (scanStream) scanStream.getTracks().forEach(t => t.stop());
+  scanStream = null;
+  $('#scan').hidden = true;
+}
+$('#set-theme').addEventListener('change', (e) => {
+  write(LS_THEME, e.target.value);
+  document.documentElement.setAttribute('data-theme', e.target.value);
+});
+
+/* ---------- Demo tournament ---------- */
+async function loadDemo() {
+  let d;
+  try { const r = await fetch('demo/demo.json'); if (!r.ok) throw new Error('x'); d = await r.json(); }
+  catch { toast('The demo file did not load. Check your signal and try again.'); return; }
+  if (!confirm(`Load the demo tournament? It adds ${d.forms.length} made-up forms and a demo setup. Demo forms are never uploaded. You can remove them at any time.`)) return;
+  if (!localStorage.getItem(LS_CFGBK)) write(LS_CFGBK, { cfg, tour: read(LS_TOUR, '') });
+  mergeForms(d.forms.map(sanitize));
+  cfg = cleanCfg(d.config);
+  write(LS_CFG, cfg);
+  write(LS_TOUR, cfg.t);
+  fillLists();
+  rvRef = null;
+  showTab('review');
+  $('#rv-tour').value = refKey(cfg.t);
+  renderReview();
+  toast('Demo tournament loaded');
+}
+function removeDemo() {
+  const n = forms.filter(isDemo).length;
+  if (!n) { toast('There is no demo data on this device'); return; }
+  if (!confirm(`Remove the ${n} demo forms? Your own forms stay.`)) return;
+  forms = forms.filter(f => !isDemo(f));
+  write(LS_FORMS, forms);
+  const bk = read(LS_CFGBK, null);
+  if (bk) { cfg = cleanCfg(bk.cfg || {}); write(LS_CFG, cfg); write(LS_TOUR, bk.tour || ''); localStorage.removeItem(LS_CFGBK); }
+  const al = read(LS_ALIAS, {});
+  delete al['priya naire'];
+  write(LS_ALIAS, al);
+  write(LS_NODUP, read(LS_NODUP, []).filter(p => !/priya/.test(p)));
+  if (isDemo(cur)) { cur = blank(); write(LS_CUR, cur.id); }
+  rvRef = null;
+  fillLists(); fillForm(); updateTabs(); renderSetup();
+  toast('Demo data removed');
+}
+
+/* ---------- Install ---------- */
+let deferred = null;
+addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferred = e;
+  $('#install-btn').hidden = false;
+});
+$('#install-btn').addEventListener('click', async () => {
+  if (!deferred) return;
+  deferred.prompt();
+  await deferred.userChoice;
+  deferred = null;
+  $('#install-btn').hidden = true;
+});
+addEventListener('appinstalled', () => { $('#install').hidden = true; });
+if (matchMedia('(display-mode: standalone)').matches || navigator.standalone) $('#install').hidden = true;
+
+/* ---------- Print and start-up ---------- */
+addEventListener('beforeprint', () => { commit(); autosizeAll(); });
+
+const seen = read(LS_SEEN, false);
+$('#hero').hidden = seen;
+$('#band').hidden = !seen;
+fillLists();
+fillForm();
+updateTabs();
+commit();
+try { navigator.storage && navigator.storage.persist && navigator.storage.persist(); } catch {}
+
+/* A setup link opened in the browser */
+if (location.hash.startsWith('#s=')) {
+  const h = location.hash;
+  history.replaceState(null, '', location.pathname + location.search);
+  showTab('setup');
+  if (!useSetupText(h)) renderSetup();
+}
+
+if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+  addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+}
+})();
+
+</script>
+</body>
+</html>
