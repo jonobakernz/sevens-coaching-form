@@ -4,7 +4,7 @@ Updated 20 Sept 2026. Current release: 13.
 
 ## At a glance
 
-Release 11 of the Sevens Coaching Form is live at <https://easy-goingcrow.staticdomains.app/>. It is a phone app. Coaches use it to score referees. Organisers use it to rank them.
+Release 13 of the Sevens Coaching Form went live on 20 Sept 2026, at <https://easy-goingcrow.staticdomains.app/>. It is a phone app. Coaches use it to score referees. Organisers use it to rank them.
 
 A coach scores a game, the phone saves it, and the coach uploads it. The app works without signal. An organiser sets up a tournament with one QR code and reviews every referee in one table.
 
