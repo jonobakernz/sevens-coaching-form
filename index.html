@@ -125,7 +125,6 @@ input:focus, textarea:focus, select:focus { border-color: var(--ink); }
 .more[open] summary::after { content: "\25B4"; }
 .more .ttl { font: 800 20px/1 var(--display); letter-spacing: .02em; }
 .more .sum { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 15px; color: var(--muted); }
-.more .sum b { color: var(--danger); font-weight: 600; }
 .more .meta { padding: 4px 12px 14px; border-top: 2px solid var(--line); }
 .intro { margin: 0; padding: 0 16px 8px; font-size: 15px; color: var(--muted); }
 .legend { margin: 0 16px 16px; font-size: 15px; color: var(--muted); }
@@ -202,12 +201,16 @@ body[data-dict=off] .dcbtn { display: none; }
 .panel .note { margin: 0 0 14px; font-size: 15px; color: var(--muted); }
 .note.warn { color: var(--ink); font-weight: 600; }
 .list { list-style: none; margin: 0; padding: 0; border-top: 4px solid var(--ink); }
-.item { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 12px; width: 100%; padding: 14px 4px; text-align: left; background: transparent; border: 0; border-bottom: 2px solid var(--line); }
+.list > li { display: flex; align-items: stretch; border-bottom: 2px solid var(--line); }
+.item { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 12px; flex: 1; min-width: 0; padding: 14px 4px; text-align: left; background: transparent; border: 0; }
 .item strong { display: block; font: 800 24px/1.1 var(--display); letter-spacing: .01em; }
 .item span { font-size: 15px; color: var(--muted); }
 .item.open strong::after { content: " (open now)"; font: 400 14px var(--body); color: var(--muted); }
 .item .tag { display: block; margin-top: 2px; font-size: 14px; }
 .item .tag.warn { color: var(--ink); font-weight: 600; }
+.del { flex: none; width: 48px; min-height: 44px; display: grid; place-items: center; border: 0; background: transparent; color: var(--muted); }
+.del svg { width: 22px; height: 22px; }
+.del:hover, .del:active, .del:focus-visible { color: var(--danger); }
 .badge { min-width: 48px; height: 48px; border-radius: 6px; display: grid; place-items: center; border: var(--bw) solid var(--edge); font: 800 30px/1 var(--display); }
 .badge.has { background: var(--sel-bg); color: var(--sel-ink); border-color: var(--sel-bg); }
 .empty { padding: 28px 4px; color: var(--muted); }
@@ -324,6 +327,9 @@ table.rv { border-collapse: separate; border-spacing: 0; width: 100%; min-width:
         <input type="text" data-f="referee" list="dl-ref" autocomplete="off" autocapitalize="words" enterkeyhint="next">
       </label>
       <p class="hint" id="ref-hint" hidden></p>
+      <label class="f wide"><span>Coach <i lang="mi">Kaiako</i></span>
+        <input type="text" data-f="coach" list="dl-coach" autocomplete="name" autocapitalize="words" enterkeyhint="next">
+      </label>
       <label class="f"><span>Field <i lang="mi">Papa tākaro</i></span>
         <input type="text" data-f="field" list="dl-field" autocomplete="off" enterkeyhint="next">
       </label>
@@ -335,9 +341,6 @@ table.rv { border-collapse: separate; border-spacing: 0; width: 100%; min-width:
     <details class="more" id="more">
       <summary><span class="ttl">Match details</span><span class="sum" id="more-sum"></span></summary>
       <div class="meta">
-        <label class="f wide"><span>Coach <i lang="mi">Kaiako</i></span>
-          <input type="text" data-f="coach" list="dl-coach" autocomplete="name" autocapitalize="words">
-        </label>
         <label class="f wide"><span>Tournament <i lang="mi">Whakataetae</i></span>
           <input type="text" data-f="tournament" autocomplete="off" autocapitalize="words">
         </label>
@@ -737,9 +740,8 @@ function refreshFlags() {
   $$('[data-flag]').forEach(b => b.setAttribute('aria-pressed', String(!!cur[b.dataset.flag])));
 }
 function moreSummary() {
-  const bits = [cur.coach.trim() || null, cur.tournament.trim(), cur.level.trim(), cur.game.trim(), fmtDate(cur.date, false)].filter(x => x !== '');
-  const html = bits.map(b => b === null ? '<b>Add your name</b>' : esc(b)).join(', ');
-  $('#more-sum').innerHTML = html;
+  const bits = [cur.tournament.trim(), cur.level.trim(), cur.game.trim(), fmtDate(cur.date, false)].filter(Boolean);
+  $('#more-sum').textContent = bits.join(', ');
 }
 function fillForm() {
   $$('[data-f]').forEach(el => { el.value = cur[el.dataset.f] || (el.dataset.f === 'role' ? 'Referee' : ''); });
@@ -776,7 +778,7 @@ function updateUploadUI() {
   }
   b.disabled = upBusy || st === 'done';
   b.textContent = upBusy ? 'Uploading...' : st === 'changed' ? 'Upload changes' : st === 'done' ? 'Uploaded' : 'Upload results';
-  $('#next-btn').hidden = st !== 'done';
+  $('#next-btn').hidden = !(st === 'done' || (cur.referee.trim() && cur.scores.rating));
   t.textContent = st === 'done' ? `Uploaded ${fmtStamp(cur.uploadedAt)}${cfg.c ? ' with the tournament code' : ', no tournament code'}. Edit the form to upload changes.`
     : st === 'changed' ? 'Changed since the last upload.'
     : 'Not uploaded yet. The form is saved on this device.';
@@ -910,13 +912,40 @@ function renderSaved() {
     const nv = Object.keys(f.voice || {}).length;
     const vtag = nv ? `<span class="tag">${nv} voice note${nv > 1 ? 's' : ''}</span>` : '';
     const tag = vtag + (isDemo(f) ? '<span class="tag">Demo</span>' : !f.referee.trim() ? '' : st === 'done' ? '<span class="tag">Uploaded</span>' : st === 'changed' ? '<span class="tag warn">Changed since upload</span>' : '<span class="tag warn">Not uploaded</span>');
-    return `<li><button type="button" class="item${f.id === cur.id ? ' open' : ''}" data-id="${esc(f.id)}">
-      <div><strong>${esc(f.referee.trim() || 'No referee name')}</strong><span>${bits.join(', ')}</span>${tag}</div>
-      <div class="badge${r ? ' has' : ''}" aria-label="Rating ${r || 'not set'}">${r || '–'}</div>
-    </button></li>`;
+    return `<li>
+      <button type="button" class="item${f.id === cur.id ? ' open' : ''}" data-id="${esc(f.id)}">
+        <div><strong>${esc(f.referee.trim() || 'No referee name')}</strong><span>${bits.join(', ')}</span>${tag}</div>
+        <div class="badge${r ? ' has' : ''}" aria-label="Rating ${r || 'not set'}">${r || '–'}</div>
+      </button>
+      <button type="button" class="del" data-del="${esc(f.id)}" aria-label="Delete ${esc(f.referee.trim() || 'this')} form">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2m-1 0v12a1 1 0 0 1-1 1h-6a1 1 0 0 1-1-1V7h8ZM10 11v6M14 11v6"/></svg>
+      </button>
+    </li>`;
   }).join('');
 }
+function deleteForm(f, { fromList = false } = {}) {
+  if (!confirm(`Delete ${f.referee.trim() || 'this'} form from this device? This cannot be undone.`)) return;
+  if (f === cur) { stopVoice(); stopDict(); }
+  vdelPrefix(f.id + ':').catch(() => {});
+  forms = forms.filter(x => x.id !== f.id);
+  write(LS_FORMS, forms);
+  if (f === cur) {
+    cur = blank({ sameGame: true });
+    write(LS_CUR, cur.id);
+    lastSaved = '';
+    fillForm();
+  }
+  updateTabs();
+  if (fromList) renderSaved();
+  toast('Form deleted');
+}
 $('#list').addEventListener('click', (e) => {
+  const del = e.target.closest('[data-del]');
+  if (del) {
+    const f = forms.find(x => x.id === del.dataset.del);
+    if (f) deleteForm(f, { fromList: true });
+    return;
+  }
   const b = e.target.closest('.item');
   if (!b) return;
   const f = forms.find(x => x.id === b.dataset.id);
@@ -1079,19 +1108,8 @@ document.addEventListener('click', async (e) => {
       break;
     }
     case 'delete':
-      if (!confirm('Delete this form from this device? This cannot be undone.')) break;
-      stopVoice();
-      stopDict();
-      vdelPrefix(cur.id + ':').catch(() => {});
-      forms = forms.filter(f => f.id !== cur.id);
-      write(LS_FORMS, forms);
-      cur = blank({ sameGame: true });
-      write(LS_CUR, cur.id);
-      lastSaved = '';
-      updateTabs();
-      fillForm();
+      deleteForm(cur);
       scrollTo(0, 0);
-      toast('Form deleted');
       break;
     case 'csv': {
       commit();
@@ -1116,7 +1134,7 @@ document.addEventListener('click', async (e) => {
       commit();
       if (isDemo(cur)) { toast('This is a demo form. Demo forms are never uploaded.'); break; }
       if (!cur.referee.trim()) { toast('Add the referee name first'); $('[data-f=referee]').focus(); break; }
-      if (!cur.coach.trim()) { $('#more').open = true; toast('Add your name first'); $('[data-f=coach]').focus(); break; }
+      if (!cur.coach.trim()) { toast('Add your name first'); $('[data-f=coach]').focus(); break; }
       await doUpload([cur]);
       break;
     case 'uploadall':
