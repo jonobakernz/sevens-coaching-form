@@ -1,6 +1,6 @@
 # Sevens Coaching Form: release notes
 
-Updated 20 Sept 2026. Current release: 12.
+Updated 20 Sept 2026. Current release: 13.
 
 ## At a glance
 
@@ -49,6 +49,7 @@ A coach can score a game in about 15 taps. Notes can be typed, spoken, or record
 - "Share summary", "Copy text", "Email this form" and "Print or save PDF" all work. Share summary also sends voice notes where the phone allows it.
 - A coach must enter a name before the first upload.
 - On the Saved tab, each form has its own delete button. Deleting no longer means opening the form first.
+- "Select forms to delete" ticks off several forms at once and removes them together, with one confirmation.
 
 **Look and feel**
 
@@ -91,10 +92,11 @@ An organiser can set up a tournament with one scan and rank every referee across
 
 ## Release history
 
-There have been 12 releases, newest first. Dates are New Zealand time. The last column helps support tell which release a phone has.
+There have been 13 releases, newest first. Dates are New Zealand time. The last column helps support tell which release a phone has.
 
 | Date | Release | What changed | How to spot it on a phone |
 | --- | --- | --- | --- |
+| 20 Sept 2026 | 13. Delete several forms at once | "Select forms to delete" on the Saved tab ticks off several forms and removes them together. | A "Select forms to delete" button above the Saved list. |
 | 20 Sept 2026 | 12. Coaching workflow fixes | Coach moved out of "Match details" onto the main screen. "Start next game" no longer waits for an upload. Each Saved form has its own delete button. | Coach sits beside Referee, Field and Time. A bin icon on each row in Saved. |
 | 20 Sept 2026 | 11. Dictation | Speak into any comment box and the words are typed in. A switch in Setup turns it off. | A microphone button beside the wave button. A Voice section in Setup. |
 | 19 Sept 2026 | 10. Voice notes | Record, play, share and delete voice notes in every comment box. Clips stay on the phone. | A wave button in each comment box. |
@@ -132,6 +134,7 @@ The app does not show a release number yet. Use the features on the screen to te
 | A wave button in each comment box | 10 |
 | A microphone button beside the wave button | 11 |
 | A bin icon on each row in Saved | 12 |
+| A "Select forms to delete" button above the Saved list | 13 |
 
 Clearing browser data, or removing the app, deletes saved forms and voice notes. Ask the coach to save a backup file first. Backup files do not hold voice notes.
 
