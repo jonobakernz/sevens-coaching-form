@@ -1,6 +1,6 @@
 # Sevens Coaching Form: release notes
 
-Updated 20 Sept 2026. Current release: 11.
+Updated 20 Sept 2026. Current release: 12.
 
 ## At a glance
 
@@ -38,8 +38,9 @@ A coach can score a game in about 15 taps. Notes can be typed, spoken, or record
 **Match details**
 
 - Referee, field and time are always on screen. Coach, tournament, date, level, game and role sit under "Match details". The app remembers them.
+- Coach sits beside Referee, Field and Time, always on screen. It is needed before the first upload.
 - If the organiser has set up a referee list, the app suggests names and checks the spelling.
-- After an upload, "Start next game" copies the tournament, coach and level. It adds one to the game number.
+- Once the referee name and the rating are in, "Start next game" is ready. It copies the tournament, coach and level, and adds one to the game number. It does not need an upload first, so it works with no signal.
 
 **Saving and sending**
 
@@ -47,6 +48,7 @@ A coach can score a game in about 15 taps. Notes can be typed, spoken, or record
 - "Upload results" sends the form. "Upload all waiting" sends every form not yet uploaded. A yellow number on the Saved tab shows how many wait.
 - "Share summary", "Copy text", "Email this form" and "Print or save PDF" all work. Share summary also sends voice notes where the phone allows it.
 - A coach must enter a name before the first upload.
+- On the Saved tab, each form has its own delete button. Deleting no longer means opening the form first.
 
 **Look and feel**
 
@@ -89,10 +91,11 @@ An organiser can set up a tournament with one scan and rank every referee across
 
 ## Release history
 
-There have been 11 releases, newest first. Dates are New Zealand time. The last column helps support tell which release a phone has.
+There have been 12 releases, newest first. Dates are New Zealand time. The last column helps support tell which release a phone has.
 
 | Date | Release | What changed | How to spot it on a phone |
 | --- | --- | --- | --- |
+| 20 Sept 2026 | 12. Coaching workflow fixes | Coach moved out of "Match details" onto the main screen. "Start next game" no longer waits for an upload. Each Saved form has its own delete button. | Coach sits beside Referee, Field and Time. A bin icon on each row in Saved. |
 | 20 Sept 2026 | 11. Dictation | Speak into any comment box and the words are typed in. A switch in Setup turns it off. | A microphone button beside the wave button. A Voice section in Setup. |
 | 19 Sept 2026 | 10. Voice notes | Record, play, share and delete voice notes in every comment box. Clips stay on the phone. | A wave button in each comment box. |
 | 19 Sept 2026 | 8 and 9. Demo tournament | A demo tournament with 45 made-up games. The review table fits a laptop screen. The Saved tab count is a plain number with a yellow "waiting" badge. | "Demo and training" in Setup. |
@@ -128,6 +131,7 @@ The app does not show a release number yet. Use the features on the screen to te
 | "Demo and training" in Setup | 8 |
 | A wave button in each comment box | 10 |
 | A microphone button beside the wave button | 11 |
+| A bin icon on each row in Saved | 12 |
 
 Clearing browser data, or removing the app, deletes saved forms and voice notes. Ask the coach to save a backup file first. Backup files do not hold voice notes.
 
