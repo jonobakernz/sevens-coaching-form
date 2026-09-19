@@ -1,5 +1,5 @@
 // Offline support. Change CACHE when you publish a new version.
-const CACHE = 'sevens-form-v10';
+const CACHE = 'sevens-form-v11';
 const ASSETS = [
   './',
   'index.html',

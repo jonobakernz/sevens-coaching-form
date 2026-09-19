@@ -153,8 +153,14 @@ input:focus, textarea:focus, select:focus { border-color: var(--ink); }
 .qt button { flex: none; min-height: 44px; padding: 0 14px; border: var(--bw) solid var(--edge); border-radius: 22px; background: var(--paper); font: 600 15px var(--body); white-space: nowrap; }
 textarea { min-height: 66px; resize: vertical; line-height: 1.35; }
 .vnwrap { position: relative; }
-.vnwrap textarea { padding-right: 62px; resize: none; }
-.vnbtn { position: absolute; right: 8px; bottom: 8px; width: 46px; height: 46px; padding: 0; display: grid; place-items: center; border-radius: 50%; border: var(--bw) solid var(--edge); background: var(--paper); color: var(--ink); }
+.vnwrap textarea { padding-right: 112px; resize: none; }
+body[data-dict=off] .vnwrap textarea, body:not([data-dict]) .vnwrap textarea { padding-right: 62px; }
+body[data-dict=off] .dcbtn { display: none; }
+.vnwrap textarea[readonly] { background: color-mix(in srgb, var(--card-r) 6%, var(--paper)); }
+.dcbar { margin: 8px 0 2px; font-size: 15px; font-weight: 600; color: var(--card-r); }
+.dcbar::before { content: ""; display: inline-block; width: 12px; height: 12px; margin-right: 8px; border-radius: 50%; background: var(--card-r); vertical-align: -1px; }
+.vnbtns { position: absolute; right: 8px; bottom: 8px; display: flex; gap: 6px; }
+.vnbtn { width: 46px; height: 46px; padding: 0; display: grid; place-items: center; border-radius: 50%; border: var(--bw) solid var(--edge); background: var(--paper); color: var(--ink); }
 .vnbtn svg { width: 24px; height: 24px; }
 .vnbtn.rec { background: var(--card-r); border-color: var(--card-r); color: #fff; animation: vnpulse 1.4s ease-in-out infinite; }
 @keyframes vnpulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(198,40,40,.5); } 50% { box-shadow: 0 0 0 8px rgba(198,40,40,0); } }
@@ -269,7 +275,7 @@ table.rv { border-collapse: separate; border-spacing: 0; width: 100%; min-width:
   @page { margin: 12mm; }
   body { background: #fff; color: #000; font-size: 12pt; }
   .top { background: #fff; color: #000; padding: 0 0 8px; border-bottom: 2px solid #000; }
-  .vnbtn, .vnbar, .btn-new, .tabs, .actions, .toast, .brand p:not(.t), .intro, .legend, .jersey, .band, .row::before, .qt, .anchor, .row.priv, .hint { display: none !important; }
+  .vnbtns, .vnbtn, .vnbar, .dcbar, .btn-new, .tabs, .actions, .toast, .brand p:not(.t), .intro, .legend, .jersey, .band, .row::before, .qt, .anchor, .row.priv, .hint { display: none !important; }
   .brand .t { color: #000; }
   .row { break-inside: avoid; padding: 8px 0; border-top: 1px solid #999; background: #fff !important; }
   .meta { padding: 10px 0; }
@@ -357,7 +363,7 @@ table.rv { border-collapse: separate; border-spacing: 0; width: 100%; min-width:
     <details class="legend">
       <summary>How to score</summary>
       <p>Score each area from 1 to 5. Tap a score again to clear it. The form saves on this device as you type.</p>
-      <p>Tap the microphone in a comment box to record a voice note. The clip stays on this phone. Share summary sends the clips with the text.</p>
+      <p>Tap the microphone in a comment box and speak. The words are typed in. Tap the wave button to record a voice note instead. The clip stays on this phone. Share summary sends the clips with the text.</p>
       <ol id="legend-list"></ol>
     </details>
 
@@ -479,6 +485,12 @@ table.rv { border-collapse: separate; border-spacing: 0; width: 100%; min-width:
           <option value="sun">Sun mode: white and black, heavy edges</option>
         </select>
       </label>
+    </div>
+
+    <div class="set-block">
+      <h2>Voice</h2>
+      <label class="chk"><input type="checkbox" id="set-dict"> Show the dictation buttons</label>
+      <p class="note" id="dict-note"></p>
     </div>
 
     <details class="more" id="demo" style="margin:0 0 14px">
@@ -795,8 +807,8 @@ function queueSave() {
   clearTimeout(timer);
   timer = setTimeout(commit, 300);
 }
-addEventListener('pagehide', () => { stopVoice(); commit(); });
-document.addEventListener('visibilitychange', () => { if (document.hidden) { stopVoice(); commit(); } });
+addEventListener('pagehide', () => { stopVoice(); stopDict(); commit(); });
+document.addEventListener('visibilitychange', () => { if (document.hidden) { stopVoice(); stopDict(); commit(); } });
 
 /* ---------- Form events ---------- */
 $('#mail-to').value = read(LS_MAIL, '');
@@ -852,6 +864,8 @@ $('#view-form').addEventListener('click', (e) => {
     ta.value = cur.comments[s.key];
     autosize(ta);
     queueSave();
+  } else if (b.dataset.dc) {
+    if (dict && dict.slot === b.dataset.dc) stopDict(); else startDict(b.dataset.dc);
   } else if (b.dataset.vn) {
     if (rec && rec.slot === b.dataset.vn) stopVoice(); else startVoice(b.dataset.vn);
   } else if (b.dataset.vact) {
@@ -867,6 +881,7 @@ $('#view-form').addEventListener('click', (e) => {
 /* ---------- Tabs ---------- */
 function showTab(name) {
   stopVoice();
+  stopDict();
   for (const v of ['form', 'saved', 'review', 'setup']) $('#view-' + v).hidden = v !== name;
   $$('.tabs button').forEach(b => b.setAttribute('aria-current', b.dataset.tab === name ? 'page' : 'false'));
   if (name === 'saved') renderSaved();
@@ -986,6 +1001,7 @@ async function copyText(text, msg = 'Copied to the clipboard') {
 }
 function newForm() {
   stopVoice();
+  stopDict();
   commit();
   cur = blank();
   write(LS_CUR, cur.id);
@@ -1065,6 +1081,7 @@ document.addEventListener('click', async (e) => {
     case 'delete':
       if (!confirm('Delete this form from this device? This cannot be undone.')) break;
       stopVoice();
+      stopDict();
       vdelPrefix(cur.id + ':').catch(() => {});
       forms = forms.filter(f => f.id !== cur.id);
       write(LS_FORMS, forms);
@@ -1654,6 +1671,11 @@ function renderSetup() {
   if (cfg.k.length) bits.push(`${cfg.k.length} coaches`);
   $('#cfg-sum').textContent = (cfg.t || cfg.c || cfg.r.length || cfg.k.length || cfg.f.length) ? `Now set: ${bits.join(', ')}.` : 'No tournament setup on this device. Scan the organiser\'s QR code or paste the link.';
   $('#set-theme').value = read(LS_THEME, 'auto');
+  $('#set-dict').checked = dictOn();
+  $('#set-dict').disabled = !SR;
+  $('#dict-note').textContent = SR
+    ? 'Dictation types what you say. It sends your voice to the speech service of your browser (Google on Android, Apple on iPhone) and needs signal. Say full stop, comma, question mark or new line for punctuation. Te reo Māori words often come out wrong, so check names. Voice notes are different: they stay on the phone.'
+    : 'This browser has no dictation. Use the microphone on the phone keyboard. Voice notes still work.';
   const nd = forms.filter(isDemo).length;
   $('#demo-note').textContent = nd ? `${nd} demo forms are on this device.` : 'No demo data on this device.';
 }
@@ -1734,6 +1756,7 @@ function stopScan() {
   scanStream = null;
   $('#scan').hidden = true;
 }
+$('#set-dict').addEventListener('change', (e) => { write(LS_DICT, e.target.checked ? 'on' : 'off'); applyDictSetting(); });
 $('#set-theme').addEventListener('change', (e) => {
   write(LS_THEME, e.target.value);
   document.documentElement.setAttribute('data-theme', e.target.value);
@@ -1781,6 +1804,8 @@ const VN_SLOTS = [...SECTIONS.map(s => s.key), 'contest', 'keep', 'work', 'priv'
 const VN_LABEL = Object.fromEntries([...SECTIONS.map(s => [s.key, s.title]), ['contest', 'Distance from contest'], ['keep', 'Strength to keep'], ['work', 'One thing to work on'], ['priv', 'Private notes']]);
 const MIC = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 15a3.5 3.5 0 0 0 3.5-3.5V6a3.5 3.5 0 0 0-7 0v5.5A3.5 3.5 0 0 0 12 15z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M6 11.5a6 6 0 0 0 12 0M12 17.5V21M9 21h6"/></svg>';
 const STOP = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor"/></svg>';
+const WAVE = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" d="M4 10v4M8 6.5v11M12 3.5v17M16 7.5v9M20 10v4"/></svg>';
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
 const fmtDur = (s) => `${Math.floor(s / 60)}:${pad(Math.round(s % 60))}`;
 let rec = null;
 const clipUrls = {};
@@ -1809,13 +1834,25 @@ $$('#view-form textarea').forEach(t => {
   wrap.className = 'vnwrap';
   t.parentNode.insertBefore(wrap, t);
   wrap.append(t);
+  const box = document.createElement('div');
+  box.className = 'vnbtns';
+  if (SR) {
+    const d = document.createElement('button');
+    d.type = 'button'; d.className = 'vnbtn dcbtn'; d.dataset.dc = slot; d.innerHTML = MIC; d.title = 'Dictate';
+    d.setAttribute('aria-label', `Dictate: ${VN_LABEL[slot]}`);
+    box.append(d);
+  }
   const btn = document.createElement('button');
-  btn.type = 'button'; btn.className = 'vnbtn'; btn.dataset.vn = slot; btn.innerHTML = MIC;
+  btn.type = 'button'; btn.className = 'vnbtn'; btn.dataset.vn = slot; btn.innerHTML = WAVE; btn.title = 'Record a voice note';
   btn.setAttribute('aria-label', `Record a voice note: ${VN_LABEL[slot]}`);
+  box.append(btn);
+  wrap.append(box);
   const bar = document.createElement('div');
   bar.className = 'vnbar'; bar.dataset.vnbar = slot; bar.hidden = true;
-  wrap.append(btn);
   wrap.after(bar);
+  const dbar = document.createElement('div');
+  dbar.className = 'dcbar'; dbar.dataset.dcbar = slot; dbar.hidden = true; dbar.textContent = 'Listening. Speak now.';
+  wrap.after(dbar);
 });
 
 function persistVoice(f) {
@@ -1833,7 +1870,7 @@ async function renderVoice(slot) {
     bar.innerHTML = `<span class="recl"><i></i>Recording <b data-vntime>${fmtDur((Date.now() - rec.t0) / 1000)}</b></span><span class="vnhint">Tap the red button to stop</span>`;
     return;
   }
-  btn.classList.remove('rec'); btn.innerHTML = MIC; btn.setAttribute('aria-label', `Record a voice note: ${VN_LABEL[slot]}`);
+  btn.classList.remove('rec'); btn.innerHTML = WAVE; btn.setAttribute('aria-label', `Record a voice note: ${VN_LABEL[slot]}`);
   const meta = f.voice && f.voice[slot];
   if (!meta) { btn.hidden = false; bar.hidden = true; bar.innerHTML = ''; return; }
   let blob = null;
@@ -1853,6 +1890,7 @@ async function renderVoice(slot) {
 function renderAllVoice() { VN_SLOTS.forEach(renderVoice); }
 
 async function startVoice(slot) {
+  if (dict) { toast('Stop dictation first'); return; }
   if (rec) { toast('Stop the other recording first'); return; }
   if (!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) || typeof MediaRecorder === 'undefined') {
     toast('This browser cannot record audio. Use the microphone on the keyboard.'); return;
@@ -1923,6 +1961,132 @@ async function voiceAction(act, slot) {
   }
 }
 
+/* ---------- Dictation (speech to text) ---------- */
+const LS_DICT = 'sevens.dictation.v1';
+const LS_DICT_OK = 'sevens.dictprivacy.v1';
+let dict = null;
+const dictOn = () => !!SR && read(LS_DICT, 'on') !== 'off';
+const applyDictSetting = () => { document.body.dataset.dict = dictOn() ? 'on' : 'off'; };
+
+/* Spoken punctuation. "period" is left out on purpose. It is a real word in rugby talk. */
+const spoken = (s) => s.replace(/\s*\bfull stop\b/gi, '.').replace(/\s*\bcomma\b/gi, ',').replace(/\s*\bquestion mark\b/gi, '?').replace(/\s*\bnew (?:line|paragraph)\b\s*/gi, '\n');
+const tr = (s) => s.replace(/^ +| +$/g, '');
+const capSentences = (s) => s.replace(/(^|[.!?]\s+|\n)([a-z])/g, (m, a, b) => a + b.toUpperCase());
+function joinSeg(a, b) {
+  if (!b) return a;
+  if (!a) return b;
+  return /\s$/.test(a) || /^[\s.,?!]/.test(b) ? a + b : a + ' ' + b;
+}
+function shape(base, seg) {
+  const startNew = !base.trim() || /[.!?]\s*$/.test(base) || /\n\s*$/.test(base);
+  const cs = capSentences(seg);
+  return startNew ? cs : seg.charAt(0) + cs.slice(1);
+}
+function dictSegment(d) {
+  return joinSeg(d.final, d.interim);
+}
+function dictRender() {
+  const d = dict;
+  if (!d) return;
+  const seg = dictSegment(d);
+  d.ta.value = seg ? joinSeg(d.base, shape(d.base, seg)) : d.base;
+  autosize(d.ta);
+}
+function dictButtons() {
+  $$('.dcbtn').forEach(b => {
+    const on = !!dict && dict.slot === b.dataset.dc;
+    b.classList.toggle('rec', on);
+    b.innerHTML = on ? STOP : MIC;
+    b.setAttribute('aria-label', on ? 'Stop dictation' : `Dictate: ${VN_LABEL[b.dataset.dc]}`);
+  });
+  $$('[data-dcbar]').forEach(x => { x.hidden = !(dict && dict.slot === x.dataset.dcbar); });
+}
+function dictFinish() {
+  const d = dict;
+  if (!d) return;
+  clearTimeout(d.killTimer);
+  dict = null;
+  let text = d.base;
+  const seg = tr(dictSegment(d));
+  if (seg) {
+    let shaped = shape(d.base, seg);
+    if (!/[.!?\n]$/.test(shaped)) shaped += '.';
+    text = joinSeg(d.base, shaped);
+  }
+  d.ta.readOnly = false;
+  d.ta.value = text;
+  autosize(d.ta);
+  if (text !== d.base) {
+    if (d.f === cur) d.ta.dispatchEvent(new Event('input', { bubbles: true }));
+    else {
+      if (COMMENT_KEYS.includes(d.slot)) d.f.comments[d.slot] = text; else d.f[d.slot] = text;
+      d.f.updated = Date.now();
+      write(LS_FORMS, forms);
+    }
+  }
+  dictButtons();
+  const msg = { 'not-allowed': 'Dictation is blocked here. Allow the microphone, or use the microphone on the keyboard.',
+    'service-not-allowed': 'Dictation is blocked here. On iPhone, use the microphone on the keyboard.',
+    'network': 'Dictation needs a network connection.', 'audio-capture': 'No microphone was found.',
+    'language-not-supported': 'This phone cannot dictate in English here.' }[d.err];
+  if (msg) toast(msg);
+  else if (d.err === 'no-speech' && text === d.base) toast('No speech heard. Try again.');
+  else if (text !== d.base) toast('Dictation added. Check the words.');
+}
+function startDict(slot) {
+  if (!SR) return;
+  if (rec) { toast('Stop the voice note first'); return; }
+  if (dict) { toast('Stop the other dictation first'); return; }
+  if (!navigator.onLine) { toast('Dictation needs signal. Record a voice note instead.'); return; }
+  if (!read(LS_DICT_OK, false)) {
+    if (!confirm('Dictation sends your voice to your browser\'s speech service (Google on Android, Apple on iPhone). Voice notes are different: they stay on the phone. Use dictation?')) return;
+    write(LS_DICT_OK, true);
+  }
+  const ta = $(`#view-form textarea[data-c="${slot}"], #view-form textarea[data-f="${slot}"]`);
+  if (!ta) return;
+  const sr = new SR();
+  sr.lang = 'en-NZ';
+  sr.continuous = !/Android/i.test(navigator.userAgent);   /* Android Chrome repeats words in continuous mode */
+  sr.interimResults = true;
+  sr.maxAlternatives = 1;
+  const d = dict = { slot, ta, f: cur, sr, base: ta.value, final: '', interim: '', userStop: false, got: false, restarts: 0, t0: Date.now(), err: '', killTimer: 0 };
+  ta.readOnly = true;
+  sr.onresult = (e) => {
+    d.got = true;
+    let interim = '';
+    for (let i = e.resultIndex; i < e.results.length; i++) {
+      const r = e.results[i], t = r[0].transcript;
+      if (r.isFinal) d.final = joinSeg(d.final, tr(spoken(t))); else interim += t;
+    }
+    d.interim = tr(spoken(interim));
+    dictRender();
+  };
+  sr.onerror = (e) => { d.err = (e && e.error) || 'error'; };
+  sr.onend = () => {
+    if (dict !== d) return;
+    if (d.err === 'language-not-supported' && sr.lang === 'en-NZ') { sr.lang = 'en-US'; d.err = ''; try { sr.start(); return; } catch {} }
+    const fatal = ['not-allowed', 'service-not-allowed', 'audio-capture', 'network', 'language-not-supported'].includes(d.err);
+    if (!d.userStop && !fatal && d.got && d.restarts < 30 && Date.now() - d.t0 < 300000) {
+      d.got = false; d.restarts++; d.err = '';
+      try { sr.start(); return; } catch {}
+    }
+    dictFinish();
+  };
+  try { sr.start(); }
+  catch { dict = null; ta.readOnly = false; toast('Dictation did not start.'); return; }
+  markSeen();
+  dictButtons();
+  toast('Listening. Tap the red button to stop.');
+}
+function stopDict() {
+  const d = dict;
+  if (!d) return;
+  d.userStop = true;
+  try { d.sr.stop(); } catch {}
+  clearTimeout(d.killTimer);
+  d.killTimer = setTimeout(dictFinish, 2500);
+}
+
 /* ---------- Install ---------- */
 let deferred = null;
 addEventListener('beforeinstallprompt', (e) => {
@@ -1943,6 +2107,7 @@ if (matchMedia('(display-mode: standalone)').matches || navigator.standalone) $(
 /* ---------- Print and start-up ---------- */
 addEventListener('beforeprint', () => { commit(); autosizeAll(); });
 
+applyDictSetting();
 const seen = read(LS_SEEN, false);
 $('#hero').hidden = seen;
 $('#band').hidden = !seen;

@@ -13,6 +13,7 @@ It is a progressive web app: plain HTML, CSS and JavaScript, with no build step 
 - Score 8 areas from 1 to 5: fitness, foul play, breakdowns, set phase, game awareness, game management, communication, and an overall rating.
 - Tap quick notes, add comments, and write "Strength to keep" and "One thing to work on".
 - Write private notes that are left out of the summary, email and print.
+- Dictate into any comment box: tap the microphone and speak, and the words are typed in. Say "full stop", "comma", "question mark" or "new line" for punctuation.
 - Record a voice note in any comment box (the 8 areas, distance from contest, the two feedback boxes and private notes). Play it back, record again, delete it, or share it.
 - Save on the device, upload with one tap, email or share a summary, print or save a PDF.
 - Work offline. Forms wait on the phone until there is signal.
@@ -70,6 +71,8 @@ If you deploy by hand, change `CACHE` in `sw.js` first.
 - Forms live in each phone's browser storage. Tell coaches to save a backup file after each event.
 - Voice notes are audio clips kept in the phone's IndexedDB. They are **not** uploaded (static.app forms carry text only) and are **not** in backup files. Share summary sends them with the text where the phone allows it. The email button cannot attach files. Clips are limited to 2 minutes (`VN_MAX` in `index.html`). For text the organiser can read, use the microphone on the phone keyboard.
 - Deleting a form deletes its voice notes.
+- Dictation uses the browser's Web Speech API (`SpeechRecognition`). **It sends the audio to the browser maker's speech service** (Google on Android Chrome, Apple on iPhone). It needs signal, shows a one-time warning, and can be switched off in Setup. It is hidden in browsers without the API (Firefox, and some iPhone Home Screen apps). Te reo Māori words often come out wrong. Voice notes are separate: they stay on the phone.
+- Dictation and voice notes both use the microphone, so only one can run at a time.
 - On iPhone, Safari and the Home Screen icon keep separate storage. Install first, then always open from the icon.
 - The tournament code is a filter, not a password. Anyone who has it can send results.
 - Results name real people. Keep the repo, exports and static.app account private, and follow your privacy rules (for example the NZ Privacy Act 2020).
@@ -85,7 +88,8 @@ If you deploy by hand, change `CACHE` in `sw.js` first.
 ## Tests
 
 There is no test suite in the repo. The app was checked with Playwright on phone-size screens, an accessibility scan (axe),
-a fake camera for QR scanning, and a mock of the static.app form script. Add your own tests if you grow the app.
+a fake camera for QR scanning, a fake microphone for voice notes, and mocks of the static.app form script and the speech service.
+Real speech recognition has not been tested on real phones. Add your own tests if you grow the app.
 
 ## Licence
 
