@@ -26,6 +26,10 @@ It is a progressive web app: plain HTML, CSS and JavaScript, with no build step 
 **Demo**
 - Setup, then Demo and training, loads 45 made-up games. Demo forms are never uploaded.
 
+## Release notes
+
+See [docs/RELEASE_NOTES.md](docs/RELEASE_NOTES.md) for what changed in each release, a troubleshooting table for support, and a data and privacy summary.
+
 ## Files
 
 | Path | What it is |
@@ -37,6 +41,7 @@ It is a progressive web app: plain HTML, CSS and JavaScript, with no build step 
 | `lib/` | QR code maker and QR scanner. Loaded only when used. See `lib/LICENSES.txt` |
 | `demo/` | Made-up tournament data: `demo.json`, plus a CSV and a backup file for testing |
 | `tools/` | Scripts that make the demo data and the icons |
+| `docs/` | Release notes and the demo overview picture |
 | `.github/workflows/` | Deploys to static.app when you push to `main` |
 
 ## Run it on your computer
