@@ -90,6 +90,11 @@ If you deploy by hand, change `CACHE` in `sw.js` first.
 - **Colours and type:** the CSS variables at the top of the styles. There are light, dark and sun themes.
 - **Demo data:** edit and run `python3 tools/generate_demo.py`.
 
+## Checks and Claude Code
+
+- `node tools/check.js` runs quick checks: scripts parse, manifest and cached files exist, the upload fields have not changed by accident, and no keys are in the files. The **Checks** workflow runs it on every pull request. The deploy workflow runs it first.
+- `CLAUDE.md` holds the rules for Claude Code. It works on a branch and opens a pull request. You merge it, and the merge deploys.
+
 ## Tests
 
 There is no test suite in the repo. The app was checked with Playwright on phone-size screens, an accessibility scan (axe),

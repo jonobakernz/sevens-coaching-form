@@ -15,6 +15,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Stop here if the checks fail, so a broken change never reaches the live site.
+      - name: Run the repo checks
+        run: node tools/check.js
+
       # A new cache name on every release makes phones fetch the new files.
       - name: Set the offline cache name
         run: sed -i "s/^const CACHE = '.*';/const CACHE = 'sevens-form-${GITHUB_SHA::7}';/" sw.js
