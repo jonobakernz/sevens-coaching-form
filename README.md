@@ -13,6 +13,7 @@ It is a progressive web app: plain HTML, CSS and JavaScript, with no build step 
 - Score 8 areas from 1 to 5: fitness, foul play, breakdowns, set phase, game awareness, game management, communication, and an overall rating.
 - Tap quick notes, add comments, and write "Strength to keep" and "One thing to work on".
 - Write private notes that are left out of the summary, email and print.
+- Record a voice note in any comment box (the 8 areas, distance from contest, the two feedback boxes and private notes). Play it back, record again, delete it, or share it.
 - Save on the device, upload with one tap, email or share a summary, print or save a PDF.
 - Work offline. Forms wait on the phone until there is signal.
 
@@ -67,6 +68,8 @@ If you deploy by hand, change `CACHE` in `sw.js` first.
 - Static.app makes a new results table when the list of upload fields changes. Do not add or rename fields in the hidden form (`#up-form`) without a plan. The list is `UP_FIELDS` in `index.html`.
 - Static.app's browser rules block live reading of the table from the app. Export the entries, then use Review, then Load results file.
 - Forms live in each phone's browser storage. Tell coaches to save a backup file after each event.
+- Voice notes are audio clips kept in the phone's IndexedDB. They are **not** uploaded (static.app forms carry text only) and are **not** in backup files. Share summary sends them with the text where the phone allows it. The email button cannot attach files. Clips are limited to 2 minutes (`VN_MAX` in `index.html`). For text the organiser can read, use the microphone on the phone keyboard.
+- Deleting a form deletes its voice notes.
 - On iPhone, Safari and the Home Screen icon keep separate storage. Install first, then always open from the icon.
 - The tournament code is a filter, not a password. Anyone who has it can send results.
 - Results name real people. Keep the repo, exports and static.app account private, and follow your privacy rules (for example the NZ Privacy Act 2020).

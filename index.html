@@ -85,6 +85,7 @@ button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .tabs button { position: relative; white-space: nowrap; }
 .pill { position: absolute; top: 3px; right: 6px; min-width: 18px; padding: 1px 5px; border-radius: 10px; background: var(--card-y); color: #111214; font: 800 14px/1.15 var(--display); text-align: center; }
 #count { font-weight: 600; opacity: .9; }
+.tabs button[data-tab=saved] { padding-right: 14px; }
 
 /* Jersey back (first visit) and compact band (every visit after) */
 .jersey { background: var(--jersey); color: #fff; text-align: center; padding: 2px 16px 26px; overflow: hidden; }
@@ -151,6 +152,19 @@ input:focus, textarea:focus, select:focus { border-color: var(--ink); }
 .qt::-webkit-scrollbar { display: none; }
 .qt button { flex: none; min-height: 44px; padding: 0 14px; border: var(--bw) solid var(--edge); border-radius: 22px; background: var(--paper); font: 600 15px var(--body); white-space: nowrap; }
 textarea { min-height: 66px; resize: vertical; line-height: 1.35; }
+.vnwrap { position: relative; }
+.vnwrap textarea { padding-right: 62px; resize: none; }
+.vnbtn { position: absolute; right: 8px; bottom: 8px; width: 46px; height: 46px; padding: 0; display: grid; place-items: center; border-radius: 50%; border: var(--bw) solid var(--edge); background: var(--paper); color: var(--ink); }
+.vnbtn svg { width: 24px; height: 24px; }
+.vnbtn.rec { background: var(--card-r); border-color: var(--card-r); color: #fff; animation: vnpulse 1.4s ease-in-out infinite; }
+@keyframes vnpulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(198,40,40,.5); } 50% { box-shadow: 0 0 0 8px rgba(198,40,40,0); } }
+.vnbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 8px 0 2px; font-size: 15px; }
+.vnbar audio { flex: 1 1 100%; width: 100%; height: 44px; }
+.vnbar .vnhint { color: var(--muted); }
+.vnbar .recl { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: var(--card-r); }
+.vnbar .recl i { width: 12px; height: 12px; border-radius: 50%; background: var(--card-r); }
+.vnbar .btn.small { min-height: 44px; padding: 0 12px; font-size: 18px; }
+.row.notes .vnbar, .row.priv .vnbar { margin-top: 6px; }
 .contest { margin-top: 20px; padding-top: 16px; border-top: 3px dotted var(--silver); }
 .contest h3 { margin: 0 0 10px; font: 800 22px/1.1 var(--display); letter-spacing: .01em; }
 .chips { display: flex; gap: 8px; margin-bottom: 10px; }
@@ -249,13 +263,13 @@ table.rv { border-collapse: separate; border-spacing: 0; width: 100%; min-width:
 .game p.cm { margin: 6px 0 0; white-space: pre-wrap; font-size: 16px; }
 .game .btn { margin-top: 12px; }
 
-@media (prefers-reduced-motion: reduce) { .tabs::after { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .tabs::after { transition: none; } .vnbtn.rec { animation: none; } }
 
 @media print {
   @page { margin: 12mm; }
   body { background: #fff; color: #000; font-size: 12pt; }
   .top { background: #fff; color: #000; padding: 0 0 8px; border-bottom: 2px solid #000; }
-  .btn-new, .tabs, .actions, .toast, .brand p:not(.t), .intro, .legend, .jersey, .band, .row::before, .qt, .anchor, .row.priv, .hint { display: none !important; }
+  .vnbtn, .vnbar, .btn-new, .tabs, .actions, .toast, .brand p:not(.t), .intro, .legend, .jersey, .band, .row::before, .qt, .anchor, .row.priv, .hint { display: none !important; }
   .brand .t { color: #000; }
   .row { break-inside: avoid; padding: 8px 0; border-top: 1px solid #999; background: #fff !important; }
   .meta { padding: 10px 0; }
@@ -343,6 +357,7 @@ table.rv { border-collapse: separate; border-spacing: 0; width: 100%; min-width:
     <details class="legend">
       <summary>How to score</summary>
       <p>Score each area from 1 to 5. Tap a score again to clear it. The form saves on this device as you type.</p>
+      <p>Tap the microphone in a comment box to record a voice note. The clip stays on this phone. Share summary sends the clips with the text.</p>
       <ol id="legend-list"></ol>
     </details>
 
@@ -381,7 +396,7 @@ table.rv { border-collapse: separate; border-spacing: 0; width: 100%; min-width:
 
   <div id="view-saved" class="panel" hidden>
     <h1>Saved forms</h1>
-    <p class="note">Forms are saved on this device. Upload them when you have signal.</p>
+    <p class="note">Forms are saved on this device. Upload them when you have signal. Voice notes stay on this phone. They are not uploaded and are not in backup files.</p>
     <p class="note" id="bk-note"></p>
     <div class="tools" style="margin:0 0 14px"><button type="button" class="btn primary" id="up-all" data-act="uploadall" hidden>Upload all waiting</button><button type="button" class="btn" data-act="new">Start a new form</button></div>
     <ul class="list" id="list"></ul>
@@ -633,20 +648,20 @@ function blank(opts = {}) {
   return {
     id: uid(), coach, tournament, level: carry.level || '', game: opts.sameGame ? (carry.game || '') : nextGame(carry.game),
     role: carry.role || 'Referee', referee: '', field: '', time: '', date: today(),
-    scores: {}, comments: {}, tooClose: false, inWay: false, goodPos: false, keep: '', work: '', priv: '',
+    scores: {}, comments: {}, voice: {}, tooClose: false, inWay: false, goodPos: false, keep: '', work: '', priv: '',
     created: Date.now(), updated: Date.now(), uploadedAt: 0, uploadedVersion: 0
   };
 }
 function normalise(f) {
   f.tournament ??= ''; f.game ??= ''; f.level ??= ''; f.role ||= 'Referee';
   f.goodPos ??= false; f.keep ??= ''; f.work ??= ''; f.priv ??= '';
-  f.uploadedAt ??= 0; f.uploadedVersion ??= 0; f.scores ??= {}; f.comments ??= {};
+  f.uploadedAt ??= 0; f.uploadedVersion ??= 0; f.scores ??= {}; f.comments ??= {}; f.voice ??= {};
   return f;
 }
 function isEmpty(f) {
   return !f.referee.trim() && !f.field.trim() && !f.time && !(f.game || '').trim() &&
     !Object.keys(f.scores).length && !Object.values(f.comments).some(v => String(v).trim()) &&
-    !f.tooClose && !f.inWay && !f.goodPos && !(f.keep || '').trim() && !(f.work || '').trim() && !(f.priv || '').trim();
+    !Object.keys(f.voice || {}).length && !f.tooClose && !f.inWay && !f.goodPos && !(f.keep || '').trim() && !(f.work || '').trim() && !(f.priv || '').trim();
 }
 
 let forms = read(LS_FORMS, []);
@@ -723,6 +738,7 @@ function fillForm() {
   moreSummary();
   autosizeAll();
   updateStatus();
+  renderAllVoice();
 }
 function updateStatus() {
   const n = SECTIONS.filter(s => cur.scores[s.key]).length;
@@ -779,8 +795,8 @@ function queueSave() {
   clearTimeout(timer);
   timer = setTimeout(commit, 300);
 }
-addEventListener('pagehide', commit);
-document.addEventListener('visibilitychange', () => { if (document.hidden) commit(); });
+addEventListener('pagehide', () => { stopVoice(); commit(); });
+document.addEventListener('visibilitychange', () => { if (document.hidden) { stopVoice(); commit(); } });
 
 /* ---------- Form events ---------- */
 $('#mail-to').value = read(LS_MAIL, '');
@@ -836,6 +852,10 @@ $('#view-form').addEventListener('click', (e) => {
     ta.value = cur.comments[s.key];
     autosize(ta);
     queueSave();
+  } else if (b.dataset.vn) {
+    if (rec && rec.slot === b.dataset.vn) stopVoice(); else startVoice(b.dataset.vn);
+  } else if (b.dataset.vact) {
+    voiceAction(b.dataset.vact, b.dataset.vslot);
   } else if (b.dataset.fix) {
     cur.referee = b.dataset.fix;
     $('[data-f=referee]').value = cur.referee;
@@ -846,6 +866,7 @@ $('#view-form').addEventListener('click', (e) => {
 
 /* ---------- Tabs ---------- */
 function showTab(name) {
+  stopVoice();
   for (const v of ['form', 'saved', 'review', 'setup']) $('#view-' + v).hidden = v !== name;
   $$('.tabs button').forEach(b => b.setAttribute('aria-current', b.dataset.tab === name ? 'page' : 'false'));
   if (name === 'saved') renderSaved();
@@ -871,7 +892,9 @@ function renderSaved() {
     const bits = [f.game ? esc(f.game) : '', f.field ? 'Field ' + esc(f.field) : 'No field', fmtTime(f.time) ? esc(fmtTime(f.time)) : '', esc(fmtDate(f.date, false))].filter(Boolean);
     const r = f.scores.rating;
     const st = upState(f);
-    const tag = isDemo(f) ? '<span class="tag">Demo</span>' : !f.referee.trim() ? '' : st === 'done' ? '<span class="tag">Uploaded</span>' : st === 'changed' ? '<span class="tag warn">Changed since upload</span>' : '<span class="tag warn">Not uploaded</span>';
+    const nv = Object.keys(f.voice || {}).length;
+    const vtag = nv ? `<span class="tag">${nv} voice note${nv > 1 ? 's' : ''}</span>` : '';
+    const tag = vtag + (isDemo(f) ? '<span class="tag">Demo</span>' : !f.referee.trim() ? '' : st === 'done' ? '<span class="tag">Uploaded</span>' : st === 'changed' ? '<span class="tag warn">Changed since upload</span>' : '<span class="tag warn">Not uploaded</span>');
     return `<li><button type="button" class="item${f.id === cur.id ? ' open' : ''}" data-id="${esc(f.id)}">
       <div><strong>${esc(f.referee.trim() || 'No referee name')}</strong><span>${bits.join(', ')}</span>${tag}</div>
       <div class="badge${r ? ' has' : ''}" aria-label="Rating ${r || 'not set'}">${r || '–'}</div>
@@ -962,6 +985,7 @@ async function copyText(text, msg = 'Copied to the clipboard') {
   catch { toast('Copy did not work. Use Print instead.'); }
 }
 function newForm() {
+  stopVoice();
   commit();
   cur = blank();
   write(LS_CUR, cur.id);
@@ -987,7 +1011,7 @@ function sanitize(r) {
     tournament: str(r.tournament), level: str(r.level), game: str(r.game), role: str(r.role) || 'Referee',
     uploadedAt: Number(r.uploadedAt) || 0, uploadedVersion: Number(r.uploadedVersion) || 0,
     time: str(r.time), date: str(r.date), scores, comments,
-    tooClose: !!r.tooClose, inWay: !!r.inWay, goodPos: !!r.goodPos, keep: str(r.keep), work: str(r.work), priv: str(r.priv),
+    voice: {}, tooClose: !!r.tooClose, inWay: !!r.inWay, goodPos: !!r.goodPos, keep: str(r.keep), work: str(r.work), priv: str(r.priv),
     created: Number(r.created) || Date.now(), updated: Number(r.updated) || Date.now()
   };
 }
@@ -1001,8 +1025,10 @@ document.addEventListener('click', async (e) => {
       commit();
       const text = summary(cur);
       const title = 'Coaching Sevens' + (cur.referee ? ': ' + cur.referee : '');
+      const files = (await Promise.all(Object.keys(cur.voice || {}).map(k => clipFile(cur, k)))).filter(Boolean);
+      const withFiles = files.length && navigator.canShare && navigator.canShare({ files });
       if (navigator.share) {
-        try { await navigator.share({ title, text }); }
+        try { await navigator.share(withFiles ? { title, text, files } : { title, text }); if (files.length && !withFiles) toast('The summary was shared. This phone cannot share the voice notes.'); }
         catch (err) { if (err.name !== 'AbortError') copyText(text); }
       } else copyText(text);
       break;
@@ -1038,6 +1064,8 @@ document.addEventListener('click', async (e) => {
     }
     case 'delete':
       if (!confirm('Delete this form from this device? This cannot be undone.')) break;
+      stopVoice();
+      vdelPrefix(cur.id + ':').catch(() => {});
       forms = forms.filter(f => f.id !== cur.id);
       write(LS_FORMS, forms);
       cur = blank({ sameGame: true });
@@ -1060,7 +1088,7 @@ document.addEventListener('click', async (e) => {
     case 'backup':
       commit();
       if (!forms.length) { toast('No forms to back up yet'); break; }
-      download(`sevens-backup-${today()}.json`, 'application/json', JSON.stringify({ app: 'sevens-form', version: 2, forms }, null, 2));
+      download(`sevens-backup-${today()}.json`, 'application/json', JSON.stringify({ app: 'sevens-form', version: 2, forms: forms.map(f => ({ ...f, voice: {} })) }, null, 2));
       write(LS_BK, Date.now());
       renderSaved();
       break;
@@ -1745,6 +1773,154 @@ function removeDemo() {
   rvRef = null;
   fillLists(); fillForm(); updateTabs(); renderSetup();
   toast('Demo data removed');
+}
+
+/* ---------- Voice notes ---------- */
+const VN_MAX = 120;
+const VN_SLOTS = [...SECTIONS.map(s => s.key), 'contest', 'keep', 'work', 'priv'];
+const VN_LABEL = Object.fromEntries([...SECTIONS.map(s => [s.key, s.title]), ['contest', 'Distance from contest'], ['keep', 'Strength to keep'], ['work', 'One thing to work on'], ['priv', 'Private notes']]);
+const MIC = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 15a3.5 3.5 0 0 0 3.5-3.5V6a3.5 3.5 0 0 0-7 0v5.5A3.5 3.5 0 0 0 12 15z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M6 11.5a6 6 0 0 0 12 0M12 17.5V21M9 21h6"/></svg>';
+const STOP = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor"/></svg>';
+const fmtDur = (s) => `${Math.floor(s / 60)}:${pad(Math.round(s % 60))}`;
+let rec = null;
+const clipUrls = {};
+
+let dbp = null;
+const vdb = () => dbp ||= new Promise((res, rej) => {
+  const r = indexedDB.open('sevens-voice', 1);
+  r.onupgradeneeded = () => r.result.createObjectStore('clips');
+  r.onsuccess = () => res(r.result);
+  r.onerror = () => rej(r.error);
+});
+const vtx = async (mode, fn) => {
+  const db = await vdb();
+  return new Promise((res, rej) => { const t = db.transaction('clips', mode); const r = fn(t.objectStore('clips')); t.oncomplete = () => res(r && r.result); t.onerror = () => rej(t.error); });
+};
+const vput = (k, blob) => vtx('readwrite', s => s.put(blob, k));
+const vget = (k) => vtx('readonly', s => s.get(k)).then(v => v || null);
+const vdel = (k) => vtx('readwrite', s => s.delete(k));
+const vdelPrefix = (p) => vtx('readwrite', s => s.delete(IDBKeyRange.bound(p, p + '\uffff')));
+
+/* A mic button sits inside every comment box. A bar below shows the recording or the saved clip. */
+$$('#view-form textarea').forEach(t => {
+  const slot = t.dataset.c || t.dataset.f;
+  if (!VN_LABEL[slot]) return;
+  const wrap = document.createElement('div');
+  wrap.className = 'vnwrap';
+  t.parentNode.insertBefore(wrap, t);
+  wrap.append(t);
+  const btn = document.createElement('button');
+  btn.type = 'button'; btn.className = 'vnbtn'; btn.dataset.vn = slot; btn.innerHTML = MIC;
+  btn.setAttribute('aria-label', `Record a voice note: ${VN_LABEL[slot]}`);
+  const bar = document.createElement('div');
+  bar.className = 'vnbar'; bar.dataset.vnbar = slot; bar.hidden = true;
+  wrap.append(btn);
+  wrap.after(bar);
+});
+
+function persistVoice(f) {
+  if (!forms.includes(f)) { if (f === cur) { dirty = true; commit(); } else { forms.push(f); write(LS_FORMS, forms); } }
+  else write(LS_FORMS, forms);
+  updateTabs();
+}
+async function renderVoice(slot) {
+  const bar = $(`[data-vnbar="${slot}"]`), btn = $(`.vnbtn[data-vn="${slot}"]`);
+  if (!bar || !btn) return;
+  const f = cur;
+  if (rec && rec.slot === slot) {
+    btn.classList.add('rec'); btn.innerHTML = STOP; btn.setAttribute('aria-label', 'Stop recording'); btn.hidden = false;
+    bar.hidden = false;
+    bar.innerHTML = `<span class="recl"><i></i>Recording <b data-vntime>${fmtDur((Date.now() - rec.t0) / 1000)}</b></span><span class="vnhint">Tap the red button to stop</span>`;
+    return;
+  }
+  btn.classList.remove('rec'); btn.innerHTML = MIC; btn.setAttribute('aria-label', `Record a voice note: ${VN_LABEL[slot]}`);
+  const meta = f.voice && f.voice[slot];
+  if (!meta) { btn.hidden = false; bar.hidden = true; bar.innerHTML = ''; return; }
+  let blob = null;
+  try { blob = await vget(`${f.id}:${slot}`); } catch {}
+  if (f !== cur) return;
+  if (!blob) { delete f.voice[slot]; persistVoice(f); btn.hidden = false; bar.hidden = true; bar.innerHTML = ''; return; }
+  if (clipUrls[slot]) URL.revokeObjectURL(clipUrls[slot]);
+  clipUrls[slot] = URL.createObjectURL(blob);
+  btn.hidden = true;
+  bar.hidden = false;
+  bar.innerHTML = `<audio controls preload="metadata" src="${clipUrls[slot]}" aria-label="Voice note: ${esc(VN_LABEL[slot])}"></audio>
+    <span class="vnhint">${fmtDur(meta.dur)}</span>
+    <button type="button" class="btn small" data-vact="redo" data-vslot="${slot}">Record again</button>
+    <button type="button" class="btn small" data-vact="share" data-vslot="${slot}">Share</button>
+    <button type="button" class="btn small danger" data-vact="del" data-vslot="${slot}">Delete</button>`;
+}
+function renderAllVoice() { VN_SLOTS.forEach(renderVoice); }
+
+async function startVoice(slot) {
+  if (rec) { toast('Stop the other recording first'); return; }
+  if (!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) || typeof MediaRecorder === 'undefined') {
+    toast('This browser cannot record audio. Use the microphone on the keyboard.'); return;
+  }
+  let stream;
+  try { stream = await navigator.mediaDevices.getUserMedia({ audio: true }); }
+  catch { toast('The microphone is blocked. Allow it in the browser settings.'); return; }
+  const mime = ['audio/webm;codecs=opus', 'audio/mp4', 'audio/webm', 'audio/ogg'].find(m => MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(m)) || '';
+  let recorder;
+  try { recorder = new MediaRecorder(stream, mime ? { mimeType: mime } : undefined); }
+  catch { stream.getTracks().forEach(t => t.stop()); toast('Recording did not start.'); return; }
+  const f = cur, chunks = [], t0 = Date.now();
+  const tick = setInterval(() => {
+    const s = (Date.now() - t0) / 1000;
+    const el = $(`[data-vnbar="${slot}"] [data-vntime]`);
+    if (el) el.textContent = fmtDur(s);
+    if (s >= VN_MAX) stopVoice();
+  }, 500);
+  recorder.ondataavailable = (e) => { if (e.data && e.data.size) chunks.push(e.data); };
+  recorder.onstop = async () => {
+    clearInterval(tick);
+    stream.getTracks().forEach(t => t.stop());
+    rec = null;
+    const blob = new Blob(chunks, { type: recorder.mimeType || mime || 'audio/webm' });
+    const dur = Math.max(1, Math.round((Date.now() - t0) / 1000));
+    if (blob.size < 300) { toast('Nothing was recorded.'); if (f === cur) renderVoice(slot); return; }
+    try {
+      await vput(`${f.id}:${slot}`, blob);
+      f.voice = { ...(f.voice || {}), [slot]: { dur, mime: blob.type, at: Date.now() } };
+      persistVoice(f);
+      toast('Voice note saved on this phone');
+    } catch { toast('The voice note did not save. Storage may be full or blocked.'); }
+    if (f === cur) { renderVoice(slot); updateStatus(); }
+  };
+  rec = { slot, recorder, t0 };
+  recorder.start(1000);
+  markSeen();
+  renderVoice(slot);
+  toast('Recording. Tap the red button to stop.');
+}
+function stopVoice() {
+  if (rec && rec.recorder.state !== 'inactive') rec.recorder.stop();
+}
+async function clipFile(f, slot) {
+  let blob = null;
+  try { blob = await vget(`${f.id}:${slot}`); } catch {}
+  if (!blob) return null;
+  const ext = /mp4|aac|m4a/.test(blob.type) ? 'm4a' : /ogg/.test(blob.type) ? 'ogg' : 'webm';
+  const name = `${(f.referee || 'Referee').trim()} - ${VN_LABEL[slot]}`.replace(/[\\/:*?"<>|]/g, '');
+  return new File([blob], `${name}.${ext}`, { type: blob.type });
+}
+async function voiceAction(act, slot) {
+  if (act === 'redo') { startVoice(slot); return; }
+  if (act === 'del') {
+    if (!confirm('Delete this voice note?')) return;
+    try { await vdel(`${cur.id}:${slot}`); } catch {}
+    delete cur.voice[slot];
+    persistVoice(cur);
+    renderVoice(slot);
+    return;
+  }
+  if (act === 'share') {
+    const file = await clipFile(cur, slot);
+    if (!file) { toast('The voice note was not found.'); return; }
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try { await navigator.share({ files: [file], title: 'Coaching Sevens voice note' }); } catch {}
+    } else toast('This phone cannot share audio files. Use the player menu to save the clip.');
+  }
 }
 
 /* ---------- Install ---------- */
