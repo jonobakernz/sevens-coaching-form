@@ -547,6 +547,15 @@ table.rv { border-collapse: separate; border-spacing: 0; width: 100%; min-width:
       <p class="note" id="dict-note"></p>
     </div>
 
+    <div class="set-block">
+      <h2>Feedback</h2>
+      <p class="note" id="fb-note"></p>
+      <label class="f wide">What's not working, or what would help
+        <textarea id="fb-text" rows="4" placeholder="What happened, and what you were doing"></textarea>
+      </label>
+      <button type="button" class="btn primary" data-act="sendfeedback">Send feedback</button>
+    </div>
+
     <details class="more" id="demo" style="margin:0 0 14px">
       <summary><span class="ttl">Demo and training</span></summary>
       <div class="meta">
@@ -566,6 +575,7 @@ table.rv { border-collapse: separate; border-spacing: 0; width: 100%; min-width:
         <label class="f wide">Levels, one per line<textarea id="o-l" rows="4"></textarea></label>
         <label class="f wide">Coaches, one per line<textarea id="o-k" rows="4"></textarea></label>
         <label class="f wide">Referees, one per line<textarea id="o-r" rows="6"></textarea></label>
+        <label class="f wide">Feedback email<input type="text" id="o-fb" inputmode="email" autocomplete="off" autocapitalize="off" placeholder="you@example.com"></label>
         <p class="note wide" style="margin:0">Anyone who has the code can send results. It is a filter, not a password.</p>
         <button type="button" class="btn wide" data-act="orgload">Fill from this device</button>
         <button type="button" class="btn primary wide" data-act="orguse">Use on this device</button>
@@ -699,7 +709,7 @@ function nextGame(label) {
 /* ---------- Setup (tournament config) ---------- */
 function cleanCfg(o) {
   const arr = (a) => Array.isArray(a) ? a.map(x => String(x).trim()).filter(Boolean).slice(0, 400) : [];
-  return { v: 1, t: String(o.t || '').trim().slice(0, 80), c: String(o.c || '').trim().slice(0, 40), f: arr(o.f), r: arr(o.r), k: arr(o.k), l: arr(o.l) };
+  return { v: 1, t: String(o.t || '').trim().slice(0, 80), c: String(o.c || '').trim().slice(0, 40), f: arr(o.f), r: arr(o.r), k: arr(o.k), l: arr(o.l), e: String(o.e || '').trim().slice(0, 200) };
 }
 let cfg = cleanCfg(read(LS_CFG, {}));
 const codeKey = (c) => String(c || '').trim().toLowerCase();
@@ -1188,6 +1198,20 @@ document.addEventListener('click', async (e) => {
       document.body.append(a);
       a.click();
       a.remove();
+      break;
+    }
+    case 'sendfeedback': {
+      const msg = $('#fb-text').value.trim();
+      if (!msg) { toast('Add a note first'); $('#fb-text').focus(); break; }
+      const to = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cfg.e) ? cfg.e : '';
+      const subject = 'Coaching Sevens feedback' + (cfg.t ? ': ' + cfg.t : '');
+      const body = `${msg}\n\n---\n${navigator.userAgent}`;
+      const url = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      const fa = document.createElement('a');
+      fa.href = url;
+      document.body.append(fa);
+      fa.click();
+      fa.remove();
       break;
     }
     case 'print': {
@@ -1812,16 +1836,20 @@ function renderSetup() {
   $('#dict-note').textContent = SR
     ? 'Dictation types what you say. It sends your voice to the speech service of your browser (Google on Android, Apple on iPhone) and needs signal. Say full stop, comma, question mark or new line for punctuation. Te reo Māori words often come out wrong, so check names. Voice notes are different: they stay on the phone.'
     : 'This browser has no dictation. Use the microphone on the phone keyboard. Voice notes still work.';
+  $('#fb-note').textContent = cfg.e
+    ? `Sends by email to the organiser. Opens your mail app, addressed and ready.`
+    : `Sends by email. No organiser address is set up yet, so add one yourself when your mail app opens.`;
   const nd = forms.filter(isDemo).length;
   $('#demo-note').textContent = nd ? `${nd} demo forms are on this device.` : 'No demo data on this device.';
 }
 function loadOrgFields() {
   $('#o-t').value = cfg.t; $('#o-c').value = cfg.c; $('#o-f').value = cfg.f.join(', ');
   $('#o-l').value = (cfg.l.length ? cfg.l : DEFAULT_LEVELS).join('\n'); $('#o-k').value = cfg.k.join('\n'); $('#o-r').value = cfg.r.join('\n');
+  $('#o-fb').value = cfg.e || '';
 }
 function readOrgFields() {
   const lines = (id) => $(id).value.split(/\r?\n/).map(x => x.trim()).filter(Boolean);
-  const c = cleanCfg({ t: $('#o-t').value, c: $('#o-c').value, f: $('#o-f').value.split(/[,;\n]/), l: lines('#o-l'), k: lines('#o-k'), r: lines('#o-r') });
+  const c = cleanCfg({ t: $('#o-t').value, c: $('#o-c').value, f: $('#o-f').value.split(/[,;\n]/), l: lines('#o-l'), k: lines('#o-k'), r: lines('#o-r'), e: $('#o-fb').value });
   if (!c.t) { toast('Add the tournament name first'); $('#o-t').focus(); return null; }
   return c;
 }
