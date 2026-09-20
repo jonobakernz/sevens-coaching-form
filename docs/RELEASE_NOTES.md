@@ -201,7 +201,7 @@ The app has not been tested on real phones yet. Everything below is either a des
 **Not yet tested**
 
 - Voice notes, dictation and QR scanning were tested in simulated browsers with a fake microphone, a fake camera and a made-up speech service. Real phones may differ, especially an iPhone Home Screen app.
-- The free static.app plan may limit form entries. Run a practice event with about 20 uploads before a tournament.
+- static.app does not publish a form entry limit for the free plan (checked their pricing and help pages: the only documented limits are 50 MB storage and 50 MB per file). Run a practice event with about 20 to 30 uploads before a tournament to find out in practice, or ask static.app support directly.
 
 **Design limits**
 
