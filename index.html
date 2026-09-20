@@ -175,6 +175,9 @@ body[data-dict=off] .dcbtn { display: none; }
 .chips { display: flex; gap: 8px; margin-bottom: 10px; }
 .chip { flex: 1; min-height: 50px; padding: 0 4px; border-radius: 6px; border: var(--bw) solid var(--edge); background: var(--paper); font: 700 20px/1 var(--display); letter-spacing: .02em; }
 .chip[aria-pressed=true] { background: var(--sel-bg); color: var(--sel-ink); border-color: var(--sel-bg); box-shadow: inset 0 -4px 0 var(--card-y); }
+.chip.alt { margin-left: 6px; position: relative; }
+.chip.alt::before { content: ""; position: absolute; left: -9px; top: 8px; bottom: 8px; width: 2px; background: var(--line); }
+.contest .sub { margin: 0 0 10px; }
 .row.rating { background: var(--paper); margin-top: 4px; border-top: 4px solid var(--ink); }
 .row.rating::before { display: none; }
 .row.rating h2 { font-size: 34px; }
@@ -293,6 +296,7 @@ table.rv { border-collapse: separate; border-spacing: 0; width: 100%; min-width:
   textarea { resize: none; }
   .scale button, .chip { min-height: 32px; border: 1px solid #000; background: #fff; color: #000; }
   .scale button[aria-pressed=true], .chip[aria-pressed=true] { background: #000 !important; color: #fff !important; box-shadow: none; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .chip.alt::before { display: none; }
   main { padding-bottom: 0; }
   #view-saved, #view-review, #view-setup { display: none !important; }
 }
@@ -375,6 +379,7 @@ table.rv { border-collapse: separate; border-spacing: 0; width: 100%; min-width:
       <ol id="legend-list"></ol>
     </details>
 
+    <p class="intro">Tap a score to set it. Tap it again to clear it.</p>
     <div class="try-line" aria-hidden="true"></div>
     <div id="sections"></div>
 
@@ -717,11 +722,12 @@ $('#sections').innerHTML = SECTIONS.map(s => `
     ${s.contest ? `
     <div class="contest">
       <h3>Distance from contest</h3>
-      <div class="chips">
+      <div class="chips" role="group" aria-label="Distance from contest">
         <button type="button" class="chip" data-flag="tooClose" aria-pressed="false">Too close</button>
         <button type="button" class="chip" data-flag="inWay" aria-pressed="false">In the way</button>
-        <button type="button" class="chip" data-flag="goodPos" aria-pressed="false">Good position</button>
+        <button type="button" class="chip alt" data-flag="goodPos" aria-pressed="false">Good position</button>
       </div>
+      <p class="sub">Too close and in the way can both apply. Good position clears them.</p>
       <textarea data-c="contest" rows="2" placeholder="Comments" aria-label="Comments: Distance from contest"></textarea>
     </div>` : ''}
   </section>`).join('');
