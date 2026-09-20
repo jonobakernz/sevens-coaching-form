@@ -981,7 +981,7 @@ function renderSaved() {
     const nv = Object.keys(f.voice || {}).length;
     const vtag = nv ? `<span class="tag">${nv} voice note${nv > 1 ? 's' : ''}</span>` : '';
     const tag = vtag + (isDemo(f) ? '<span class="tag">Demo</span>' : !f.referee.trim() ? '' : st === 'done' ? '<span class="tag">Uploaded</span>' : st === 'changed' ? '<span class="tag warn">Changed since upload</span>' : '<span class="tag warn">Not uploaded</span>');
-    const body = `<div><strong>${esc(f.referee.trim() || 'No referee name')}</strong><span>${bits.join(', ')}</span>${tag}</div><div class="badge${r ? ' has' : ''}" aria-label="Rating ${r || 'not set'}">${r || '–'}</div>`;
+    const body = `<div><strong>${esc(f.referee.trim() || 'No referee name')}</strong><span>${bits.join(', ')}</span>${tag}</div><div class="badge${r ? ' has' : ''}" role="img" aria-label="Rating ${r || 'not set'}">${r || '–'}</div>`;
     if (selectMode) {
       return `<li><label class="item sel${selected.has(f.id) ? ' on' : ''}">
         <input type="checkbox" class="selchk" data-sel="${esc(f.id)}"${selected.has(f.id) ? ' checked' : ''} aria-label="Select ${esc(f.referee.trim() || 'this')} form">
