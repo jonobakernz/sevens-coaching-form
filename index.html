@@ -159,8 +159,9 @@ body[data-dict=off] .dcbtn { display: none; }
 .dcbar { margin: 8px 0 2px; font-size: 15px; font-weight: 600; color: var(--card-r); }
 .dcbar::before { content: ""; display: inline-block; width: 12px; height: 12px; margin-right: 8px; border-radius: 50%; background: var(--card-r); vertical-align: -1px; }
 .vnbtns { position: absolute; right: 8px; bottom: 8px; display: flex; gap: 6px; }
-.vnbtn { width: 46px; height: 46px; padding: 0; display: grid; place-items: center; border-radius: 50%; border: var(--bw) solid var(--edge); background: var(--paper); color: var(--ink); }
-.vnbtn svg { width: 24px; height: 24px; }
+.vnbtn { width: 46px; height: 46px; padding: 0; display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--line); background: var(--paper); color: var(--muted); }
+.vnbtn svg { width: 20px; height: 20px; }
+.vnbtn:hover, .vnbtn:focus-visible { border-color: var(--edge); color: var(--ink); }
 .vnbtn.rec { background: var(--card-r); border-color: var(--card-r); color: #fff; animation: vnpulse 1.4s ease-in-out infinite; }
 @keyframes vnpulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(198,40,40,.5); } 50% { box-shadow: 0 0 0 8px rgba(198,40,40,0); } }
 .vnbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 8px 0 2px; font-size: 15px; }
@@ -252,6 +253,7 @@ body[data-dict=off] .dcbtn { display: none; }
 .scan button { min-height: 56px; margin: 0 16px calc(16px + env(safe-area-inset-bottom)); border: 2px solid #fff; border-radius: 6px; background: transparent; color: #fff; font: 700 22px var(--display); }
 
 /* Review table: a scoreboard */
+.rv-sort { display: none; }
 .tbl-wrap { overflow-x: auto; border: var(--bw) solid var(--ink); border-radius: 6px; background: var(--paper); -webkit-overflow-scrolling: touch; }
 table.rv { border-collapse: separate; border-spacing: 0; width: 100%; min-width: 780px; font-size: 17px; }
 .rv th, .rv td { padding: 4px 5px; text-align: center; border-bottom: 1px solid var(--line); white-space: nowrap; }
@@ -269,6 +271,20 @@ table.rv { border-collapse: separate; border-spacing: 0; width: 100%; min-width:
 .rv tr.prov td, .rv tr.prov th.nm { color: var(--muted); }
 .rv .sc { font: 700 20px var(--display); font-variant-numeric: tabular-nums; background: color-mix(in srgb, var(--pounamu) var(--t, 0%), transparent); }
 .rv .sc.main { font-weight: 800; font-size: 22px; }
+
+/* Below 640px the scoreboard becomes a stack of cards. Sort moves from tappable headers to this control. */
+@media (max-width: 640px) {
+  .rv-sort { display: flex; align-items: flex-end; gap: 10px; margin-bottom: 12px; }
+  .rv-sort .f { flex: 1; min-width: 0; }
+  .tbl-wrap { overflow-x: visible; border: 0; border-radius: 0; background: transparent; }
+  table.rv { display: block; width: 100%; min-width: 0; }
+  table.rv thead { display: none; }
+  table.rv tbody { display: block; }
+  table.rv tr { display: block; margin-bottom: 12px; border: var(--bw) solid var(--ink); border-radius: 6px; background: var(--paper); }
+  table.rv th.nm { display: flex; align-items: center; position: static; min-width: 0; box-shadow: none; padding: 12px; border-bottom: var(--bw) solid var(--ink); white-space: normal; }
+  table.rv td { display: flex; justify-content: space-between; align-items: center; text-align: right; padding: 7px 12px; white-space: normal; }
+  table.rv td::before { content: attr(data-label); font: 600 15px var(--body); color: var(--muted); text-align: left; }
+}
 .back { min-height: 46px; margin: 0 0 8px -4px; padding: 0 4px; border: 0; background: none; font: 700 20px var(--display); letter-spacing: .03em; color: var(--muted); }
 .game { padding: 16px 0; border-top: 4px solid var(--ink); }
 .game h2 { margin: 0; font: 800 24px/1.1 var(--display); }
@@ -466,6 +482,12 @@ table.rv { border-collapse: separate; border-spacing: 0; width: 100%; min-width:
         <label class="f">From date<input type="date" id="rv-from"></label>
         <label class="f">To date<input type="date" id="rv-to"></label>
         <label class="chk wide"><input type="checkbox" id="rv-adj"> Adjust ratings for coach marking style</label>
+      </div>
+      <div class="rv-sort" id="rv-sort-bar" hidden>
+        <label class="f">Sort by
+          <select id="rv-sort-key"></select>
+        </label>
+        <button type="button" class="btn small" id="rv-sort-dir"></button>
       </div>
       <div class="tbl-wrap" id="rv-wrap" tabindex="0" role="region" aria-label="Referee ranking table"></div>
       <p class="note" id="rv-note" style="margin-top:10px"></p>
@@ -1483,6 +1505,7 @@ function renderReview() {
   if (D.unnamed) note.push(`${D.unnamed} form${D.unnamed > 1 ? 's have' : ' has'} no referee name and ${D.unnamed > 1 ? 'are' : 'is'} left out.`);
   if (D.outside) note.push(`${D.outside} form${D.outside > 1 ? 's are' : ' is'} outside the filters.`);
   $('#rv-note').textContent = note.join(' ');
+  $('#rv-sort-bar').hidden = !rows.length;
   if (!rows.length) {
     wrap.innerHTML = '<div class="empty" style="padding:20px 12px">No referees to show yet. Forms with a referee name appear here.</div>';
   } else {
@@ -1492,15 +1515,18 @@ function renderReview() {
     const asort = (k) => rvSort.key === k ? (rvSort.dir === 'asc' ? 'ascending' : 'descending') : 'none';
     const head = `<tr><th class="nm" scope="col" aria-sort="${asort('name')}"><button type="button" data-sort="name">Referee</button></th>` +
       cols.map(c => `<th scope="col" aria-sort="${asort(c.key)}"><button type="button" data-sort="${c.key}">${c.label}</button></th>`).join('') + '</tr>';
-    const cell = (v, main) => {
+    const cell = (v, main, label) => {
       const t = v == null ? '' : ` style="--t:${Math.round((v - 1) / 4 * 45)}%"`;
-      return `<td class="sc${main ? ' main' : ''}"${t}>${one(v)}</td>`;
+      return `<td class="sc${main ? ' main' : ''}" data-label="${esc(label)}"${t}>${one(v)}</td>`;
     };
     const body = sortRows(rows).map(g => {
-      const cells = [cell(g.avg.rating, !F.adj), ...(F.adj ? [cell(g.adj, true)] : []), ...AREAS.map(s => cell(g.avg[s.key]))].join('');
-      return `<tr class="${g.prov ? 'prov' : ''}"><th class="nm" scope="row"><span class="rk${g.rank ? '' : ' none'}">${g.rank || 'P'}</span><button type="button" class="who" data-ref="${esc(g.key)}">${esc(g.name)}</button>${g.prov ? '<span class="pv">provisional</span>' : ''}</th><td>${g.games.length}</td><td>${g.coaches.size}</td>${cells}</tr>`;
+      const cells = [cell(g.avg.rating, !F.adj, 'Rating'), ...(F.adj ? [cell(g.adj, true, 'Adjusted')] : []), ...AREAS.map(s => cell(g.avg[s.key], false, s.short))].join('');
+      return `<tr class="${g.prov ? 'prov' : ''}"><th class="nm" scope="row"><span class="rk${g.rank ? '' : ' none'}">${g.rank || 'P'}</span><button type="button" class="who" data-ref="${esc(g.key)}">${esc(g.name)}</button>${g.prov ? '<span class="pv">provisional</span>' : ''}</th><td data-label="Games">${g.games.length}</td><td data-label="Coaches">${g.coaches.size}</td>${cells}</tr>`;
     }).join('');
     wrap.innerHTML = `<table class="rv"><thead>${head}</thead><tbody>${body}</tbody></table>`;
+    const sortOpts = [{ key: 'name', label: 'Referee' }, ...cols];
+    $('#rv-sort-key').innerHTML = sortOpts.map(o => `<option value="${o.key}"${o.key === rvSort.key ? ' selected' : ''}>${esc(o.label)}</option>`).join('');
+    $('#rv-sort-dir').textContent = rvSort.dir === 'asc' ? 'Low to high' : 'High to low';
   }
   /* extra panels */
   let more = '';
@@ -1569,6 +1595,9 @@ $('#view-review').addEventListener('click', (e) => {
     if (rvSort.key === k) rvSort.dir = rvSort.dir === 'asc' ? 'desc' : 'asc';
     else rvSort = { key: k, dir: k === 'name' ? 'asc' : 'desc' };
     renderReview();
+  } else if (b.id === 'rv-sort-dir') {
+    rvSort.dir = rvSort.dir === 'asc' ? 'desc' : 'asc';
+    renderReview();
   } else if (b.dataset.ref) {
     rvRef = b.dataset.ref;
     renderReview();
@@ -1603,6 +1632,11 @@ $('#view-review').addEventListener('click', (e) => {
   }
 });
 ['#rv-from', '#rv-to', '#rv-tour', '#rv-role', '#rv-min', '#rv-adj'].forEach(s => $(s).addEventListener('change', renderReview));
+$('#rv-sort-key').addEventListener('change', (e) => {
+  const k = e.target.value;
+  rvSort = { key: k, dir: k === 'name' ? 'asc' : 'desc' };
+  renderReview();
+});
 
 function exportRanking() {
   const D = collect();
