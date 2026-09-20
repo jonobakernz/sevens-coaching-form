@@ -17,9 +17,10 @@ It is a progressive web app: plain HTML, CSS and JavaScript, with no build step 
 - Record a voice note in any comment box (the 8 areas, distance from contest, the two feedback boxes and private notes). Play it back, record again, delete it, or share it.
 - Save on the device, upload with one tap, email or share a summary, print or save a PDF.
 - Work offline. Forms wait on the phone until there is signal.
+- Send feedback about the app by email, from Setup. Opens the phone's mail app.
 
 **Organisers**
-- Make a setup link and QR code with the tournament name, a tournament code, and lists of fields, levels, coaches and referees.
+- Make a setup link and QR code with the tournament name, a tournament code, lists of fields, levels, coaches and referees, and a feedback email address.
 - Rank referees, with provisional marks for few games, coach marking style adjustment, a coverage list, and a name merge tool.
 - Load a results file (CSV or JSON) and export the ranking as CSV.
 
