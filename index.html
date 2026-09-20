@@ -126,6 +126,7 @@ input:focus, textarea:focus, select:focus { border-color: var(--ink); }
 .more .ttl { font: 800 20px/1 var(--display); letter-spacing: .02em; }
 .more .sum { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 15px; color: var(--muted); }
 .more .meta { padding: 4px 12px 14px; border-top: 2px solid var(--line); }
+.more .plain { padding: 4px 12px 14px; border-top: 2px solid var(--line); }
 .intro { margin: 0; padding: 0 16px 8px; font-size: 15px; color: var(--muted); }
 .legend { margin: 0 16px 16px; font-size: 15px; color: var(--muted); }
 .legend summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; font-weight: 600; color: var(--ink); }
@@ -509,6 +510,15 @@ table.rv { border-collapse: separate; border-spacing: 0; width: 100%; min-width:
     <div class="set-block">
       <h2>This device</h2>
       <p class="note" id="cfg-sum"></p>
+      <details class="more" id="cfg-list" hidden style="margin:0 0 14px">
+        <summary><span class="ttl">Referees and coaches</span></summary>
+        <div class="plain">
+          <p class="note" id="cfg-list-ref-note" style="margin:0 0 4px"></p>
+          <ul class="chiplist" id="cfg-list-ref"></ul>
+          <p class="note" id="cfg-list-coach-note" style="margin:14px 0 4px"></p>
+          <ul class="chiplist" id="cfg-list-coach"></ul>
+        </div>
+      </details>
       <div class="stack">
         <button type="button" class="btn primary" data-act="scan">Scan a setup QR code</button>
         <label class="f">Or paste a setup link or code
@@ -1343,7 +1353,7 @@ async function doUpload(list) {
   upBusy = true;
   updateUploadUI();
   $('#up-all').disabled = true;
-  let ok = 0, err = null;
+  let ok = 0, err = null, failed = null;
   for (const f of list) {
     try {
       await uploadOne(f);
@@ -1351,7 +1361,7 @@ async function doUpload(list) {
       f.uploadedVersion = f.updated;
       write(LS_FORMS, forms);
       ok++;
-    } catch (e) { err = e; break; }
+    } catch (e) { err = e; failed = f; break; }
     await new Promise(r => setTimeout(r, 400));
   }
   upBusy = false;
@@ -1361,7 +1371,11 @@ async function doUpload(list) {
   if (!$('#view-saved').hidden) renderSaved();
   if (!err) toast(ok === 1 ? 'Results uploaded' : `${ok} forms uploaded`);
   else if (err.message === 'offline') toast('No connection. The forms are saved. Try again with signal.');
-  else toast(ok ? `Uploaded ${ok}. The next one failed. Try again.` : 'Upload did not work. Try again.');
+  else if (list.length === 1) toast('Upload did not work. Try again.');
+  else {
+    const name = failed.referee.trim() || 'One form';
+    toast(ok ? `Uploaded ${ok}. ${name} failed. Try again.` : `${name} did not upload. Try again.`);
+  }
 }
 
 /* ---------- Referee review ---------- */
@@ -1784,6 +1798,14 @@ function renderSetup() {
   if (cfg.r.length) bits.push(`${cfg.r.length} referees`);
   if (cfg.k.length) bits.push(`${cfg.k.length} coaches`);
   $('#cfg-sum').textContent = (cfg.t || cfg.c || cfg.r.length || cfg.k.length || cfg.f.length) ? `Now set: ${bits.join(', ')}.` : 'No tournament setup on this device. Scan the organiser\'s QR code or paste the link.';
+  const hasList = cfg.r.length || cfg.k.length;
+  $('#cfg-list').hidden = !hasList;
+  if (hasList) {
+    $('#cfg-list-ref-note').textContent = cfg.r.length ? `${cfg.r.length} referee${cfg.r.length > 1 ? 's' : ''}:` : 'No referees in this setup.';
+    $('#cfg-list-ref').innerHTML = cfg.r.map(n => `<li>${esc(n)}</li>`).join('');
+    $('#cfg-list-coach-note').textContent = cfg.k.length ? `${cfg.k.length} coach${cfg.k.length > 1 ? 'es' : ''}:` : 'No coaches in this setup.';
+    $('#cfg-list-coach').innerHTML = cfg.k.map(n => `<li>${esc(n)}</li>`).join('');
+  }
   $('#set-theme').value = read(LS_THEME, 'auto');
   $('#set-dict').checked = dictOn();
   $('#set-dict').disabled = !SR;

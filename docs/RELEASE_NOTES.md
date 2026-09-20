@@ -1,10 +1,10 @@
 # Sevens Coaching Form: release notes
 
-Updated 20 Sept 2026. Current release: 15.
+Updated 20 Sept 2026. Current release: 16.
 
 ## At a glance
 
-Release 15 of the Sevens Coaching Form went live on 20 Sept 2026, at <https://easy-goingcrow.staticdomains.app/>. It is a phone app. Coaches use it to score referees. Organisers use it to rank them.
+Release 16 of the Sevens Coaching Form went live on 20 Sept 2026, at <https://easy-goingcrow.staticdomains.app/>. It is a phone app. Coaches use it to score referees. Organisers use it to rank them.
 
 A coach scores a game, the phone saves it, and the coach uploads it. The app works without signal. An organiser sets up a tournament with one QR code and reviews every referee in one table.
 
@@ -52,6 +52,7 @@ A coach can score a game in about 15 taps. Notes can be typed, spoken, or record
 - A coach must enter a name before the first upload.
 - On the Saved tab, each form has its own delete button. Deleting no longer means opening the form first.
 - "Select forms to delete" ticks off several forms at once and removes them together, with one confirmation.
+- If "Upload all waiting" stops partway, the message now names the referee whose form failed, not just "the next one".
 
 **Look and feel**
 
@@ -70,6 +71,7 @@ An organiser can set up a tournament with one scan and rank every referee across
 - Make a setup link and QR code. It holds the tournament name, tournament code, field names, levels, coaches and referees.
 - Coaches scan the QR code in the app, paste the link, or open the link. Their lists fill in.
 - The tournament code goes with every upload. Loading a results file skips rows with a wrong or missing code. The code is a filter, not a password.
+- Open "Referees and coaches" under "This device" to check the names a setup loaded, without exporting anything.
 
 **Review tab**
 
@@ -94,10 +96,11 @@ An organiser can set up a tournament with one scan and rank every referee across
 
 ## Release history
 
-There have been 15 releases, newest first. Dates are New Zealand time. The last column helps support tell which release a phone has.
+There have been 16 releases, newest first. Dates are New Zealand time. The last column helps support tell which release a phone has.
 
 | Date | Release | What changed | How to spot it on a phone |
 | --- | --- | --- | --- |
+| 20 Sept 2026 | 16. Small fixes | A failed "Upload all waiting" names the referee whose form failed. Setup can show the referee and coach list without exporting. | "Referees and coaches" under "This device" in Setup. A named referee in a failed upload message. |
 | 20 Sept 2026 | 15. Review table on phone | On a phone, the referee ranking is a list of cards instead of a sideways-scrolling table, with a "Sort by" box in place of tappable headings. The microphone and wave buttons are lighter. | A "Sort by" box above the ranking. Cards instead of a wide table. Thinner voice buttons. |
 | 20 Sept 2026 | 14. Clearer scoring hints | A visible hint above the scores explains tapping a score again clears it. The distance-from-contest buttons show which two can combine and which one is separate. | "Tap a score to set it..." above the score rows. A short line and a gap before "Good position". |
 | 20 Sept 2026 | 13. Delete several forms at once | "Select forms to delete" on the Saved tab ticks off several forms and removes them together. | A "Select forms to delete" button above the Saved list. |
@@ -141,6 +144,7 @@ The app does not show a release number yet. Use the features on the screen to te
 | A "Select forms to delete" button above the Saved list | 13 |
 | "Tap a score to set it..." shown above the score rows | 14 |
 | A "Sort by" box above the referee ranking on a phone | 15 |
+| "Referees and coaches" under "This device" in Setup | 16 |
 
 Clearing browser data, or removing the app, deletes saved forms and voice notes. Ask the coach to save a backup file first. Backup files do not hold voice notes.
 
