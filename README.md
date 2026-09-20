@@ -17,10 +17,10 @@ It is a progressive web app: plain HTML, CSS and JavaScript, with no build step 
 - Record a voice note in any comment box (the 8 areas, distance from contest, the two feedback boxes and private notes). Play it back, record again, delete it, or share it.
 - Save on the device, upload with one tap, email or share a summary, print or save a PDF.
 - Work offline. Forms wait on the phone until there is signal.
-- Send feedback about the app by email, from Setup. Opens the phone's mail app.
+- Send feedback about the app from Setup. Goes straight to the organiser, the same way results upload.
 
 **Organisers**
-- Make a setup link and QR code with the tournament name, a tournament code, lists of fields, levels, coaches and referees, and a feedback email address.
+- Make a setup link and QR code with the tournament name, a tournament code, and lists of fields, levels, coaches and referees.
 - Rank referees, with provisional marks for few games, coach marking style adjustment, a coverage list, and a name merge tool.
 - Load a results file (CSV or JSON) and export the ranking as CSV.
 
@@ -72,6 +72,7 @@ If you deploy by hand, change `CACHE` in `sw.js` first.
 ## Results and data
 
 - Each game is one row in a static.app form named `sevens-results`. Read the rows in your static.app account.
+- Feedback sent from Setup is a separate static.app form named `sevens-feedback`, in the same account.
 - Static.app makes a new results table when the list of upload fields changes. Do not add or rename fields in the hidden form (`#up-form`) without a plan. The list is `UP_FIELDS` in `index.html`.
 - Static.app's browser rules block live reading of the table from the app. Export the entries, then use Review, then Load results file.
 - Forms live in each phone's browser storage. Tell coaches to save a backup file after each event.
