@@ -1,10 +1,10 @@
 # Sevens Coaching Form: release notes
 
-Updated 20 Sept 2026. Current release: 13.
+Updated 20 Sept 2026. Current release: 14.
 
 ## At a glance
 
-Release 13 of the Sevens Coaching Form went live on 20 Sept 2026, at <https://easy-goingcrow.staticdomains.app/>. It is a phone app. Coaches use it to score referees. Organisers use it to rank them.
+Release 14 of the Sevens Coaching Form went live on 20 Sept 2026, at <https://easy-goingcrow.staticdomains.app/>. It is a phone app. Coaches use it to score referees. Organisers use it to rank them.
 
 A coach scores a game, the phone saves it, and the coach uploads it. The app works without signal. An organiser sets up a tournament with one QR code and reviews every referee in one table.
 
@@ -25,7 +25,8 @@ A coach can score a game in about 15 taps. Notes can be typed, spoken, or record
 - Score eight areas from 1 to 5: fitness, foul play, breakdowns, set phase, game awareness, game management, communication, and an overall rating.
 - Communication is a new area. "Good position" is a new choice under distance from contest.
 - Each score shows a one-line meaning, such as "3. Meets the standard for this level." Open "How to score" to see all five.
-- Tap a score again to clear it.
+- "Tap a score to set it. Tap it again to clear it." is shown on screen above the scores, not just in "How to score".
+- Under distance from contest, "Too close" and "In the way" can both apply. "Good position" is a separate choice and clears the other two. A line under the buttons explains this, and "Good position" now sits apart from the other two.
 
 **Notes**
 
@@ -92,10 +93,11 @@ An organiser can set up a tournament with one scan and rank every referee across
 
 ## Release history
 
-There have been 13 releases, newest first. Dates are New Zealand time. The last column helps support tell which release a phone has.
+There have been 14 releases, newest first. Dates are New Zealand time. The last column helps support tell which release a phone has.
 
 | Date | Release | What changed | How to spot it on a phone |
 | --- | --- | --- | --- |
+| 20 Sept 2026 | 14. Clearer scoring hints | A visible hint above the scores explains tapping a score again clears it. The distance-from-contest buttons show which two can combine and which one is separate. | "Tap a score to set it..." above the score rows. A short line and a gap before "Good position". |
 | 20 Sept 2026 | 13. Delete several forms at once | "Select forms to delete" on the Saved tab ticks off several forms and removes them together. | A "Select forms to delete" button above the Saved list. |
 | 20 Sept 2026 | 12. Coaching workflow fixes | Coach moved out of "Match details" onto the main screen. "Start next game" no longer waits for an upload. Each Saved form has its own delete button. | Coach sits beside Referee, Field and Time. A bin icon on each row in Saved. |
 | 20 Sept 2026 | 11. Dictation | Speak into any comment box and the words are typed in. A switch in Setup turns it off. | A microphone button beside the wave button. A Voice section in Setup. |
@@ -135,6 +137,7 @@ The app does not show a release number yet. Use the features on the screen to te
 | A microphone button beside the wave button | 11 |
 | A bin icon on each row in Saved | 12 |
 | A "Select forms to delete" button above the Saved list | 13 |
+| "Tap a score to set it..." shown above the score rows | 14 |
 
 Clearing browser data, or removing the app, deletes saved forms and voice notes. Ask the coach to save a backup file first. Backup files do not hold voice notes.
 
