@@ -1,10 +1,10 @@
 # Sevens Coaching Form: release notes
 
-Updated 20 Sept 2026. Current release: 19.
+Updated 23 Sept 2026. Current release: 20.
 
 ## At a glance
 
-Release 19 of the Sevens Coaching Form went live on 20 Sept 2026, at <https://easy-goingcrow.staticdomains.app/>. It is a phone app. Coaches use it to score referees. Organisers use it to rank them.
+Release 20 of the Sevens Coaching Form went live on 23 Sept 2026, at <https://easy-goingcrow.staticdomains.app/>. It is a phone app. Coaches use it to score referees. Organisers use it to rank them.
 
 A coach scores a game, the phone saves it, and the coach uploads it. The app works without signal. An organiser sets up a tournament with one QR code and reviews every referee in one table.
 
@@ -31,6 +31,7 @@ A coach can score a game in about 15 taps. Notes can be typed, spoken, or record
 **Notes**
 
 - Quick notes add a ready phrase to a comment box with one tap.
+- Foul play, breakdowns and game management each have new quick notes, taken from the printed coaching sheet: recognising foul play and applying the law, respecting the jackler's rights and getting the ball available quickly, and being proactive rather than reactive.
 - "Strength to keep" and "One thing to work on" are for the referee.
 - Private notes stay out of the summary, the email and the print. The organiser sees them after an upload.
 - Dictation: tap the microphone in any comment box and speak. Say "full stop", "comma", "question mark" or "new line" for punctuation.
@@ -99,10 +100,11 @@ An organiser can set up a tournament with one scan and rank every referee across
 
 ## Release history
 
-There have been 19 releases, newest first. Dates are New Zealand time. The last column helps support tell which release a phone has.
+There have been 20 releases, newest first. Dates are New Zealand time. The last column helps support tell which release a phone has.
 
 | Date | Release | What changed | How to spot it on a phone |
 | --- | --- | --- | --- |
+| 23 Sept 2026 | 20. Quick notes from the printed coaching sheet | Compared the printed "7's Coaching Notes" sheet with the app and added the quick notes it was missing: two for foul play (recognising it early, applying the law), two for breakdowns (the jackler's rights, getting the ball available), and one for game management (proactive, not just reactive). | Two extra quick-note buttons on Foul play and Breakdowns, one extra on Game management. |
 | 20 Sept 2026 | 19. Feedback sends straight to the organiser | Release 18's "Feedback" sent an email, but many phones have no mail app set up to actually send one. It now sends the same way results upload: a static.app form, "sevens-feedback", straight into the organiser's account. If there is no signal, the note is copied to send another way. The organiser no longer sets up an address for this. | Tap "Send feedback": the button says "Sending...", then either sends or copies the note. It does not open a mail app. |
 | 20 Sept 2026 | 18. Feedback | A "Feedback" box in Setup opened the phone's mail app, addressed to the organiser if one was set up. Replaced by release 19, since many phones have no mail app configured to actually send from. | Tap "Send feedback": the phone's mail app opens. |
 | 20 Sept 2026 | 17. Accessibility fix | A full accessibility scan of all four tabs found one real issue: the rating badge on the Saved tab was not labelled correctly for a screen reader. Fixed. | No visible change. Check with a screen reader on the Saved tab. |
