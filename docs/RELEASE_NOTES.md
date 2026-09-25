@@ -1,6 +1,6 @@
 # Sevens Coaching Form: release notes
 
-Updated 25 Sept 2026. Current release: 22.
+Updated 25 Sept 2026. Current release: 23.
 
 ## At a glance
 
@@ -11,7 +11,8 @@ The site is hosted on GitHub Pages, and the repo is public -- GitHub Pages does 
 on the Free plan. No coaching data lives in the repo itself, only fictional demo data.
 
 Coaching-results uploads and in-app feedback both go to SnapItForms. Both are new to this project, so watch real
-submissions closely -- see the Support reference below before relying on either for a real event.
+submissions closely -- see the Support reference below before relying on either for a real event. Bugs and feature
+ideas go somewhere else again: a public GitHub issue, separate from the organiser's feedback box.
 
 A coach scores a game, the phone saves it, and the coach uploads it. The app works without signal. An organiser
 sets up a tournament with one QR code and reviews every referee in one table.
@@ -63,7 +64,8 @@ A coach can score a game in about 15 taps. Notes can be typed, spoken, or record
 - "Select forms to delete" ticks off several forms at once and removes them together, with one confirmation.
 - If "Upload all waiting" stops partway, the message now names the referee whose form failed, not just "the next one".
 - The rating badge on each saved form now labels itself correctly for a screen reader, found in a full accessibility scan of all four tabs.
-- "Feedback" in Setup sends a note straight to the organiser, the same way results upload. Needs signal. If there is none, the note is copied so it can be sent another way. There was no way to send feedback from inside the app before.
+- "Feedback for the organiser" in Setup sends a note straight to the organiser, the same way results upload. Needs signal. If there is none, the note is copied so it can be sent another way. There was no way to send feedback from inside the app before.
+- "Bugs and ideas" in Setup opens a prefilled GitHub issue -- a separate, public channel from the feedback box above it, for reporting problems with the app itself rather than a tournament. Needs internet and a GitHub account.
 
 **Look and feel**
 
@@ -98,7 +100,7 @@ An organiser can set up a tournament with one scan and rank every referee across
 **Results**
 
 - Each upload is one submission in the SnapItForms dashboard.
-- Feedback from a coach is a separate submission, told apart by a `kind` field.
+- Feedback from a coach is a separate submission, told apart by a `kind` field. A bug report or feature idea never reaches this dashboard at all -- it opens a public GitHub issue instead.
 - "Load results file" reads a CSV or JSON export and merges it. "Export ranking table (CSV)" saves the ranking.
 - The Saved tab still has the CSV export and the backup file.
 
@@ -108,10 +110,11 @@ An organiser can set up a tournament with one scan and rank every referee across
 
 ## Release history
 
-There have been 22 releases, newest first. Dates are New Zealand time. The last column helps support tell which release a phone has.
+There have been 23 releases, newest first. Dates are New Zealand time. The last column helps support tell which release a phone has.
 
 | Date | Release | What changed | How to spot it on a phone |
 | --- | --- | --- | --- |
+| 25 Sept 2026 | 23. Bugs and ideas go to GitHub | A new "Bugs and ideas" box in Setup opens a prefilled GitHub issue. It is separate from "Feedback for the organiser" (renamed from plain "Feedback") just above it: bug reports and feature ideas are public on the app's repo, not the organiser's private SnapItForms account, so real names should stay out of them. | A "Bugs and ideas" section in Setup, below a renamed "Feedback for the organiser" box. |
 | 25 Sept 2026 | 22. Moved to GitHub Pages, feedback moved to SnapItForms | The site now lives at jonobakernz.github.io/sevens-coaching-form/. The repo is now public, which GitHub Pages requires on the Free plan. Feedback now sends to SnapItForms, the same way results upload does. | The address in the browser is different. Setup and coaching are otherwise unchanged. |
 | 25 Sept 2026 | 21. Coaching-results upload moved to SnapItForms (trial) | Upload results now posts to SnapItForms. It has no independent track record yet -- see Support reference. Feedback did not change in this release. | No visible change on the form itself. The upload status line now says "This is a trial upload service." |
 | 23 Sept 2026 | 20. Quick notes from the printed coaching sheet | Compared the printed "7's Coaching Notes" sheet with the app and added the quick notes it was missing: two for foul play (recognising it early, applying the law), two for breakdowns (the jackler's rights, getting the ball available), and one for game management (proactive, not just reactive). | Two extra quick-note buttons on Foul play and Breakdowns, one extra on Game management. |
@@ -166,6 +169,7 @@ The app does not show a release number yet. Use the features on the screen to te
 | A "Sort by" box above the referee ranking on a phone | 15 |
 | "Referees and coaches" under "This device" in Setup | 16 |
 | A "Feedback" section in Setup | 18 |
+| A "Bugs and ideas" section in Setup | 23 |
 
 Clearing browser data, or removing the app, deletes saved forms and voice notes. Ask the coach to save a backup file first. Backup files do not hold voice notes.
 
@@ -210,6 +214,7 @@ Forms stay on the phone until the coach uploads, shares, emails or exports them.
 | Backup and CSV files | Wherever the coach saves them. They include private notes. | When the coach exports. |
 | A setup link or QR code | Anyone who has it. It holds the tournament code and the referee and coach names. | When the organiser shares it. |
 | Feedback text, the tournament name, the coach's name and the phone's browser details | The SnapItForms dashboard, in the organiser's account, told apart by a `kind` field. | When the coach taps "Send feedback" in Setup. |
+| A bug report or feature idea, plus the phone's browser details | A public GitHub issue on the app's repo -- not the organiser's SnapItForms account. Anyone can read it. | When the coach taps "Open on GitHub" in Setup. |
 | Demo data | The phone only. It is never uploaded. | When someone loads the demo. |
 
 ## Known limits
@@ -235,6 +240,7 @@ The app has not been tested on real phones yet. Everything below is either a des
 - The tournament code is a filter, not a password.
 - The coverage list is a list, not a grid of referees by game.
 - Whichever backend is used, changing the upload field names breaks anyone's saved export or in-progress CSV.
+- Opening a GitHub issue needs internet and a GitHub account. A coach without one can still use "Feedback for the organiser" instead, or ask the organiser to pass the note on.
 
 **Content still to check**
 
