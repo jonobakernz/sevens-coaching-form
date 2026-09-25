@@ -562,7 +562,10 @@ table.rv { border-collapse: separate; border-spacing: 0; width: 100%; min-width:
       <label class="f wide">What happened, or what you'd like the app to do
         <textarea id="gh-text" rows="4" placeholder="What happened, and what you were doing"></textarea>
       </label>
-      <button type="button" class="btn primary" data-act="reportbug">Open on GitHub</button>
+      <div class="tools" style="margin-top:10px">
+        <button type="button" class="btn primary" data-act="reportbug">Open on GitHub</button>
+        <button type="button" class="btn" data-act="emailbug">Email instead</button>
+      </div>
     </div>
 
     <details class="more" id="demo" style="margin:0 0 14px">
@@ -1236,6 +1239,19 @@ document.addEventListener('click', async (e) => {
       window.open(url, '_blank', 'noopener');
       break;
     }
+    case 'emailbug': {
+      const msg = $('#gh-text').value.trim();
+      if (!msg) { toast('Add a note first'); $('#gh-text').focus(); break; }
+      const subject = 'Sevens Coaching Form: bug or idea';
+      const body = `${msg}\n\n---\nDevice: ${navigator.userAgent}`;
+      const url = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      const a = document.createElement('a');
+      a.href = url;
+      document.body.append(a);
+      a.click();
+      a.remove();
+      break;
+    }
     case 'print': {
       commit();
       const opened = $('#more').open;
@@ -1355,6 +1371,8 @@ const SNAPIT_ACCESS_KEY = 'sf_169bdf63542fa54907f80a82327b63f0'; // snapitforms.
  * a separate channel, so a report never lands next to real coaching data. No access key needed: it's
  * just a prefilled "new issue" link that opens in the coach's own browser. */
 const GITHUB_ISSUE_URL = 'https://github.com/jonobakernz/sevens-coaching-form/issues/new';
+// A coach without a GitHub account can send the same note by email instead.
+const SUPPORT_EMAIL = 'Support@simplesolutions.co.nz';
 
 const UP_FIELDS = ['form_id', 'version', 'code', 'tournament', 'level', 'game', 'date', 'time', 'field', 'referee', 'role', 'coach',
   ...SECTIONS.flatMap(s => ['score_' + s.key, 'comment_' + s.key]),
@@ -1919,7 +1937,7 @@ function renderSetup() {
     ? 'Dictation types what you say. It sends your voice to the speech service of your browser (Google on Android, Apple on iPhone) and needs signal. Say full stop, comma, question mark or new line for punctuation. Te reo Māori words often come out wrong, so check names. Voice notes are different: they stay on the phone.'
     : 'This browser has no dictation. Use the microphone on the phone keyboard. Voice notes still work.';
   $('#fb-note').textContent = 'Sends straight to the organiser, the same way results upload. Needs signal.';
-  $('#gh-note').textContent = 'Opens a GitHub issue that anyone can read, so leave out real names. Needs internet and a GitHub account.';
+  $('#gh-note').textContent = 'GitHub opens an issue that anyone can read, so leave out real names. No GitHub account? Email sends the same note privately instead.';
   const nd = forms.filter(isDemo).length;
   $('#demo-note').textContent = nd ? `${nd} demo forms are on this device.` : 'No demo data on this device.';
 }
