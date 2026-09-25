@@ -605,7 +605,6 @@ table.rv { border-collapse: separate; border-spacing: 0; width: 100%; min-width:
 <datalist id="dl-coach"></datalist>
 <datalist id="dl-level"></datalist>
 
-<form id="fb-form" static-form static-form-id="sevens-feedback" static-form-success-callback="sevensFeedbackSent" hidden aria-hidden="true"></form>
 
 <script>
 (() => {
@@ -1423,41 +1422,42 @@ async function doUpload(list) {
   }
 }
 
-/* ---------- Feedback ---------- */
-const FB_FIELDS = ['message', 'tournament', 'coach', 'device'];
-$('#fb-form').innerHTML = FB_FIELDS.map(k => `<input type="hidden" name="${k}">`).join('');
-let fbBusy = false, fbResolve = null;
+/* ---------- Feedback ----------
+ * Posts to the same SnapItForms account as results upload, marked with kind: 'feedback' so it
+ * can be told apart in the dashboard. Used to go through static.app's own injected form script,
+ * which only ever worked because static.app itself served the page; that stopped being true once
+ * the app moved to GitHub Pages (see CLAUDE.md), so this now posts with fetch like uploadOne().
+ */
+let fbBusy = false;
 
-window.sevensFeedbackSent = () => {
-  $('#fb-form').removeAttribute('data-submitting');
-  if (fbResolve) fbResolve();
-};
-
-function submitFeedback(msg) {
-  return new Promise((resolve, reject) => {
-    const form = $('#fb-form');
-    if (!navigator.onLine) { reject(new Error('offline')); return; }
-    if (typeof sendForm !== 'function') { reject(new Error('offline')); return; }
-    const p = { message: msg, tournament: (cfg.t || '').trim(), coach: (cur.coach || '').trim(), device: navigator.userAgent };
-    for (const k of FB_FIELDS) form.elements[k].value = p[k] ?? '';
-    let seen = false, finished = false;
-    const t0 = Date.now();
-    const finish = (err) => {
-      if (finished) return;
-      finished = true;
-      clearInterval(poll); clearTimeout(limit);
-      fbResolve = null;
-      err ? reject(err) : resolve();
-    };
-    fbResolve = () => finish();
-    const poll = setInterval(() => {
-      const busy = form.getAttribute('data-submitting') === 'true';
-      if (busy) seen = true;
-      else if (seen || Date.now() - t0 > 2500) finish(new Error('failed'));
-    }, 250);
-    const limit = setTimeout(() => finish(new Error('failed')), 25000);
-    form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
-  });
+async function submitFeedback(msg) {
+  if (!navigator.onLine) throw new Error('offline');
+  if (!SNAPIT_ACCESS_KEY || SNAPIT_ACCESS_KEY.startsWith('REPLACE_WITH_')) throw new Error('offline');
+  const body = new FormData();
+  body.append('access_key', SNAPIT_ACCESS_KEY);
+  body.append('kind', 'feedback');
+  body.append('message', msg);
+  body.append('tournament', (cfg.t || '').trim());
+  body.append('coach', (cur.coach || '').trim());
+  body.append('device', navigator.userAgent);
+  const ctrl = new AbortController();
+  const limit = setTimeout(() => ctrl.abort(), 25000);
+  let res;
+  try {
+    res = await fetch(SNAPIT_ENDPOINT, { method: 'POST', headers: { Accept: 'application/json' }, body, signal: ctrl.signal });
+  } catch {
+    throw new Error('failed');
+  } finally {
+    clearTimeout(limit);
+  }
+  if (!res.ok) throw new Error('failed');
+  try {
+    const data = await res.clone().json();
+    if (data && data.success === false) throw new Error('failed');
+  } catch (e) {
+    if (e instanceof SyntaxError) { /* a 2xx with no JSON body still counts as sent */ }
+    else throw e;
+  }
 }
 
 /* ---------- Referee review ---------- */

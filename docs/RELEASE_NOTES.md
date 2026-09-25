@@ -1,12 +1,16 @@
 # Sevens Coaching Form: release notes
 
-Updated 25 Sept 2026. Current release: 21.
+Updated 25 Sept 2026. Current release: 22.
 
 ## At a glance
 
-Release 21 of the Sevens Coaching Form went live on 25 Sept 2026, at <https://easy-goingcrow.staticdomains.app/>. It is a phone app. Coaches use it to score referees. Organisers use it to rank them.
+Release 22 of the Sevens Coaching Form went live on 25 Sept 2026, at <https://jonobakernz.github.io/sevens-coaching-form/> (a new address -- see below). It is a phone app. Coaches use it to score referees. Organisers use it to rank them.
 
-**Release 21 puts coaching-results uploads on trial with a new, unproven backend (SnapItForms) in place of static.app's form service.** This is deliberately a trial, not a settled choice -- see the Support reference below before relying on it for a real event. The separate in-app feedback feature is unaffected and still uses static.app.
+**The site moved from static.app to GitHub Pages, and the repo is now public.** This was needed, not just preferred: static.app sends a security header on every page that silently blocks any connection to a third party, which meant the SnapItForms upload added in release 21 could never actually work while hosted there -- it looked fine in every test except a real one on the live site. GitHub Pages sends no such header. GitHub Pages also does not support private repositories on the Free plan, which is why this repo had to become public; no coaching data lives in the repo itself, only in SnapItForms.
+
+**The in-app feedback feature also moved to SnapItForms in this release**, because it previously relied on a script that static.app injects only when static.app itself serves the page -- that stopped being true once GitHub Pages became the host.
+
+**Both features are still on trial with SnapItForms**, an unproven vendor -- see the Support reference below before relying on either for a real event.
 
 A coach scores a game, the phone saves it, and the coach uploads it. The app works without signal. An organiser sets up a tournament with one QR code and reviews every referee in one table.
 
@@ -102,10 +106,11 @@ An organiser can set up a tournament with one scan and rank every referee across
 
 ## Release history
 
-There have been 21 releases, newest first. Dates are New Zealand time. The last column helps support tell which release a phone has.
+There have been 22 releases, newest first. Dates are New Zealand time. The last column helps support tell which release a phone has.
 
 | Date | Release | What changed | How to spot it on a phone |
 | --- | --- | --- | --- |
+| 25 Sept 2026 | 22. Moved to GitHub Pages, feedback moved to SnapItForms | The site now lives at jonobakernz.github.io/sevens-coaching-form/, because static.app's own security header was silently blocking the SnapItForms upload added in release 21. The repo is now public (needed for free GitHub Pages). Feedback also moved to SnapItForms, replacing a static.app dependency that only worked when static.app hosted the page. | The address in the browser is different. Setup and coaching are otherwise unchanged. |
 | 25 Sept 2026 | 21. Coaching-results upload moved to SnapItForms (trial) | Upload results now posts to SnapItForms instead of static.app's form service, so the site can move to GitHub Pages if wanted. SnapItForms has no independent track record yet -- see Support reference. The separate feedback feature is unchanged and still uses static.app. | No visible change on the form itself. The upload status line now says "This is a trial upload service." |
 | 23 Sept 2026 | 20. Quick notes from the printed coaching sheet | Compared the printed "7's Coaching Notes" sheet with the app and added the quick notes it was missing: two for foul play (recognising it early, applying the law), two for breakdowns (the jackler's rights, getting the ball available), and one for game management (proactive, not just reactive). | Two extra quick-note buttons on Foul play and Breakdowns, one extra on Game management. |
 | 20 Sept 2026 | 19. Feedback sends straight to the organiser | Release 18's "Feedback" sent an email, but many phones have no mail app set up to actually send one. It now sends the same way results upload: a static.app form, "sevens-feedback", straight into the organiser's account. If there is no signal, the note is copied to send another way. The organiser no longer sets up an address for this. | Tap "Send feedback": the button says "Sending...", then either sends or copies the note. It does not open a mail app. |
@@ -213,15 +218,17 @@ The app has not been tested on real phones yet. Everything below is either a des
 
 - Voice notes, dictation and QR scanning were tested in simulated browsers with a fake microphone, a fake camera and a made-up speech service. Real phones may differ, especially an iPhone Home Screen app.
 - static.app does not publish a form entry limit for the free plan (checked their pricing and help pages: the only documented limits are 50 MB storage and 50 MB per file). Run a practice event with about 20 to 30 uploads before a tournament to find out in practice, or ask static.app support directly. This still applies to the feedback feature, which stayed on static.app.
-- **SnapItForms itself has not been tested with a real access key or a real submission.** Everything around it (success, a rejected submission, a network failure, retries, offline) was tested with a stand-in for their service, because no independent information about how it actually behaves could be found. The first real submissions after this release need to be watched closely, ideally by checking the SnapItForms dashboard right after each one.
-- If SnapItForms' API does not allow browser-based `fetch` submissions the way a static-site tool normally would (their own published example is a plain HTML form, not JavaScript), every upload will fail with a generic "Upload did not work" message. This would show up immediately on the first real test.
+- **SnapItForms itself has now been tested with the real access key**, including a real submission checked all the way through: a browser test with no mocks, confirming a genuine 200 response from `api.snapitforms.com`, and confirmed CORS support via a preflight check. That part of the earlier uncertainty is resolved.
+- **What was not caught in time: static.app's own security header blocking the request.** Release 21 passed every test that existed at the time, including a real end-to-end browser test -- but that test ran against a local copy of the file, not the actual page served by static.app, so it never hit the header that was actually blocking things. Release 22 (this one) exists because of that gap. The lesson, now written into `CLAUDE.md`: test against the real deployed page's actual headers, not just a local copy, whenever a host might be adding its own restrictions.
+- GitHub Pages itself has not been used for a real tournament yet. Confirmed only that it serves the site correctly and sends no CSP header.
 
 **Design limits**
 
 - The app shows no release number.
-- Coaching-results upload is on trial with SnapItForms, a vendor with no independent track record at the time this shipped. It may need to move again.
-- Feedback still works only when static.app serves the page (or when static.app is reachable, regardless of host).
-- The organiser cannot read results live in the app. Export the entries from the SnapItForms dashboard (or static.app, for feedback), then use "Load results file".
+- Coaching-results upload and feedback are both on trial with SnapItForms, a vendor with no independent track record at the time this shipped. Either may need to move again.
+- The repo is public. No coaching data lives in it, but this is a real change from how the project started, worth knowing before adding anything to the repo.
+- No licence is set for the code, public or not.
+- The organiser cannot read results live in the app. Export the entries from the SnapItForms dashboard, then use "Load results file".
 - Voice notes are not uploaded, not in backups and not in emails.
 - Dictation needs signal and sends audio to the browser's speech service.
 - The tournament code is a filter, not a password.
@@ -237,20 +244,25 @@ The app has not been tested on real phones yet. Everything below is either a des
 
 | Item | Detail |
 | --- | --- |
-| Live address | https://easy-goingcrow.staticdomains.app/ (static.app site "Sevenscoaching", site id adrf1y2gis), or the GitHub Pages address if that has been turned on |
-| Coaching results (from release 21) | A SnapItForms form, in the account signed in for `SNAPIT_ACCESS_KEY`. Export the submissions from the SnapItForms dashboard as CSV. |
-| Coaching results (releases 3 to 20) | The static.app form "sevens-results". Three test tables also exist in that account from earlier work; only "sevens-results" (the newest) matters. |
+| Live address (from release 22) | https://jonobakernz.github.io/sevens-coaching-form/. This is the one to give coaches. |
+| Old address, do not use | https://easy-goingcrow.staticdomains.app/ (static.app site "Sevenscoaching", site id adrf1y2gis). Still online and still updates on every push, but results and feedback silently fail here -- see "Why the address changed", below. |
+| Why the address changed | Static.app sends `Content-Security-Policy: connect-src 'self' https://*.static.domains https://static.app` on every page. That blocks a browser from connecting to any other domain, including SnapItForms, no matter how correct the app code is. GitHub Pages sends no such header. Confirmed directly with `curl -I` against both addresses. |
+| The repo is now public | GitHub Pages does not support private repositories on the Free plan. No coaching data lives in the repo -- only in SnapItForms. See "Keeping the repo public safe" in the README. |
+| Coaching results and feedback (from release 22) | Both go to SnapItForms, told apart by the `kind` field (results have none set; feedback has `kind: feedback`). Export from the SnapItForms dashboard as CSV. |
+| Coaching results (release 21 only) | Also SnapItForms, but this was the release where it looked like it worked and did not -- see above. Any results from this window may not have actually arrived. |
+| Coaching results (releases 3 to 20) | The static.app form "sevens-results". Feedback from that era is in "sevens-feedback", same account. Three additional test tables exist from earlier work; only "sevens-results" matters among them. |
 | SnapItForms track record | None found independently as of Sept 2026 -- no Capterra/G2 listing, no Reddit or Hacker News mention, no GitHub presence. Watch it closely. If it proves unreliable, the code to swap it for Formspree, Basin, Getform/Forminit, or an in-house Power Automate/Azure option is a similar-sized change to this one. |
-| Feedback | Still the static.app form "sevens-feedback", in the static.app account. Unaffected by the SnapItForms change. |
-| Deploy (static.app) | A GitHub workflow uploads the site to static.app on every push to the main branch. It needs the secret `STATICAPP_API_KEY` and the variable `STATICAPP_PID`. |
-| Deploy (GitHub Pages) | Settings, then Pages, then "Deploy from a branch", `main`, `/ (root)`. Independent of the SnapItForms change. Feedback still needs static.app to be reachable either way. |
-| Manual deploy | Upload the site zip to static.app, or push to `main` with Pages enabled. |
-| Offline cache | The cache name in `sw.js` changes on every release. This makes phones fetch the new files. |
+| Deploy (GitHub Pages) | Automatic after every push to `main`. No workflow or secret needed. Usually live within a minute or two. |
+| Deploy (static.app, legacy) | A GitHub workflow still uploads to static.app on every push, needing the secret `STATICAPP_API_KEY` and the variable `STATICAPP_PID`. Consider removing this workflow and secret now that it is not the live site, so the two addresses cannot drift or confuse anyone. |
+| Offline cache | The cache name in `sw.js` changes whenever the static.app workflow runs. GitHub Pages deploys do not touch it automatically -- if you ever deploy to Pages by a route other than `git push`, update `CACHE` in `sw.js` yourself first. |
 | Upload fields | Do not add or rename fields in `UP_FIELDS` (`index.html`) without a plan, whichever backend is in use. `node tools/check.js` catches an accidental change. |
+| Licence | Still not set (see the README). The repo being public does not mean anyone else has permission to reuse the code -- that is a separate, still-open decision. |
 | Wording | Score meanings, quick notes and the referee, coach and level lists are set in the app script and the Setup tab. The README explains where. |
 
 **Housekeeping**
 
+- Delete the test entries in the SnapItForms dashboard: anything with a tournament or message clearly marked as a test (several were made while verifying releases 21 and 22).
 - Delete the test entries in static.app: tournaments "ZZ TEST" and "ZZ LIVE TEST", and the table "sevens-test". The delete calls failed from code.
-- Delete every API key or access key that was pasted into a chat, including the SnapItForms one once it is confirmed working from the repo. Make a new key for the GitHub workflow at static.app, under the account API page.
-- Keep the repo private. The results name real people.
+- Delete every API key or access key that was pasted into a chat. Make fresh ones if the workflow needs a static.app key going forward.
+- Decide whether to keep the static.app deploy at all, now that GitHub Pages is the real site.
+- Decide on a licence for the now-public code, or explicitly decide not to and note that choice somewhere.
