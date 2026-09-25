@@ -61,8 +61,10 @@ The site is hosted on GitHub Pages: <https://jonobakernz.github.io/sevens-coachi
 Pages redeploys automatically a short time after every push to `main` -- no workflow or secret is needed for it.
 Merging a pull request to `main` is what puts a change live, so treat every merge as a release.
 
-Phones cache the app for offline use, so a release does not reach everyone straight away. `CACHE` in `sw.js`
-changes on each release; once a phone has the new files, it picks them up after two opens.
+Phones cache the app for offline use, so a release does not reach everyone straight away. `sw.js` refreshes its
+cached files in the background each time the app opens; once a phone has the new files, it picks them up after
+two opens. Bump `CACHE` in `sw.js` by hand if you ever need every phone to drop its old cache in one go -- nothing
+does this automatically for a GitHub Pages deploy.
 
 ## Keeping the repo public safe
 
