@@ -45,20 +45,26 @@ const fonts = [...new Set([...html.matchAll(/url\((fonts\/[^)]+)\)/g)].map((m) =
 const noFont = fonts.filter((f) => !exists(f));
 noFont.length ? bad('fonts named in the CSS are missing: ' + noFont.join(', ')) : ok(`all ${fonts.length} font files exist`);
 
-/* 5. The static.app form hook that makes Upload work. */
-html.includes('static-form-id="sevens-results"') && html.includes('static-form-success-callback="sevensUploaded"') && html.includes('id="up-form"')
-  ? ok('the hidden upload form and its callback are in place')
-  : bad('the hidden upload form (id up-form, static-form-id sevens-results, callback sevensUploaded) is changed or missing');
+/* 5. Uploads go to SnapItForms (a trial third-party backend, see CLAUDE.md). Catch an unset key
+ * before it reaches the live site, and catch the old static.app upload hook coming back by
+ * accident (the separate feedback form still legitimately uses static-form / #fb-form). */
+html.includes('static-form-id="sevens-results"') || html.includes('id="up-form"')
+  ? bad('the old static.app upload form is back (static-form-id sevens-results, or id="up-form"). This project now uploads to SnapItForms instead -- remove it, or update this check if that was on purpose.')
+  : ok('no leftover static.app upload form');
+const keyMatch = html.match(/const SNAPIT_ACCESS_KEY = '([^']*)'/);
+if (!keyMatch) bad('SNAPIT_ACCESS_KEY is missing from index.html');
+else if (keyMatch[1].startsWith('REPLACE_WITH_') || !keyMatch[1]) bad('SNAPIT_ACCESS_KEY is still a placeholder. Uploads will not work until the real SnapItForms access key is put in.');
+else ok('SNAPIT_ACCESS_KEY looks like it has been set');
 
 /* 6. Upload fields must not change by accident. Static.app makes a NEW results table when they change. */
 try {
   const sec = html.match(/const SECTIONS = \[([\s\S]*?)\n\];/)[1];
   const SECTIONS = new Function('return [' + sec + '\n]')();
-  const up = html.match(/const UP_FIELDS = (\[[\s\S]*?\]);\n\$\('#up-form'\)/)[1];
+  const up = html.match(/const UP_FIELDS = (\[[\s\S]*?\]);/)[1];
   const fields = new Function('SECTIONS', 'return ' + up)(SECTIONS);
   const snap = path.join(root, 'tools', 'upload-fields.json');
   if (process.argv.includes('--update-fields')) {
-    fs.writeFileSync(snap, JSON.stringify({ note: 'The upload fields. If this list changes, static.app starts a new results table. Change it only on purpose.', fields }, null, 2) + '\n');
+    fs.writeFileSync(snap, JSON.stringify({ note: 'The upload fields. Whichever backend receives them, an export or a saved CSV expects these exact names. Change it only on purpose.', fields }, null, 2) + '\n');
     ok(`wrote tools/upload-fields.json with ${fields.length} fields`);
   } else if (!fs.existsSync(snap)) {
     bad('tools/upload-fields.json is missing. Run: node tools/check.js --update-fields');

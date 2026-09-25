@@ -17,7 +17,7 @@ It is a progressive web app: plain HTML, CSS and JavaScript, with no build step 
 - Record a voice note in any comment box (the 8 areas, distance from contest, the two feedback boxes and private notes). Play it back, record again, delete it, or share it.
 - Save on the device, upload with one tap, email or share a summary, print or save a PDF.
 - Work offline. Forms wait on the phone until there is signal.
-- Send feedback about the app from Setup. Goes straight to the organiser, the same way results upload.
+- Send feedback about the app from Setup. Goes straight to the organiser through static.app, separately from results upload.
 
 **Organisers**
 - Make a setup link and QR code with the tournament name, a tournament code, and lists of fields, levels, coaches and referees.
@@ -55,13 +55,11 @@ Open http://localhost:8000. Service workers and the camera work on `localhost`. 
 
 ## Deploy
 
-**Upload results only works when the site is served by static.app.**
-The Upload button uses static.app's form service. Static.app adds the form script to the page when it serves it.
-On GitHub Pages or another host, everything else works, but Upload does nothing.
-The email, share, CSV, backup and print options still work.
+The site itself works on any static host, including GitHub Pages -- see "Upload results" below for the one feature
+that currently still depends on which host you use.
 
-1. Make a site at https://static.app and note its site id (`pid`).
-2. In this GitHub repo, open Settings, then Secrets and variables, then Actions.
+1. Make a site at https://static.app and note its site id (`pid`), or turn on GitHub Pages for this repo (Settings, then Pages).
+2. If using static.app: in this GitHub repo, open Settings, then Secrets and variables, then Actions.
 3. Add the secret `STATICAPP_API_KEY`. Make a new key at https://static.app/account/api. Do not paste it in code, chat or issues.
 4. Add the variable `STATICAPP_PID` with your site id.
 5. Push to `main`. The workflow zips the site and uploads it.
@@ -69,12 +67,36 @@ The email, share, CSV, backup and print options still work.
 The workflow changes the cache name in `sw.js` on each release, so phones pick up the new files after two opens.
 If you deploy by hand, change `CACHE` in `sw.js` first.
 
+## Upload results: on trial with SnapItForms
+
+**Coaching-results uploads are on trial with [SnapItForms](https://snapitforms.com/), a small third-party form backend.**
+It was picked because it works from any static host (GitHub Pages included), not because it has a track record --
+at the time this was set up (Sept 2026), no independent review of it could be found anywhere (Capterra, G2, Reddit,
+Hacker News, GitHub). Treat it as unproven. Watch real submissions closely, and be ready to move to a better-known
+service (Formspree, Basin, Getform/Forminit) or an in-house option (Power Automate + SharePoint, an Azure Function)
+if it does not hold up.
+
+- The upload code (`uploadOne()` in `index.html`) posts straight to `https://api.snapitforms.com/submit` with `fetch`.
+  No vendor script or hidden form is involved for this any more.
+- `SNAPIT_ACCESS_KEY`, near the top of the script, must hold a real access key from your SnapItForms account
+  (sign in with Google, then copy the key) before Upload will do anything. `node tools/check.js` fails on the
+  placeholder value on purpose, so a deploy with no key configured is caught before it goes out.
+- The key is not a secret in the usual sense -- a browser-only app cannot hide it -- but do not publicise it. Anyone
+  who has it can send junk into your SnapItForms dashboard.
+- If a submission fails for a reason other than "no signal" (SnapItForms down, a CORS block, a rejected key), the
+  coach sees "Upload did not work. Try again." with no more detail. The form itself is never lost either way; it
+  stays on the phone until it uploads.
+- **The separate in-app feedback feature (Setup, then "Send feedback") still uses static.app**, unchanged. It is
+  a distinct hidden form (`#fb-form`, `sevens-feedback`) and was not part of this trial.
+
 ## Results and data
 
-- Each game is one row in a static.app form named `sevens-results`. Read the rows in your static.app account.
-- Feedback sent from Setup is a separate static.app form named `sevens-feedback`, in the same account.
-- Static.app makes a new results table when the list of upload fields changes. Do not add or rename fields in the hidden form (`#up-form`) without a plan. The list is `UP_FIELDS` in `index.html`.
-- Static.app's browser rules block live reading of the table from the app. Export the entries, then use Review, then Load results file.
+- Each game is one submission in your SnapItForms dashboard. Export it from there as CSV.
+- Feedback sent from Setup still goes to the static.app form named `sevens-feedback`. Read it in your static.app account.
+- Whatever the upload backend, do not add or rename fields in `UP_FIELDS` (`index.html`) without a plan -- anyone
+  exporting a CSV, or loading an older one, expects the column names to stay put. `node tools/check.js` catches an
+  accidental change.
+- Nothing in the app reads the results back live. Export the entries, then use Review, then Load results file.
 - Forms live in each phone's browser storage. Tell coaches to save a backup file after each event.
 - Voice notes are audio clips kept in the phone's IndexedDB. They are **not** uploaded (static.app forms carry text only) and are **not** in backup files. Share summary sends them with the text where the phone allows it. The email button cannot attach files. Clips are limited to 2 minutes (`VN_MAX` in `index.html`). For text the organiser can read, use the microphone on the phone keyboard.
 - Deleting a form deletes its voice notes.
@@ -100,8 +122,9 @@ If you deploy by hand, change `CACHE` in `sw.js` first.
 ## Tests
 
 There is no test suite in the repo. The app was checked with Playwright on phone-size screens, an accessibility scan (axe),
-a fake camera for QR scanning, a fake microphone for voice notes, and mocks of the static.app form script and the speech service.
-Real speech recognition has not been tested on real phones. Add your own tests if you grow the app.
+a fake camera for QR scanning, a fake microphone for voice notes, a mock of `fetch` for SnapItForms uploads, and a mock of the
+static.app form script for feedback and the speech service. Real speech recognition and a real SnapItForms submission have not
+been tested. Add your own tests if you grow the app.
 
 ## Licence
 

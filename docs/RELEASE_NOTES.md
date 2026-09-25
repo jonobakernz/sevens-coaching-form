@@ -1,10 +1,12 @@
 # Sevens Coaching Form: release notes
 
-Updated 23 Sept 2026. Current release: 20.
+Updated 25 Sept 2026. Current release: 21.
 
 ## At a glance
 
-Release 20 of the Sevens Coaching Form went live on 23 Sept 2026, at <https://easy-goingcrow.staticdomains.app/>. It is a phone app. Coaches use it to score referees. Organisers use it to rank them.
+Release 21 of the Sevens Coaching Form went live on 25 Sept 2026, at <https://easy-goingcrow.staticdomains.app/>. It is a phone app. Coaches use it to score referees. Organisers use it to rank them.
+
+**Release 21 puts coaching-results uploads on trial with a new, unproven backend (SnapItForms) in place of static.app's form service.** This is deliberately a trial, not a settled choice -- see the Support reference below before relying on it for a real event. The separate in-app feedback feature is unaffected and still uses static.app.
 
 A coach scores a game, the phone saves it, and the coach uploads it. The app works without signal. An organiser sets up a tournament with one QR code and reviews every referee in one table.
 
@@ -100,10 +102,11 @@ An organiser can set up a tournament with one scan and rank every referee across
 
 ## Release history
 
-There have been 20 releases, newest first. Dates are New Zealand time. The last column helps support tell which release a phone has.
+There have been 21 releases, newest first. Dates are New Zealand time. The last column helps support tell which release a phone has.
 
 | Date | Release | What changed | How to spot it on a phone |
 | --- | --- | --- | --- |
+| 25 Sept 2026 | 21. Coaching-results upload moved to SnapItForms (trial) | Upload results now posts to SnapItForms instead of static.app's form service, so the site can move to GitHub Pages if wanted. SnapItForms has no independent track record yet -- see Support reference. The separate feedback feature is unchanged and still uses static.app. | No visible change on the form itself. The upload status line now says "This is a trial upload service." |
 | 23 Sept 2026 | 20. Quick notes from the printed coaching sheet | Compared the printed "7's Coaching Notes" sheet with the app and added the quick notes it was missing: two for foul play (recognising it early, applying the law), two for breakdowns (the jackler's rights, getting the ball available), and one for game management (proactive, not just reactive). | Two extra quick-note buttons on Foul play and Breakdowns, one extra on Game management. |
 | 20 Sept 2026 | 19. Feedback sends straight to the organiser | Release 18's "Feedback" sent an email, but many phones have no mail app set up to actually send one. It now sends the same way results upload: a static.app form, "sevens-feedback", straight into the organiser's account. If there is no signal, the note is copied to send another way. The organiser no longer sets up an address for this. | Tap "Send feedback": the button says "Sending...", then either sends or copies the note. It does not open a mail app. |
 | 20 Sept 2026 | 18. Feedback | A "Feedback" box in Setup opened the phone's mail app, addressed to the organiser if one was set up. Replaced by release 19, since many phones have no mail app configured to actually send from. | Tap "Send feedback": the phone's mail app opens. |
@@ -209,18 +212,21 @@ The app has not been tested on real phones yet. Everything below is either a des
 **Not yet tested**
 
 - Voice notes, dictation and QR scanning were tested in simulated browsers with a fake microphone, a fake camera and a made-up speech service. Real phones may differ, especially an iPhone Home Screen app.
-- static.app does not publish a form entry limit for the free plan (checked their pricing and help pages: the only documented limits are 50 MB storage and 50 MB per file). Run a practice event with about 20 to 30 uploads before a tournament to find out in practice, or ask static.app support directly.
+- static.app does not publish a form entry limit for the free plan (checked their pricing and help pages: the only documented limits are 50 MB storage and 50 MB per file). Run a practice event with about 20 to 30 uploads before a tournament to find out in practice, or ask static.app support directly. This still applies to the feedback feature, which stayed on static.app.
+- **SnapItForms itself has not been tested with a real access key or a real submission.** Everything around it (success, a rejected submission, a network failure, retries, offline) was tested with a stand-in for their service, because no independent information about how it actually behaves could be found. The first real submissions after this release need to be watched closely, ideally by checking the SnapItForms dashboard right after each one.
+- If SnapItForms' API does not allow browser-based `fetch` submissions the way a static-site tool normally would (their own published example is a plain HTML form, not JavaScript), every upload will fail with a generic "Upload did not work" message. This would show up immediately on the first real test.
 
 **Design limits**
 
 - The app shows no release number.
-- Upload works only when static.app serves the page.
-- The organiser cannot read the results table live in the app. Export the entries from static.app, then use "Load results file".
+- Coaching-results upload is on trial with SnapItForms, a vendor with no independent track record at the time this shipped. It may need to move again.
+- Feedback still works only when static.app serves the page (or when static.app is reachable, regardless of host).
+- The organiser cannot read results live in the app. Export the entries from the SnapItForms dashboard (or static.app, for feedback), then use "Load results file".
 - Voice notes are not uploaded, not in backups and not in emails.
 - Dictation needs signal and sends audio to the browser's speech service.
 - The tournament code is a filter, not a password.
 - The coverage list is a list, not a grid of referees by game.
-- Static.app makes a new results table when the list of upload fields changes.
+- Whichever backend is used, changing the upload field names breaks anyone's saved export or in-progress CSV.
 
 **Content still to check**
 
@@ -231,18 +237,20 @@ The app has not been tested on real phones yet. Everything below is either a des
 
 | Item | Detail |
 | --- | --- |
-| Live address | https://easy-goingcrow.staticdomains.app/ (static.app site "Sevenscoaching", site id adrf1y2gis) |
-| Results | The static.app form "sevens-results". Read the rows in the static.app account for the site. |
-| Results tables | Three tables exist from testing. The newest is the live one. The older ones hold test entries only. |
-| Feedback | The static.app form "sevens-feedback", in the same static.app account. Separate from results. |
-| Deploy | A GitHub workflow uploads the site to static.app on every push to the main branch. It needs the secret `STATICAPP_API_KEY` and the variable `STATICAPP_PID`. |
-| Manual deploy | Upload the site zip to static.app. |
+| Live address | https://easy-goingcrow.staticdomains.app/ (static.app site "Sevenscoaching", site id adrf1y2gis), or the GitHub Pages address if that has been turned on |
+| Coaching results (from release 21) | A SnapItForms form, in the account signed in for `SNAPIT_ACCESS_KEY`. Export the submissions from the SnapItForms dashboard as CSV. |
+| Coaching results (releases 3 to 20) | The static.app form "sevens-results". Three test tables also exist in that account from earlier work; only "sevens-results" (the newest) matters. |
+| SnapItForms track record | None found independently as of Sept 2026 -- no Capterra/G2 listing, no Reddit or Hacker News mention, no GitHub presence. Watch it closely. If it proves unreliable, the code to swap it for Formspree, Basin, Getform/Forminit, or an in-house Power Automate/Azure option is a similar-sized change to this one. |
+| Feedback | Still the static.app form "sevens-feedback", in the static.app account. Unaffected by the SnapItForms change. |
+| Deploy (static.app) | A GitHub workflow uploads the site to static.app on every push to the main branch. It needs the secret `STATICAPP_API_KEY` and the variable `STATICAPP_PID`. |
+| Deploy (GitHub Pages) | Settings, then Pages, then "Deploy from a branch", `main`, `/ (root)`. Independent of the SnapItForms change. Feedback still needs static.app to be reachable either way. |
+| Manual deploy | Upload the site zip to static.app, or push to `main` with Pages enabled. |
 | Offline cache | The cache name in `sw.js` changes on every release. This makes phones fetch the new files. |
-| Upload fields | Do not add or rename the hidden upload fields without a plan. Static.app makes a new results table each time. |
+| Upload fields | Do not add or rename fields in `UP_FIELDS` (`index.html`) without a plan, whichever backend is in use. `node tools/check.js` catches an accidental change. |
 | Wording | Score meanings, quick notes and the referee, coach and level lists are set in the app script and the Setup tab. The README explains where. |
 
 **Housekeeping**
 
 - Delete the test entries in static.app: tournaments "ZZ TEST" and "ZZ LIVE TEST", and the table "sevens-test". The delete calls failed from code.
-- Delete every API key that was pasted into a chat. Make a new key for the GitHub workflow at static.app, under the account API page.
+- Delete every API key or access key that was pasted into a chat, including the SnapItForms one once it is confirmed working from the repo. Make a new key for the GitHub workflow at static.app, under the account API page.
 - Keep the repo private. The results name real people.
