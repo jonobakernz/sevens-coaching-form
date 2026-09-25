@@ -45,12 +45,13 @@ const fonts = [...new Set([...html.matchAll(/url\((fonts\/[^)]+)\)/g)].map((m) =
 const noFont = fonts.filter((f) => !exists(f));
 noFont.length ? bad('fonts named in the CSS are missing: ' + noFont.join(', ')) : ok(`all ${fonts.length} font files exist`);
 
-/* 5. Uploads go to SnapItForms (a trial third-party backend, see CLAUDE.md). Catch an unset key
- * before it reaches the live site, and catch the old static.app upload hook coming back by
- * accident (the separate feedback form still legitimately uses static-form / #fb-form). */
-html.includes('static-form-id="sevens-results"') || html.includes('id="up-form"')
-  ? bad('the old static.app upload form is back (static-form-id sevens-results, or id="up-form"). This project now uploads to SnapItForms instead -- remove it, or update this check if that was on purpose.')
-  : ok('no leftover static.app upload form');
+/* 5. Uploads and feedback both go to SnapItForms (a trial third-party backend, see CLAUDE.md).
+ * Catch an unset key before it reaches the live site, and catch either of the old static.app
+ * form hooks coming back by accident -- they only ever worked when static.app itself served the
+ * page, which stopped being true once GitHub Pages became the host. */
+html.includes('static-form')
+  ? bad('a static.app form hook is back (static-form / static-form-id / id="up-form" / id="fb-form"). This project now uploads and sends feedback to SnapItForms instead -- remove it, or update this check if static.app is hosting again on purpose.')
+  : ok('no leftover static.app form hook');
 const keyMatch = html.match(/const SNAPIT_ACCESS_KEY = '([^']*)'/);
 if (!keyMatch) bad('SNAPIT_ACCESS_KEY is missing from index.html');
 else if (keyMatch[1].startsWith('REPLACE_WITH_') || !keyMatch[1]) bad('SNAPIT_ACCESS_KEY is still a placeholder. Uploads will not work until the real SnapItForms access key is put in.');

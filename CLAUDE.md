@@ -6,12 +6,21 @@ A phone app (progressive web app) for rugby referee coaches at sevens tournament
 - No build step and no packages. The whole app is in `index.html` (HTML, CSS and JavaScript). Keep it that way unless asked.
 - `sw.js` is the offline service worker. `manifest.webmanifest` holds install details.
 - `fonts/`, `icons/`, `lib/` (QR code maker and scanner) and `demo/` hold assets. `tools/` holds scripts.
-- Hosted on static.app. The deploy workflow uploads the site when a change reaches `main`.
-- **Coaching-results uploads are on trial with SnapItForms** (`api.snapitforms.com`), not static.app. SnapItForms is a small third-party service with no independent track record found when this was added (Sept 2026) -- treat it as unproven until it has held up over real use. `uploadOne()` posts directly with `fetch`; there is no hidden form or vendor script for this any more.
-- **The separate in-app feedback feature still uses static.app** (`#fb-form`, `submitFeedback()`). It was not part of the SnapItForms change and was left alone on purpose -- do not assume the whole app moved off static.app.
+- **Hosted on GitHub Pages** (`https://jonobakernz.github.io/sevens-coaching-form/`), which is why this repo is
+  public -- GitHub Pages does not support private repos on the Free plan. Pages redeploys automatically after a
+  push to `main`, no workflow needed. An older static.app deploy still exists (`.github/workflows/deploy-static-app.yml`)
+  but must not be treated as the live site -- see the next point for why.
+- **Coaching-results uploads and in-app feedback both go to SnapItForms** (`api.snapitforms.com`), not static.app.
+  This is why the app had to leave static.app hosting: static.app sends a `Content-Security-Policy` header
+  (`connect-src 'self' https://*.static.domains https://static.app`) that silently blocks `fetch()` to any other
+  domain, including SnapItForms. GitHub Pages sends no such header. Do not reintroduce anything that assumes the
+  app is served by static.app.
+- SnapItForms itself is a small third-party service with no independent track record found when this was added
+  (Sept 2026) -- treat it as unproven until it has held up over real use. `uploadOne()` and `submitFeedback()` both
+  post with `fetch`; there is no hidden form or vendor script for either any more.
 
 ## Rules that matter
-1. **Work on a branch and open a pull request.** Never push to `main`. Never merge. A merge to `main` deploys to the live site.
+1. **Work on a branch and open a pull request.** Never push to `main`. Never merge. A merge to `main` deploys to GitHub Pages (and, if still configured, static.app).
 2. **Do not change the upload fields** (`UP_FIELDS` in `index.html`) unless the task says so. Anyone exporting from SnapItForms, or from an old CSV, expects these column names to stay put. `node tools/check.js` fails if they change. If a change is on purpose, run `node tools/check.js --update-fields` and say so in the pull request.
 3. **Never put real names, keys or hosting tokens in the repo.** The static.app deploy key lives in the GitHub secret `STATICAPP_API_KEY`, never in a file. The SnapItForms access key (`SNAPIT_ACCESS_KEY` in `index.html`) is different: it has to sit in plain sight for a browser-only app to work, so it is not a secret Anthropic-style, but it should not be advertised -- anyone who has it can send junk into the SnapItForms dashboard. Demo data is made up.
 4. **Private notes stay private.** They must never appear in the shared summary, the email, or the print. They do go in uploads, backups and CSV exports.
@@ -23,7 +32,7 @@ A phone app (progressive web app) for rugby referee coaches at sevens tournament
 ## Test before you finish
 - `node tools/check.js` must pass.
 - Run the app: `python3 -m http.server 8000`, then open http://localhost:8000. Test on a phone-size screen (about 390 px wide).
-- Coaching-results uploads go to SnapItForms: test with a mock of `window.fetch` for `api.snapitforms.com`, covering a success, an HTTP failure, a JSON `success: false`, and a thrown/network error. Feedback still goes to static.app: test that separately with a mock of the static.app form script (`window.sendForm`, the form's `submit` event, `data-submitting`, `window.sevensFeedbackSent()`).
+- Coaching-results uploads and feedback both go to SnapItForms: test with a mock of `window.fetch` for `api.snapitforms.com`, covering a success, an HTTP failure, a JSON `success: false`, and a thrown/network error. A local `python3 -m http.server` copy has none of static.app's headers, so it cannot catch a CSP-type problem -- if a future host might add its own restrictive headers, check the real deployed page's response headers directly (`curl -I`), not just a local copy.
 - Voice and dictation: use a fake microphone in Playwright, and a mock `SpeechRecognition`.
 - Keep touch targets at 44 px or more, keep text contrast at 4.5 to 1, and run an accessibility scan (axe) on all four tabs.
 
@@ -33,4 +42,4 @@ A phone app (progressive web app) for rugby referee coaches at sevens tournament
 - Score meanings (`ANCHORS`), areas and quick notes (`SECTIONS`) are drafts the coaches will agree. Change them only when asked.
 
 ## Where things are in `index.html`
-`ANCHORS`, `SECTIONS` (areas and quick notes), storage keys (`LS_*`), form records (`blank()`, `normalise()`), upload to SnapItForms (`UP_FIELDS`, `payload()`, `uploadOne()`, `SNAPIT_ACCESS_KEY`), feedback to static.app (`submitFeedback()`), review table (`collect()`, `renderReview()`), setup link and QR (`makeSetup()`, `startScan()`), voice notes and dictation (search "Voice notes" and "Dictation"), demo (`loadDemo()`).
+`ANCHORS`, `SECTIONS` (areas and quick notes), storage keys (`LS_*`), form records (`blank()`, `normalise()`), upload and feedback, both to SnapItForms (`UP_FIELDS`, `payload()`, `uploadOne()`, `submitFeedback()`, `SNAPIT_ACCESS_KEY`), review table (`collect()`, `renderReview()`), setup link and QR (`makeSetup()`, `startScan()`), voice notes and dictation (search "Voice notes" and "Dictation"), demo (`loadDemo()`).
