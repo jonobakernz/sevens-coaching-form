@@ -605,7 +605,6 @@ table.rv { border-collapse: separate; border-spacing: 0; width: 100%; min-width:
 <datalist id="dl-coach"></datalist>
 <datalist id="dl-level"></datalist>
 
-<form id="up-form" static-form static-form-id="sevens-results" static-form-success-callback="sevensUploaded" hidden aria-hidden="true"></form>
 <form id="fb-form" static-form static-form-id="sevens-feedback" static-form-success-callback="sevensFeedbackSent" hidden aria-hidden="true"></form>
 
 <script>
@@ -744,7 +743,7 @@ let forms = read(LS_FORMS, []);
 if (!Array.isArray(forms)) forms = [];
 forms.forEach(normalise);
 let cur = forms.find(f => f.id === read(LS_CUR, null)) || blank();
-let timer = null, dirty = false, upBusy = false, upResolve = null, lastSaved = '';
+let timer = null, dirty = false, upBusy = false, lastSaved = '';
 
 /* ---------- Build the score rows ---------- */
 const WHISTLE = '<svg class="whistle" viewBox="0 0 40 28" aria-hidden="true" focusable="false"><path fill="currentColor" d="M1 11h15l3-4h11a9 9 0 0 1 0 18h-1a9 9 0 0 1-8.6-6.4H1z"/><circle cx="29" cy="16" r="3.2" fill="var(--paper)"/><rect x="20" y="2" width="6" height="4" rx="1" fill="currentColor"/></svg>';
@@ -841,7 +840,7 @@ function updateUploadUI() {
   b.disabled = upBusy || st === 'done';
   b.textContent = upBusy ? 'Uploading...' : st === 'changed' ? 'Upload changes' : st === 'done' ? 'Uploaded' : 'Upload results';
   $('#next-btn').hidden = !(st === 'done' || (cur.referee.trim() && cur.scores.rating));
-  t.textContent = st === 'done' ? `Uploaded ${fmtStamp(cur.uploadedAt)}${cfg.c ? ' with the tournament code' : ', no tournament code'}. Edit the form to upload changes.`
+  t.textContent = st === 'done' ? `Uploaded ${fmtStamp(cur.uploadedAt)}${cfg.c ? ' with the tournament code' : ', no tournament code'}. This is a trial upload service. Edit the form to upload changes.`
     : st === 'changed' ? 'Changed since the last upload.'
     : 'Not uploaded yet. The form is saved on this device.';
 }
@@ -1320,16 +1319,23 @@ $('#restore').addEventListener('change', async (e) => {
   toast(bad ? `Added ${added}, updated ${updated}. ${bad} file(s) not a Sevens backup` : `Added ${added} new, ${updated} updated`);
 });
 
-/* ---------- Upload results ---------- */
+/* ---------- Upload results ----------
+ * TRIAL: results are sent to SnapItForms (api.snapitforms.com), not static.app.
+ * SnapItForms is a small third-party form backend with no independent track record found at the
+ * time this was added (Sept 2026) -- see CLAUDE.md and the pull request for the reasoning. Treat
+ * this as a trial: test with real submissions and watch it for a few weeks before trusting it for
+ * a real tournament. The access key below is not a high-value secret (it has to be visible in the
+ * page for a browser-only app), but do not publish it -- anyone who has it can send junk into the
+ * SnapItForms dashboard, the same caution as the tournament code.
+ * The separate feedback form just below this still goes to static.app -- it was not part of this
+ * change.
+ */
+const SNAPIT_ENDPOINT = 'https://api.snapitforms.com/submit';
+const SNAPIT_ACCESS_KEY = 'REPLACE_WITH_SNAPITFORMS_ACCESS_KEY'; // snapitforms.com, sign in with Google, copy the access key here.
+
 const UP_FIELDS = ['form_id', 'version', 'code', 'tournament', 'level', 'game', 'date', 'time', 'field', 'referee', 'role', 'coach',
   ...SECTIONS.flatMap(s => ['score_' + s.key, 'comment_' + s.key]),
   'too_close', 'in_the_way', 'good_position', 'contest_comments', 'keep', 'work', 'private_notes'];
-$('#up-form').innerHTML = UP_FIELDS.map(k => `<input type="hidden" name="${k}">`).join('');
-
-window.sevensUploaded = () => {
-  $('#up-form').removeAttribute('data-submitting');
-  if (upResolve) upResolve();
-};
 
 function payload(f) {
   const p = {
@@ -1350,31 +1356,38 @@ function payload(f) {
   return p;
 }
 
-function uploadOne(f) {
-  return new Promise((resolve, reject) => {
-    const form = $('#up-form');
-    if (!navigator.onLine) { reject(new Error('offline')); return; }
-    if (typeof sendForm !== 'function') { reject(new Error('offline')); return; }
-    const p = payload(f);
-    for (const k of UP_FIELDS) form.elements[k].value = p[k] ?? '';
-    let seen = false, finished = false;
-    const t0 = Date.now();
-    const finish = (err) => {
-      if (finished) return;
-      finished = true;
-      clearInterval(poll); clearTimeout(limit);
-      upResolve = null;
-      err ? reject(err) : resolve();
-    };
-    upResolve = () => finish();
-    const poll = setInterval(() => {
-      const busy = form.getAttribute('data-submitting') === 'true';
-      if (busy) seen = true;
-      else if (seen || Date.now() - t0 > 2500) finish(new Error('failed'));
-    }, 250);
-    const limit = setTimeout(() => finish(new Error('failed')), 25000);
-    form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
-  });
+/* Throws Error('offline') when there is no point trying (no signal, or the key is not set up
+ * yet), and Error('failed') for anything the network or SnapItForms rejected. A cross-origin
+ * fetch to a third party can be blocked by the browser before it even reaches SnapItForms if
+ * their API does not allow fetch/CORS the way this expects (their published example is a plain
+ * HTML form, not fetch) -- that shows up here as a generic network failure, which is why the
+ * first real submission after this ships must be watched closely against the SnapItForms
+ * dashboard, not just the message in this app. */
+async function uploadOne(f) {
+  if (!navigator.onLine) throw new Error('offline');
+  if (!SNAPIT_ACCESS_KEY || SNAPIT_ACCESS_KEY.startsWith('REPLACE_WITH_')) throw new Error('offline');
+  const p = payload(f);
+  const body = new FormData();
+  body.append('access_key', SNAPIT_ACCESS_KEY);
+  for (const k of UP_FIELDS) body.append(k, p[k] ?? '');
+  const ctrl = new AbortController();
+  const limit = setTimeout(() => ctrl.abort(), 25000);
+  let res;
+  try {
+    res = await fetch(SNAPIT_ENDPOINT, { method: 'POST', headers: { Accept: 'application/json' }, body, signal: ctrl.signal });
+  } catch {
+    throw new Error('failed');
+  } finally {
+    clearTimeout(limit);
+  }
+  if (!res.ok) throw new Error('failed');
+  try {
+    const data = await res.clone().json();
+    if (data && data.success === false) throw new Error('failed');
+  } catch (e) {
+    if (e instanceof SyntaxError) { /* not every success reply is JSON; a 2xx with no JSON body still counts as sent */ }
+    else throw e;
+  }
 }
 
 async function doUpload(list) {
@@ -1400,7 +1413,9 @@ async function doUpload(list) {
   updateTabs();
   if (!$('#view-saved').hidden) renderSaved();
   if (!err) toast(ok === 1 ? 'Results uploaded' : `${ok} forms uploaded`);
-  else if (err.message === 'offline') toast('No connection. The forms are saved. Try again with signal.');
+  else if (err.message === 'offline') toast(SNAPIT_ACCESS_KEY.startsWith('REPLACE_WITH_')
+    ? 'Uploads are not set up yet. See SNAPIT_ACCESS_KEY in index.html.'
+    : 'No connection. The forms are saved. Try again with signal.');
   else if (list.length === 1) toast('Upload did not work. Try again.');
   else {
     const name = failed.referee.trim() || 'One form';
